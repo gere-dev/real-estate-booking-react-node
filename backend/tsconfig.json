@@ -10,7 +10,7 @@
         "baseUrl": "./src", 
         "paths": {
             "@/*":["*"],
-            "@db/*": ["database/config/*"],
+            "@db*": ["database/config/db"],
             "@controllers":["controllers/*"],
             "@routes/*": ["routes/*"],
             "@models/*": ["database/models/*"]
