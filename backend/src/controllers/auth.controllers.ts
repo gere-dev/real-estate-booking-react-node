@@ -44,3 +44,35 @@ export const register = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const [result] = await db.query<any>('SELECT * FROM users WHERE email = ?', [email]);
+    const user = result[0]; // get the first element of the array
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = generateRefreshToken(user.id);
+    await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user.id, refreshToken]);
+
+    res.cookie('access_token', accessToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
+      secure: true,
+      sameSite: 'none',
+    });
+    res.status(200).json({ user: { id: user.id, name: user.name, email: user.email } });
+  } catch (error) {
+    console.log(`Error at signIn controller: ${error}`);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
