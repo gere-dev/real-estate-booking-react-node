@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node -r tsconfig-paths/register src/server.ts",
     "dev": "nodemon --exec ts-node -r  tsconfig-paths/register src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "create-schemas":"ts-node -r tsconfig-paths/register src/database/models/createSchemas.ts"
   },
   "keywords": [],
   "author": "",
