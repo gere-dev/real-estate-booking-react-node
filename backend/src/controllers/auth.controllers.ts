@@ -1,4 +1,5 @@
 import db from '@/database/config/db';
+import { setCookies } from '@/utils/cookies.utils';
 import { generateAccessToken, generateRefreshToken, verifyToken } from '@/utils/jwt.utils';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
@@ -25,18 +26,7 @@ export const register = async (req: Request, res: Response) => {
     await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [userId, refreshToken]);
 
     // set cookie
-    res.cookie('access_token', accessToken, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
-      secure: true,
-      sameSite: 'none',
-    });
-    res.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
-      secure: true,
-      sameSite: 'none',
-    });
+    setCookies(res, accessToken, refreshToken);
 
     const user = {
       id: userId,
@@ -70,18 +60,8 @@ export const login = async (req: Request, res: Response) => {
     const refreshToken = generateRefreshToken(user.id);
     await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user.id, refreshToken]);
 
-    res.cookie('access_token', accessToken, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
-      secure: true,
-      sameSite: 'none',
-    });
-    res.cookie('refresh_token', refreshToken, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
-      secure: true,
-      sameSite: 'none',
-    });
+    setCookies(res, accessToken, refreshToken);
+
     res.status(200).json({ user: { id: user.id, name: user.name, email: user.email } });
   } catch (error) {
     console.log(`Error at signIn controller: ${error}`);
