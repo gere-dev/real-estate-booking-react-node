@@ -6,21 +6,24 @@ import { Link } from 'react-router-dom';
 export const Nav = () => {
   return (
     <header>
-      <Link to={'/'}>Logo</Link>
-
-      <nav>
-        <ul className='flex gap-7'>
-          {navs.map((nav) => {
-            return (
-              <li key={nav.title}>
-                <Link to={nav.path!}>
-                  <IconComponent Icon={nav.icon!} />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      <div className='flex justify-between items-center px-10 py-5 border-b'>
+        <Link className='bg-primary text-white py-1 px-3 rounded-full' to={'/'}>
+          B
+        </Link>
+        <nav>
+          <ul className='flex gap-7'>
+            {navs.map((nav) => {
+              return (
+                <li key={nav.title}>
+                  <Link to={nav.path!}>
+                    <IconComponent Icon={nav.icon!} />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 };
