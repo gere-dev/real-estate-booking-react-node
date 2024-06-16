@@ -116,3 +116,19 @@ export const refreshToken = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+export const logout = async (req: Request, res: Response) => {
+  res.clearCookie('access_token', {
+    maxAge: 0, // Expire immediately
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  });
+  res.clearCookie('refresh_token', {
+    maxAge: 0, // Expire immediately
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  });
+  res.status(200).json({ message: 'Logged out successfully' });
+};
