@@ -1,5 +1,5 @@
 import db from '@/database/config/db';
-import { generateAccessToken, generateRefreshToken } from '@/utils/jwt.utils';
+import { generateAccessToken, generateRefreshToken, verifyToken } from '@/utils/jwt.utils';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { ResultSetHeader } from 'mysql2';
@@ -26,6 +26,12 @@ export const register = async (req: Request, res: Response) => {
 
     // set cookie
     res.cookie('access_token', accessToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
+      secure: true,
+      sameSite: 'none',
+    });
+    res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
       maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
       secure: true,
@@ -70,9 +76,43 @@ export const login = async (req: Request, res: Response) => {
       secure: true,
       sameSite: 'none',
     });
+    res.cookie('refresh_token', refreshToken, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 1000, //24 hours in milliseconds
+      secure: true,
+      sameSite: 'none',
+    });
     res.status(200).json({ user: { id: user.id, name: user.name, email: user.email } });
   } catch (error) {
     console.log(`Error at signIn controller: ${error}`);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+export const refreshToken = async (req: Request, res: Response) => {
+  try {
+    const refreshToken = req.cookies.refresh_token;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const decoded = await verifyToken(refreshToken);
+    if (!decoded) {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+
+    const [result] = await db.query<any>('SELECT * FROM refresh_tokens WHERE token = ?', [refreshToken]);
+    const user = result[0]; // get the first element of the array
+    if (!user) {
+      // check if user exists
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const accessToken = generateAccessToken(user.user_id);
+    res.cookie('access_token', accessToken, { httpOnly: true, maxAge: 60 * 60 * 24 * 1000, secure: true, sameSite: 'none' });
+    res.status(200).json({ user: { id: user.user_id, name: user.name, email: user.email } });
+  } catch (error) {
+    // check if user exists
+    console.log(`Error at refreshToken controller: ${error}`);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
