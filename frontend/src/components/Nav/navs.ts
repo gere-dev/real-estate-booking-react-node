@@ -2,7 +2,7 @@ import { IoHomeSharp } from 'react-icons/io5';
 import { RiLogoutCircleRFill, RiLoginCircleFill } from 'react-icons/ri';
 import { FaCircleUser } from 'react-icons/fa6';
 import { IconType } from 'react-icons';
-type Nav = {
+export type Nav = {
   title: string;
   path?: string;
   icon?: IconType;
