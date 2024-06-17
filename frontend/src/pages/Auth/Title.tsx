@@ -4,5 +4,5 @@ interface Props {
   title: string;
 }
 export const Title = ({ title }: Props) => {
-  return <h2 className='font-semibold text-2xl text-center'>{title}</h2>;
+  return <h2 className='font-semibold text-2xl text-center capitalize'>{title}</h2>;
 };

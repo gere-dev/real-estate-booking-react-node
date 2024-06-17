@@ -26,7 +26,7 @@ export const AuthForm = ({ formType, buttonText, onSubmit }: Props) => {
       {formType === FormType.REGISTER && <InputField value={formData.name} onChange={handleChange} name='name' placeholder='Name' />}
       <InputField value={formData.email} onChange={handleChange} type='email' name='email' placeholder='Email' />
       <InputField value={formData.password} onChange={handleChange} name='password' type='password' placeholder='Password' />
-      <button type='submit' className='bg-primary text-white py-2 px-3 rounded'>
+      <button type='submit' className='bg-primary text-white py-2 px-3 rounded capitalize'>
         {buttonText}
       </button>
     </form>
