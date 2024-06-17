@@ -1,7 +1,7 @@
 import { Nav } from '@/components';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { Login, Home } from 'pages';
+import { Login, Home } from '@/pages';
 function App() {
   return (
     <>
