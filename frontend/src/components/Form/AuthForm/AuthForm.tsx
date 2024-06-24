@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { InputField } from './InputField';
-import { FormType } from './enums';
-import { FormData } from './types';
+import { AuthForm as AuthFormEnum } from '@/enums';
+import { AuthForm as AuthFormType } from '@/types';
 interface Props {
   formType: string;
   buttonText: string;
-  onSubmit: (formData: FormData) => void;
+  onSubmit: (formData: AuthFormType) => void;
 }
 
 export const AuthForm = ({ formType, buttonText, onSubmit }: Props) => {
-  const initialFormData: FormData = formType === FormType.REGISTER ? { name: '', email: '', password: '' } : { email: '', password: '' };
+  const initialFormData: AuthFormType = formType === AuthFormEnum.REGISTER ? { name: '', email: '', password: '' } : { email: '', password: '' };
 
-  const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [formData, setFormData] = useState<AuthFormType>(initialFormData);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit(formData);
@@ -23,7 +23,7 @@ export const AuthForm = ({ formType, buttonText, onSubmit }: Props) => {
   };
   return (
     <form onSubmit={handleSubmit} className='flex flex-col gap-2 w-full max-w-xs ml-auto mr-auto'>
-      {formType === FormType.REGISTER && <InputField value={formData.name} onChange={handleChange} name='name' placeholder='Name' />}
+      {formType === AuthFormEnum.REGISTER && <InputField value={formData.name} onChange={handleChange} name='name' placeholder='Name' />}
       <InputField value={formData.email} onChange={handleChange} type='email' name='email' placeholder='Email' />
       <InputField value={formData.password} onChange={handleChange} name='password' type='password' placeholder='Password' />
       <button type='submit' className='bg-primary text-white py-2 px-3 rounded capitalize'>

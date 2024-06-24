@@ -1,16 +1,15 @@
-import { AuthForm, AuthMessageLink } from '@/components';
-import { Title } from '../../../components/Auth/Title';
-import { FormType } from '@/components/Form/AuthForm/enums';
-import { FormData } from '@/components/Form/AuthForm/types';
+import { AuthForm, AuthMessageLink, Title } from '@/components';
+import { AuthForm as AuthFormEnum } from '@/enums';
+import { AuthForm as AuthFormType } from '@/types';
 
 export const Login = () => {
-  const handleSubmit = (data: FormData) => {
+  const handleSubmit = (data: AuthFormType) => {
     console.log(data);
   };
   return (
     <section className='flex flex-col '>
       <Title title='Login' />
-      <AuthForm formType={FormType.LOGIN} buttonText={FormType.LOGIN} onSubmit={handleSubmit} />
+      <AuthForm formType={AuthFormEnum.LOGIN} buttonText={AuthFormEnum.LOGIN} onSubmit={handleSubmit} />
       <AuthMessageLink to='Register' linkText='Register' message="Don't have an account account?" />
     </section>
   );
