@@ -1,5 +1,4 @@
-import { AuthForm, AuthMessageLink, Title } from '@/components';
-import AuthContainer from '@/components/Auth/AuthContainer';
+import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
 import { AuthForm as AuthFormEnum } from '@/enums';
 import { AuthForm as AuthFormType } from '@/types';
 

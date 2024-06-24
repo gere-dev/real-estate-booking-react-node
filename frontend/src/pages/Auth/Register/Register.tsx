@@ -1,7 +1,6 @@
-import { AuthForm, AuthMessageLink, Title } from '@/components';
+import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
 import { AuthForm as AuthFormType } from '@/types';
 import { AuthForm as AuthFormEnum } from '@/enums';
-import AuthContainer from '@/components/Auth/AuthContainer';
 export const Register = () => {
   const handleSubmit = (data: AuthFormType) => {
     console.log(data);
