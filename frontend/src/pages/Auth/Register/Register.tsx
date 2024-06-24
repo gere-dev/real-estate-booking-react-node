@@ -1,4 +1,4 @@
-import { AuthForm } from '@/components';
+import { AuthForm, AuthMessageLink } from '@/components';
 import { Title } from '../Title';
 import { FormType } from '@/components/Form/AuthForm/enums';
 import { FormData } from '@/components/Form/AuthForm/types';
@@ -8,9 +8,10 @@ export const Register = () => {
     console.log(data);
   };
   return (
-    <section className='flex flex-col '>
+    <section className='flex flex-col'>
       <Title title={FormType.REGISTER} />
       <AuthForm formType={FormType.REGISTER} buttonText={FormType.REGISTER} onSubmit={handleSubmit} />
+      <AuthMessageLink to='login' linkText='login' message='Already have an account?' />
     </section>
   );
 };
