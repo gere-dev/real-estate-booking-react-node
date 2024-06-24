@@ -1,5 +1,5 @@
 import { AuthForm, AuthMessageLink } from '@/components';
-import { Title } from '../Title';
+import { Title } from '../../../components/Auth/Title';
 import { FormType } from '@/components/Form/AuthForm/enums';
 import { FormData } from '@/components/Form/AuthForm/types';
 
