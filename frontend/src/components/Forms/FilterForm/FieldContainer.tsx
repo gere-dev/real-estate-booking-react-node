@@ -9,9 +9,9 @@ interface Props {
 export const FieldContainer = ({ children, Icon, label, htmlFor }: Props) => (
   <span className='border-b lg:border-b-0 lg:border-r lg:pr-2 w-full flex gap-3 items-center py-3 '>
     <IconContainer Icon={Icon} />
-    <span>
+    <span className='w-full'>
       {children}
-      <label className='hidden lg:block text-gray-600 mt-2' htmlFor={htmlFor}>
+      <label className='hidden lg:block text-gray-600 mt-3' htmlFor={htmlFor}>
         {label}
       </label>
     </span>
