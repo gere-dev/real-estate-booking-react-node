@@ -5,7 +5,7 @@ import heroImg from '@/assets/images/hero-right.webp';
 
 export const Home = () => {
   return (
-    <section className='px-3 flex flex-col gap-12 md:flex-col-reverse md:mt-10'>
+    <section className='max-width-container px-3 flex flex-col gap-12 md:flex-col-reverse md:mt-10'>
       <form className='flex flex-col gap-4'>
         <InputContainer>
           <IconContainer Icon={BiSearch} />

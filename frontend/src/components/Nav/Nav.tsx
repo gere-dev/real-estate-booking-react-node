@@ -5,8 +5,8 @@ import { NavList } from './NavList';
 
 export const Nav = () => {
   return (
-    <header>
-      <div className='flex justify-between items-center px-10  border-b py-2'>
+    <header className='border-b'>
+      <div className='flex justify-between items-center py-2 max-width-container'>
         <Link className='bg-primary text-white py-1 px-3 rounded-full' to={'/'}>
           B
         </Link>

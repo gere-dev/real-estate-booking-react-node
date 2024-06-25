@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const AuthContainer: React.FC<Props> = ({ children }) => {
-  return <section className={`flex flex-col justify-center h-[calc(100vh-${NAV_HEIGHT}px)]`}> {children}</section>;
+  return <section className={`max-width-container flex flex-col justify-center h-[calc(100vh-58.6px)]`}> {children}</section>;
 };
 
 export default AuthContainer;
