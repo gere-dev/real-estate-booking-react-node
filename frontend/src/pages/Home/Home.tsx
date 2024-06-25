@@ -7,7 +7,7 @@ export const Home = () => {
   return (
     <section className='max-width-container px-3 flex flex-col gap-12 md:flex-col-reverse md:mt-10 lg:h-[calc(100vh-58.6px)] lg:justify-center'>
       <form className='flex flex-col gap-4 lg:flex-row lg:items-center lg:shadow-lg lg:-mt-16 rounded-full py-2 lg:px-8 z-10 lg:h-fit bg-white'>
-        <InputContainer>
+        <FieldContainer>
           <IconContainer Icon={BiSearch} />
           <span>
             <input id='location' className='px-2 flex-1 outline-none' placeholder='Location...' type='text' />
@@ -15,9 +15,9 @@ export const Home = () => {
               Search by location
             </label>
           </span>
-        </InputContainer>
+        </FieldContainer>
 
-        <InputContainer>
+        <FieldContainer>
           <IconContainer Icon={BiDollar} />
           <span>
             <input
@@ -29,9 +29,9 @@ export const Home = () => {
               Price
             </label>
           </span>
-        </InputContainer>
+        </FieldContainer>
 
-        <InputContainer>
+        <FieldContainer>
           <IconContainer Icon={BiBed} />
           <span>
             <select className='flex-1 bg-transparent border-none ' name='' id='number of Beds'>
@@ -44,7 +44,7 @@ export const Home = () => {
               Number of Beds
             </label>
           </span>
-        </InputContainer>
+        </FieldContainer>
         <button className='bg-primary rounded-full text-white flex items-center justify-center py-2 gap-2 lg:w-[170px] lg:h-[50px]'>
           <BiSearch className='text-xl' />
           <span className='lg:hidden'>Search</span>
@@ -70,7 +70,7 @@ export const Home = () => {
   );
 };
 
-const InputContainer = ({ children }: { children: React.ReactNode }) => (
+const FieldContainer = ({ children }: { children: React.ReactNode }) => (
   <span className='border-b lg:border-b-0 lg:border-r lg:pr-2 w-full flex gap-3 items-center py-3 '>{children}</span>
 );
 const IconContainer = ({ Icon }: { Icon: IconType }) => (
