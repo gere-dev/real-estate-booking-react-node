@@ -1,5 +1,5 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
-import { AuthForm as AuthFormEnum } from '@/enums';
+import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { AuthForm as AuthFormType } from '@/types';
 
 export const Login = () => {
@@ -8,9 +8,13 @@ export const Login = () => {
   };
   return (
     <AuthContainer>
-      <Title title='Login' />
+      <Title title={AuthFormEnum.LOGIN} />
       <AuthForm formType={AuthFormEnum.LOGIN} buttonText={AuthFormEnum.LOGIN} onSubmit={handleSubmit} />
-      <AuthMessageLink to='Register' linkText='Register' message="Don't have an account account?" />
+      <AuthMessageLink
+        to={authMessageLinkProps.REGISTER_LINK}
+        linkText={authMessageLinkProps.REGISTER_LINK}
+        message={authMessageLinkProps.REGISTER_MESSAGE}
+      />
     </AuthContainer>
   );
 };
