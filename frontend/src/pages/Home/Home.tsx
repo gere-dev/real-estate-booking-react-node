@@ -1,10 +1,11 @@
 import React from 'react';
-import { BiBed, BiDollar, BiMoney, BiSearch } from 'react-icons/bi';
+import { BiBed, BiDollar, BiMoney, BiPhone, BiSearch } from 'react-icons/bi';
 import { IconType } from 'react-icons';
+import heroImg from '@/assets/images/hero-right.webp';
 
 export const Home = () => {
   return (
-    <section className='px-3'>
+    <section className='px-3 flex flex-col gap-12'>
       <form className='flex flex-col gap-4'>
         <InputContainer>
           <IconContainer Icon={BiSearch} />
@@ -33,6 +34,20 @@ export const Home = () => {
           <span className=''>Search</span>
         </button>
       </form>
+
+      <div className='flex flex-col gap-12'>
+        <div className='flex flex-col gap-4'>
+          <h2 className='font-semibold text-5xl'>Travel, book & experience!</h2>
+          <p>Accompanied by us, make the memories you have always wanted! Book your dream resorts, villas, hotels and more...</p>
+          <a href='#' className='text-white bg-primary rounded-full py-2 px-6 flex items-center w-fit gap-2 '>
+            <BiPhone className='text-2xl' />
+            <span className='font-bold mb-1 '>1-800-123-1234</span>
+          </a>
+        </div>
+        <figure>
+          <img src={heroImg} alt='hero image' />
+        </figure>
+      </div>
     </section>
   );
 };
