@@ -1,6 +1,5 @@
-import { FieldContainer } from './FieldContainer';
 import { BiBed, BiDollar, BiSearch } from 'react-icons/bi';
-import { FormContainer } from './FormContainer';
+import { FieldContainer, SearchButton, FormContainer } from '@/components';
 
 export const FilterForm = () => {
   const renderLocationInput = () => {
@@ -32,10 +31,7 @@ export const FilterForm = () => {
       <FieldContainer Icon={BiSearch} children={renderLocationInput()} htmlFor='location' label='Location' />
       <FieldContainer Icon={BiDollar} children={renderPriceRange()} htmlFor='price' label='Price Range' />
       <FieldContainer Icon={BiBed} children={renderNumOfBed()} htmlFor='bed' label='Number Of Bed' />
-      <button className='bg-primary rounded-full text-white flex items-center justify-center py-2 gap-2 lg:w-[170px] lg:h-[50px]'>
-        <BiSearch className='text-xl' />
-        <span className='lg:hidden'>Search</span>
-      </button>
+      <SearchButton />
     </FormContainer>
   );
 };
