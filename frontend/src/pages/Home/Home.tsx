@@ -5,7 +5,7 @@ import heroImg from '@/assets/images/hero-right.webp';
 
 export const Home = () => {
   return (
-    <section className='px-3 flex flex-col gap-12'>
+    <section className='px-3 flex flex-col gap-12 md:flex-col-reverse md:mt-10'>
       <form className='flex flex-col gap-4'>
         <InputContainer>
           <IconContainer Icon={BiSearch} />
@@ -35,16 +35,18 @@ export const Home = () => {
         </button>
       </form>
 
-      <div className='flex flex-col gap-12'>
-        <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-12 md:flex-row md:items-center'>
+        <div className='flex flex-col gap-4 flex-1'>
           <h2 className='font-semibold text-5xl'>Travel, book & experience!</h2>
-          <p>Accompanied by us, make the memories you have always wanted! Book your dream resorts, villas, hotels and more...</p>
-          <a href='#' className='text-white bg-primary rounded-full py-2 px-6 flex items-center w-fit gap-2 '>
+          <p className='md:text-lg text-gray-600 max-w-[400px]'>
+            Accompanied by us, make the memories you have always wanted! Book your dream resorts, villas, hotels and more...
+          </p>
+          <a href='#' className='text-white bg-primary md:mt-5 rounded-full py-2 px-6 flex items-center w-fit gap-2 '>
             <BiPhone className='text-2xl' />
-            <span className='font-bold mb-1 '>1-800-123-1234</span>
+            <span className='font-bold mb-1 py-1'>1-800-123-1234</span>
           </a>
         </div>
-        <figure>
+        <figure className='flex-1'>
           <img src={heroImg} alt='hero image' />
         </figure>
       </div>
