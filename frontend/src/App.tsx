@@ -1,13 +1,13 @@
 import { Nav } from '@/components';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
-import { Login, Register } from '@/pages';
+import { Home, Login, Register } from '@/pages';
 function App() {
   return (
     <>
       <Nav />
       <Routes>
-        <Route path='/' element={<div>Home</div>} />
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
