@@ -6,6 +6,12 @@ CREATE TABLE IF NOT EXISTS properties(
     description TEXT NOT NULL,
     location VARCHAR(100) NOT NULL,
     price_per_night INT NOT NULL,
+    wifi BOOLEAN NOT NULL,
+    parking BOOLEAN NOT NULL,
+    pets BOOLEAN NOT NULL,  
+    gym BOOLEAN NOT NULL,
+    pool BOOLEAN NOT NULL,
+    netflix BOOLEAN NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (property_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
