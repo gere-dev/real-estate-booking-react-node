@@ -1,7 +1,9 @@
 import db from '../config/db';
+import { bookingsSchema } from './bookings.schema';
+import { propertiesSchema } from './properties.schema';
 import { refreshTokenSchema } from './refreshToken.schema';
 import { userSchema } from './userSchema';
-const schemas = [userSchema, refreshTokenSchema];
+const schemas = [userSchema, refreshTokenSchema, propertiesSchema, bookingsSchema];
 
 const createSchemas = async () => {
   try {
