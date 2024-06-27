@@ -1,4 +1,4 @@
-const imagesSchema = `
+export const imagesSchema = `
 CREATE TABLE IF NOT EXISTS images (
     image_id INT NOT NULL AUTO_INCREMENT,
     entity_id INT NOT NULL,
