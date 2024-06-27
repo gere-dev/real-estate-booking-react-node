@@ -9,12 +9,14 @@
     "dev": "nodemon --exec ts-node -r  tsconfig-paths/register src/server.ts",
     "build": "tsc",
     "watch": "tsc -w",
-    "create-schemas": "ts-node -r tsconfig-paths/register src/database/models/createSchemas.ts"
+    "create-schemas": "ts-node -r tsconfig-paths/register src/database/models/createSchemas.ts",
+    "populate-data": "ts-node -r tsconfig-paths/register src/database/data.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.2",
     "bcryptjs": "^2.4.3",
