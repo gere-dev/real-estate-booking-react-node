@@ -15,7 +15,7 @@ async function generateUsers(numUsers: number) {
   }
 }
 
-async function generateProperties(numProperties: number) {
+async function generateProperties(numProperties: number, numUsers: number) {
   for (let i = 0; i < numProperties; i++) {
     const title = faker.word.words({ count: { min: 3, max: 10 } });
     const description = faker.lorem.paragraph();
@@ -27,7 +27,7 @@ async function generateProperties(numProperties: number) {
     const gym = faker.datatype.boolean();
     const pool = faker.datatype.boolean();
     const netflix = faker.datatype.boolean();
-    const user_id = faker.number.int({ min: 1, max: 10 });
+    const user_id = faker.number.int({ min: 1, max: numUsers });
     const sql = `
         INSERT INTO properties (user_id, title, description, location, price_per_night, wifi, parking, pets, gym, pool, netflix)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -36,37 +36,30 @@ async function generateProperties(numProperties: number) {
   }
 }
 
-async function generateImages(numImages: number) {
-  const entityTypes = ['property', 'user'];
+async function generateImages(numImages: number, numProperties: number) {
   for (let i = 0; i < numImages; i++) {
-    const entityType = entityTypes[faker.number.int({ min: 0, max: 1 })];
-    let entityId;
-
-    if (entityType === 'property') {
-      // Generate entity_id as property_id
-      entityId = faker.number.int({ min: 1, max: 20 }); // Replace with actual property_id range
-    } else if (entityType === 'user') {
-      // Generate entity_id as user_id
-      entityId = faker.number.int({ min: 1, max: 10 }); // Replace with actual user_id range
-    }
+    const property_id = faker.number.int({ min: 1, max: numProperties });
 
     const imageUrl = faker.image.url();
 
     const sql = `
-        INSERT INTO images (entity_id, entity_type, image_url)
-        VALUES (?, ?, ?)
+        INSERT INTO images (property_id, image_url)
+        VALUES (?, ?)
       `;
 
-    await db.query(sql, [entityId, entityType, imageUrl]);
+    await db.query(sql, [property_id, imageUrl]);
   }
 }
 
 async function main() {
+  const users = 3;
+  const properties = 12;
+  const images = 50;
   try {
     // Generate fake data
-    // await generateUsers(10); // Generate 10 users
-    // await generateProperties(20); // Generate 20 properties
-    await generateImages(50); // Generate 50 images
+    await generateUsers(users); // Generate 10 users
+    await generateProperties(properties, users); // Generate 20 properties
+    await generateImages(images, properties); // Generate 50 images
     console.log('Data generation completed successfully.');
   } catch (error) {
     console.error('Error generating data:', error);
