@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
 import db from './config/db';
+import path from 'path';
+import fs from 'fs';
 
 async function generateUsers(numUsers: number) {
   for (let i = 0; i < numUsers; i++) {
@@ -37,17 +39,26 @@ async function generateProperties(numProperties: number, numUsers: number) {
 }
 
 async function generateImages(numImages: number, numProperties: number) {
-  for (let i = 0; i < numImages; i++) {
-    const property_id = faker.number.int({ min: 1, max: numProperties });
+  const imageFolder = path.join(__dirname, '../uploads');
+  const imageFiles = fs.readdirSync(imageFolder);
 
-    const imageUrl = faker.image.url();
+  for (let property_id = 1; property_id < numProperties; property_id++) {
+    for (let j = 0; j < 4; j++) {
+      const imageUrl = imageFiles[property_id];
 
-    const sql = `
-        INSERT INTO images (property_id, image_url)
-        VALUES (?, ?)
-      `;
+      const sql = `
+          INSERT INTO images (property_id, image_url)
+          VALUES (?, ?)
+        `;
+      try {
+        await db.query(sql, [property_id, imageUrl]);
+      } catch (error: any) {
+        console.error(`Error inserting image: ${error.message}`);
+        console.error(`SQL Query: ${sql}`);
+      }
+    }
 
-    await db.query(sql, [property_id, imageUrl]);
+    // const randomImageIndex = faker.number.int({ min: 0, max: imageFiles.length - 1 });
   }
 }
 
@@ -57,9 +68,9 @@ async function main() {
   const images = 50;
   try {
     // Generate fake data
-    await generateUsers(users); // Generate 10 users
-    await generateProperties(properties, users); // Generate 20 properties
-    await generateImages(images, properties); // Generate 50 images
+    await generateUsers(users);
+    await generateProperties(properties, users);
+    await generateImages(images, properties);
     console.log('Data generation completed successfully.');
   } catch (error) {
     console.error('Error generating data:', error);
