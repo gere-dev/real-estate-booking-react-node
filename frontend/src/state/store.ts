@@ -1,8 +1,8 @@
-import propertySlice from './property/propertySlice';
+import propertySlice from './properties/propertiesSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
-  property: propertySlice,
+  properties: propertySlice,
 });
 
 export const store = configureStore({

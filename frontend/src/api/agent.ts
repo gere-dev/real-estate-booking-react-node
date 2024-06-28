@@ -1,7 +1,7 @@
 import { Property } from '@/types';
 import axios, { AxiosResponse } from 'axios';
 
-const apiUrl = process.env.NODE === 'production' ? process.env.REACT_APP_API_URL : 'http://localhost:5000/api';
+const apiUrl = import.meta.env.NODE === 'production' ? import.meta.env.VITE_API_URL : 'http://localhost:5000/api';
 
 axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;

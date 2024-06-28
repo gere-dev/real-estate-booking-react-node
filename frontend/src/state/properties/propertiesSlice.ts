@@ -3,10 +3,10 @@ import { Property } from '@/types';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchProperties = createAsyncThunk<Property[], void, { rejectValue: string }>(
-  'property/fetchProperties',
+  'properties/fetchProperties',
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await agent.Properties.list();
+      const data = await agent.Properties.list();
       return data;
     } catch (error) {
       return rejectWithValue((error as Error).message);

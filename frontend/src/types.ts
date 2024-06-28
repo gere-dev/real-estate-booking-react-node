@@ -8,7 +8,7 @@ export interface Property {
   property_id: number;
   title: string;
   description: string;
-  price: number;
+  price_per_night: number;
   image: string;
   location: string;
   user_id: number;
