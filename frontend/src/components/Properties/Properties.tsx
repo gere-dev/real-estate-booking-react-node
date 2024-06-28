@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { fetchProperties } from '@/state/properties/propertiesSlice';
 import { selectProperties } from '@/state/properties/selectors';
-import { apiUrl } from '@/api/agent';
-import { Link } from 'react-router-dom';
+import { PropertiesList } from '@/components';
 
 export const Properties = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +12,10 @@ export const Properties = () => {
   useEffect(() => {
     dispatch(fetchProperties());
   }, [dispatch]);
-  console.log(apiUrl);
+
+  if (!properties) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className='max-width-container my-8'>
@@ -22,19 +24,9 @@ export const Properties = () => {
         <p>Plenty of locations to choose from that will make you feel at home!</p>
       </div>
 
-      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8'>
+      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 mt-8'>
         {properties.map((property) => (
-          <li key={property.property_id} className='flex flex-col gap-4'>
-            <Link className='w-full' to={`property/${property.property_id}`}>
-              <img
-                className='rounded aspect-square object-cover w-full h-full'
-                src={`${apiUrl}/uploads/${property?.images[0]}`}
-                alt='property image'
-              />
-            </Link>
-            <h3 className='font-semibold text-xl'>{property.title}</h3>
-            <p>{property.description}</p>
-          </li>
+          <PropertiesList key={property.property_id} property={property} />
         ))}
       </ul>
     </section>
