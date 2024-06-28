@@ -1,22 +1,16 @@
-import React, { useEffect } from 'react';
-import { FilterForm } from '@/components';
+import React from 'react';
+import { FilterForm, Properties } from '@/components';
 import { HeroSection } from './HeroSection';
-import { useAppDispatch, useAppSelector } from '@/state/hook';
-import { fetchProperties } from '@/state/properties/propertiesSlice';
 
 export const Home = () => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchProperties());
-  }, [dispatch]);
-
-  const properties = useAppSelector((state) => state.properties.properties);
-  console.log(properties);
   return (
-    <Container>
-      <FilterForm />
-      <HeroSection />
-    </Container>
+    <>
+      <Container>
+        <FilterForm />
+        <HeroSection />
+      </Container>
+      <Properties />
+    </>
   );
 };
 

@@ -9,7 +9,7 @@ export interface Property {
   title: string;
   description: string;
   price_per_night: number;
-  image: string;
+  images: [string];
   location: string;
   user_id: number;
   wifi: boolean;

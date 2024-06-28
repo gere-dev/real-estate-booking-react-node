@@ -34,11 +34,12 @@ export const getProperties = async (req: Request, res: Response) => {
           images: [row?.image_url],
         };
       } else {
-        properties[propertyId].images.push(row?.image_url);
+        properties[propertyId]?.images?.push(row?.image_url);
       }
     }
 
     const response = Object.values(properties);
+    console.log(rows);
     res.json(response);
   } catch (error) {
     console.error(error);

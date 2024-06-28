@@ -43,7 +43,7 @@ async function generateImages(numImages: number, numProperties: number) {
   const imageFiles = fs.readdirSync(imageFolder);
 
   let imageIndex = 0;
-  for (let property_id = 1; property_id < numProperties; property_id++) {
+  for (let property_id = 1; property_id <= numProperties; property_id++) {
     for (let j = 0; j < 4; j++) {
       const imageUrl = imageFiles[imageIndex];
 
@@ -53,7 +53,7 @@ async function generateImages(numImages: number, numProperties: number) {
         `;
       try {
         await db.query(sql, [property_id, imageUrl]);
-        imageIndex += 1;
+        imageIndex++;
       } catch (error: any) {
         console.error(`Error inserting image: ${error.message}`);
         console.error(`SQL Query: ${sql}`);
@@ -68,8 +68,8 @@ async function main() {
   const images = 50;
   try {
     // Generate fake data
-    await generateUsers(users);
-    await generateProperties(properties, users);
+    // await generateUsers(users);
+    // await generateProperties(properties, users);
     await generateImages(images, properties);
     console.log('Data generation completed successfully.');
   } catch (error) {
