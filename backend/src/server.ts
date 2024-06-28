@@ -9,12 +9,26 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Controller-Allow-Credentials', 'true');
+  next();
+});
+
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use('api/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(express.static('public'));
 app.use(express.static('dist'));
-app.use('api/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api', routes);
 
