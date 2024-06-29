@@ -5,6 +5,11 @@ interface Props {
   images?: [string];
 }
 export const PropertyImages: React.FC<Props> = ({ images }) => {
+  const [isSlideOpen, setIsSlideOpen] = React.useState(false);
+
+  const closeSlide = () => {
+    setIsSlideOpen(false);
+  };
   const determineImageClasses = (index: number) => {
     const baseClasses = 'flex overflow-hidden';
     if (index === 0) {
@@ -20,10 +25,15 @@ export const PropertyImages: React.FC<Props> = ({ images }) => {
     <ul className='grid gap-2 sm:grid-cols-[2fr_1fr] mt-2 '>
       {images?.slice(0, 3).map((image, index) => (
         <li key={index} className={determineImageClasses(index)}>
-          <img className={`hover:cursor-pointer aspect-square object-cover`} src={`${apiUrl}/uploads/${image}`} alt='property image' />
+          <img
+            onClick={() => setIsSlideOpen(true)}
+            className={`hover:cursor-pointer aspect-square object-cover`}
+            src={`${apiUrl}/uploads/${image}`}
+            alt='property image'
+          />
         </li>
       ))}
-      <Slides />
+      <Slides images={images} closeSlide={closeSlide} isSlideOpen={isSlideOpen} />
     </ul>
   );
 };

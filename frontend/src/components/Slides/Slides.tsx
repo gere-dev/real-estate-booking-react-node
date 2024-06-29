@@ -1,27 +1,83 @@
-import { ComponentProps } from 'react';
-import { IconType } from 'react-icons';
+import React, { ComponentProps, useEffect, useState } from 'react';
+import { apiUrl } from '@/api/agent';
 import { BiSolidLeftArrowAlt, BiSolidRightArrowAlt } from 'react-icons/bi';
 import { CgClose } from 'react-icons/cg';
+import { IconType } from 'react-icons';
 
 interface Props {
-  images?: [string];
+  images?: string[];
+  closeSlide: () => void;
+  isSlideOpen: boolean;
 }
-export const Slides: React.FC<Props> = ({ images }) => {
-  if (!images) return <></>;
+
+export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => {
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') {
+        nextSlide();
+      } else if (event.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (event.key === 'Escape') {
+        closeSlide();
+      }
+    };
+
+    // Add event listener when component mounts
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [currentImage]);
+
+  useEffect(() => {
+    if (isSlideOpen) {
+      window.scrollTo(0, 0);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [isSlideOpen]);
+
+  if (!images || images.length === 0) return;
+  const nextSlide = () => {
+    if (currentImage === images.length - 1) {
+      setCurrentImage(0);
+    } else {
+      setCurrentImage(currentImage + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (currentImage === 0) {
+      setCurrentImage(images.length - 1);
+    } else {
+      setCurrentImage(currentImage - 1);
+    }
+  };
+
   return (
-    <section className='absolute top-0 left-0 w-full h-full bg-white flex justify-center items-center'>
-      <figure className='relative'>
-        <Button customClass='absolute top-5 right-5' Icon={CgClose} />
-        <img
-          src='https://images.unsplash.com/photo-1501183638710-841dd1904471?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-          alt='slide'
-        />
-        <div className='absolute px-5 top-1/2 -translate-y-1/2  flex w-full justify-between text-primary '>
-          <Button Icon={BiSolidLeftArrowAlt} />
-          <Button Icon={BiSolidRightArrowAlt} />
-        </div>
-      </figure>
-    </section>
+    <>
+      {isSlideOpen && (
+        <section className='absolute top-1/2 -translate-y-1/2 left-0 w-full h-screen my-auto bg-white flex justify-center items-center '>
+          <figure className='relative'>
+            <Button customClass='absolute top-5 right-5' Icon={CgClose} onClick={closeSlide} />
+            <img
+              className='p-4 rounded-lg aspect-[16/12] object-cover w-full max-h-[700px] '
+              src={`${apiUrl}/uploads/${images[currentImage]}`}
+              alt='slide'
+            />
+            <div className='absolute px-5 top-1/2 -translate-y-1/2 flex w-full justify-between text-primary'>
+              <Button onClick={prevSlide} Icon={BiSolidLeftArrowAlt} />
+              <Button onClick={nextSlide} Icon={BiSolidRightArrowAlt} />
+            </div>
+          </figure>
+        </section>
+      )}
+    </>
   );
 };
 
@@ -31,7 +87,7 @@ interface ButtonProps extends ComponentProps<'button'> {
 }
 const Button = ({ Icon, customClass, ...props }: ButtonProps) => {
   return (
-    <button className={`bg-primary rounded-full text-white text-2xl p-1 ${customClass}`}>
+    <button {...props} className={`bg-primary rounded-full text-white text-2xl p-1 ${customClass}`}>
       <Icon />
     </button>
   );
