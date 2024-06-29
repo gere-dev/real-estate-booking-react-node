@@ -19,9 +19,12 @@ async function generateUsers(numUsers: number) {
 
 async function generateProperties(numProperties: number, numUsers: number) {
   for (let i = 0; i < numProperties; i++) {
-    const title = faker.word.words({ count: { min: 3, max: 10 } });
+    const title = faker.word.words({ count: { min: 2, max: 3 } });
     const description = faker.lorem.paragraph();
-    const location = faker.location.secondaryAddress();
+    const address = faker.location.streetAddress();
+    const bed = faker.number.int({ min: 1, max: 4 });
+    const city = faker.location.city();
+    const state = faker.location.state();
     const price = faker.commerce.price();
     const wifi = faker.datatype.boolean();
     const parking = faker.datatype.boolean();
@@ -31,10 +34,10 @@ async function generateProperties(numProperties: number, numUsers: number) {
     const netflix = faker.datatype.boolean();
     const user_id = faker.number.int({ min: 1, max: numUsers });
     const sql = `
-        INSERT INTO properties (user_id, title, description, location, price_per_night, wifi, parking, pets, gym, pool, netflix)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO properties (user_id, title, description, bed, address, city, state, price_per_night, wifi, parking, pets, gym, pool, netflix)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
-    await db.query(sql, [user_id, title, description, location, price, wifi, parking, pets, gym, pool, netflix]);
+    await db.query(sql, [user_id, title, description, bed, address, city, state, price, wifi, parking, pets, gym, pool, netflix]);
   }
 }
 
@@ -68,8 +71,8 @@ async function main() {
   const images = 50;
   try {
     // Generate fake data
-    // await generateUsers(users);
-    // await generateProperties(properties, users);
+    await generateUsers(users);
+    await generateProperties(properties, users);
     await generateImages(images, properties);
     console.log('Data generation completed successfully.');
   } catch (error) {
