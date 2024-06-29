@@ -2,7 +2,10 @@ export interface Property {
   property_id: number;
   title: string;
   description: string;
-  location: string;
+  bed: number;
+  address: string;
+  city: string;
+  state: string;
   price_per_night: number;
   wifi: boolean;
   parking: boolean;

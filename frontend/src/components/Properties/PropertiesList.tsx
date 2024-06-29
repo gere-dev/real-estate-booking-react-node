@@ -20,15 +20,15 @@ export const PropertiesList: FC<Props> = ({ property }) => {
       </Link>
 
       <div>
-        <h3 className='font-semibold text-xl capitalize leading-1'>{property.title}</h3>
-        <div className='text-gray-600'>
-          <div className='flex gap-2 items-center'>
-            <MdOutlineLocationOn className='inline' />
-            <span className='text-gray-600 text-sm'>{property.location}</span>{' '}
+        <h3 className='font-semibold text-xl capitalize leading-1 mb-1'>{property.title}</h3>
+        <div className='text-gray-500 flex flex-col gap-0'>
+          <div className='flex gap-2 items-end'>
+            <MdOutlineLocationOn className='inline text-lg' />
+            <span className='text-gray-600 text-sm'>{`${property.city}, ${property.state}`}</span>{' '}
           </div>
-          <div className='flex gap-2 items-center'>
-            <MdOutlineBed className='inline' />
-            <span className='text-gray-600 text-sm'>{property.location}</span>{' '}
+          <div className='flex gap-2 items-end'>
+            <MdOutlineBed className='inline text-lg' />
+            <span className='text-gray-600 text-sm'>{property.bed}</span>
           </div>
           <div> </div>
         </div>
