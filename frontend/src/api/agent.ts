@@ -23,7 +23,7 @@ const Properties = {
 };
 
 const Property = {
-  get: (propertyId: number) => requests.get(`/properties/${propertyId}`),
+  get: (id: number) => requests.get(`/property/${id}`),
 };
 
 const agent = {
