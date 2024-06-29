@@ -5,3 +5,4 @@ export * from './Properties';
 export * from './Loading';
 export * from './Property';
 export * from './Slides';
+export * from './Account';

@@ -1,9 +1,10 @@
+import React from 'react';
 import { AccountContainer } from '@/components';
 
-export const AddNewListing = () => {
+export const Listings = () => {
   return (
     <AccountContainer>
-      <div>add new listing</div>
+      <div>listing</div>
     </AccountContainer>
   );
 };
