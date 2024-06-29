@@ -1,6 +1,6 @@
 import React from 'react';
 import { apiUrl } from '@/api/agent';
-
+import { Slides } from '@/components';
 interface Props {
   images?: [string];
 }
@@ -23,6 +23,7 @@ export const PropertyImages: React.FC<Props> = ({ images }) => {
           <img className={`hover:cursor-pointer aspect-square object-cover`} src={`${apiUrl}/uploads/${image}`} alt='property image' />
         </li>
       ))}
+      <Slides />
     </ul>
   );
 };
