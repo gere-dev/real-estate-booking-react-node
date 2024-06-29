@@ -1,10 +1,10 @@
-import React from 'react';
 import { AccountContainer } from '@/components';
+import { ListingsContainer } from '@/pages';
 
 export const Listings = () => {
   return (
     <AccountContainer>
-      <div>listing</div>
+      <ListingsContainer />
     </AccountContainer>
   );
 };
