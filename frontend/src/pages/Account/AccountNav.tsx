@@ -10,7 +10,7 @@ export const AccountNav = () => {
 
   return (
     <section>
-      <ul className='flex gap-4'>
+      <ul className='flex gap-4 md:flex-col md:gap-8'>
         {ACCOUNT_NAV.map((nav) => {
           return (
             <li key={nav.title}>
