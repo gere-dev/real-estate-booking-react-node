@@ -14,6 +14,7 @@ export const Property = () => {
 
   useEffect(() => {
     dispatch(fetchProperty(Number(id)));
+    window.scrollTo(0, 0);
   }, [id, dispatch]);
 
   return (

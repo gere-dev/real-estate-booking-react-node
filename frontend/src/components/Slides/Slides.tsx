@@ -12,6 +12,25 @@ interface Props {
 
 export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => {
   const [currentImage, setCurrentImage] = useState(0);
+  const nextSlide = () => {
+    if (!images || images.length === 0) return;
+
+    if (currentImage === images.length - 1) {
+      setCurrentImage(0);
+    } else {
+      setCurrentImage(currentImage + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (!images || images.length === 0) return;
+
+    if (currentImage === 0) {
+      setCurrentImage(images.length - 1);
+    } else {
+      setCurrentImage(currentImage - 1);
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -42,22 +61,7 @@ export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => 
     }
   }, [isSlideOpen]);
 
-  if (!images || images.length === 0) return;
-  const nextSlide = () => {
-    if (currentImage === images.length - 1) {
-      setCurrentImage(0);
-    } else {
-      setCurrentImage(currentImage + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentImage === 0) {
-      setCurrentImage(images.length - 1);
-    } else {
-      setCurrentImage(currentImage - 1);
-    }
-  };
+  if (!images || images.length === 0) return <></>;
 
   return (
     <>
