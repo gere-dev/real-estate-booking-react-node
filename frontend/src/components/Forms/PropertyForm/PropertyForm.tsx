@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from './Input';
 import { TextArea } from './TextArea';
-import { UploadPropertyImages } from '@/components';
+import { RectangleButton, UploadPropertyImages } from '@/components';
 import { CheckBoxContainer } from './PropertyCheckBoxContainer';
 
 type FormType = {
@@ -60,7 +60,6 @@ export const PropertyForm = () => {
     }
   };
 
-  console.log(formData);
   return (
     <form className='flex-1 flex gap-4 flex-col' action=''>
       <Input
@@ -89,6 +88,11 @@ export const PropertyForm = () => {
         description='Extra information about the property'
       />
       <CheckBoxContainer handleChange={handleChange} />
+
+      <div className='flex flex-col md:flex-row gap-4'>
+        <RectangleButton type='submit' label='Submit' />
+        <RectangleButton className='bg-white border border-gray-300 text-gray-500' label='Cancel' />
+      </div>
     </form>
   );
 };
