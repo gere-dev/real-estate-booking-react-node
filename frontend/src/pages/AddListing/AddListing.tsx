@@ -1,6 +1,6 @@
 import { AccountContainer } from '@/components';
 
-export const AddNewListing = () => {
+export const AddListing = () => {
   return (
     <AccountContainer>
       <div>add new listing</div>

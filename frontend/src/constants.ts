@@ -11,6 +11,6 @@ export const ACCOUNT_NAV = [
   },
   {
     title: 'Add Listing',
-    path: '/account/add-new-listing',
+    path: '/account/add-listing',
   },
 ];
