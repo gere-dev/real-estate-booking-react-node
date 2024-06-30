@@ -6,7 +6,7 @@ import { ListingsList } from '@/pages';
 export const ListingsContainer = () => {
   const properties = useAppSelector(selectProperties);
   return (
-    <ul className='flex flex-1 flex-col gap-4 pt-8 md:pl-8'>
+    <ul className='flex flex-1 flex-col gap-4 '>
       {properties.map((property) => {
         return <ListingsList property={property} />;
       })}

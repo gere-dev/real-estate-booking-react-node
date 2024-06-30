@@ -10,7 +10,7 @@ export const ACCOUNT_NAV = [
     path: '/account/bookings',
   },
   {
-    title: 'Add New Listing',
+    title: 'Add Listing',
     path: '/account/add-new-listing',
   },
 ];

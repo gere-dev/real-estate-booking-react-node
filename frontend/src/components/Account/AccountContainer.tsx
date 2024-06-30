@@ -6,7 +6,7 @@ interface Props {
 }
 export const AccountContainer: FC<Props> = ({ children }: Props) => {
   return (
-    <section className='max-width-container py-8 flex flex-col md:flex-row '>
+    <section className='max-width-container py-8  flex flex-col md:flex-row '>
       <AccountNav />
       {children}
     </section>
