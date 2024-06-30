@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Input } from './Input';
 import { TextArea } from './TextArea';
 import { UploadPropertyImages } from '@/components';
+import { CheckBoxContainer } from './PropertyCheckBoxContainer';
 
 type FormType = {
   title: string;
@@ -11,6 +12,12 @@ type FormType = {
   province: string;
   images: File[];
   extraInfo: string;
+  wifi: boolean;
+  parking: boolean;
+  pets: boolean;
+  gym: boolean;
+  pool: boolean;
+  netflix: boolean;
 };
 
 const initialFormData: FormType = {
@@ -21,6 +28,12 @@ const initialFormData: FormType = {
   province: '',
   images: [],
   extraInfo: '',
+  wifi: false,
+  parking: false,
+  pets: false,
+  gym: false,
+  pool: false,
+  netflix: false,
 };
 
 export const PropertyForm = () => {
@@ -39,6 +52,9 @@ export const PropertyForm = () => {
       if (files) {
         setFormData((prev) => ({ ...prev, images: [...prev.images, ...Array.from(files)] }));
       }
+    } else if (type === 'checkbox') {
+      const checked = (event.target as HTMLInputElement).checked;
+      setFormData((prev) => ({ ...prev, [name]: checked }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -72,6 +88,7 @@ export const PropertyForm = () => {
         label='Extra info'
         description='Extra information about the property'
       />
+      <CheckBoxContainer handleChange={handleChange} />
     </form>
   );
 };

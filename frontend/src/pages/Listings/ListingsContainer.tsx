@@ -8,7 +8,7 @@ export const ListingsContainer = () => {
   return (
     <ul className='flex flex-1 flex-col gap-4 '>
       {properties.map((property) => {
-        return <ListingsList property={property} />;
+        return <ListingsList key={property.property_id} property={property} />;
       })}
     </ul>
   );
