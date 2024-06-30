@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { Nav, Property } from '@/components';
-import { Home, Login, Register, Bookings, AddListing, Listings } from '@/pages';
+import { Home, Login, Register, Bookings, AddListing, Listings, NotFound } from '@/pages';
 import './App.css';
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         <Route path='/account/add-listing' element={<AddListing />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   );
