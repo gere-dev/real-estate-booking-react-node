@@ -13,7 +13,7 @@ export const TextArea = ({ label, description, ...props }: TextareaProps) => {
         </label>
         <small className='text-gray-400'>{description}</small>
       </div>
-      <textarea {...props} className='border px-2 py-2 rounded outline-none w-full resize-none h-28' name='' id=''></textarea>
+      <textarea {...props} className='border px-2 py-2 rounded outline-none w-full resize-none h-28'></textarea>
     </div>
   );
 };
