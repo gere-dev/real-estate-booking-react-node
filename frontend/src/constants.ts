@@ -1,8 +1,6 @@
 import { BiDumbbell } from 'react-icons/bi';
 import { MdDriveEta, MdPets, MdPool, MdTv, MdWifi, MdWorkOutline } from 'react-icons/md';
 
-export const NAV_HEIGHT = '58.6px';
-
 export const ACCOUNT_NAV = [
   {
     title: 'Listings',
