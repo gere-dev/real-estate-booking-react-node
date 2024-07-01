@@ -1,4 +1,4 @@
-export enum PathEndPoints {
+export enum EndPointPaths {
   LOGIN = '/login',
   REGISTER = '/register',
   REFRESH_TOKEN = '/refresh-token',

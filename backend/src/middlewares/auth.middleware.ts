@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import validator from 'email-validator';
-import { errorMessages } from '@/constants';
+import { errorMessages, EndPointPaths } from '@/constants';
 export const validateCredentials = (req: Request, res: Response, next: NextFunction) => {
   const MIN_PASSWORD_LENGTH = 6;
 
@@ -16,7 +16,7 @@ export const validateCredentials = (req: Request, res: Response, next: NextFunct
   }
 
   // for registration end point only
-  if (req.path === '/register') {
+  if (req.path === EndPointPaths.REGISTER) {
     if (!name) {
       return res.status(400).json({ message: errorMessages.invalidName });
     }
