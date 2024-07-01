@@ -9,3 +9,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+:root {
+  --nav-height: 58.6px;
+}

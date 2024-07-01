@@ -5,8 +5,9 @@ interface Props {
   children: React.ReactNode;
 }
 
+const height = `calc(100vh-${NAV_HEIGHT})`;
 export const AuthContainer: React.FC<Props> = ({ children }) => {
-  return <section className={`max-width-container flex flex-col justify-center h-[calc(100vh-${NAV_HEIGHT})]`}> {children}</section>;
+  return <section className={`max-width-container flex flex-col justify-center h-dynamic`}> {children}</section>;
 };
 
 export default AuthContainer;
