@@ -1,4 +1,4 @@
-import { Property as PropertyType } from '@/types';
+import { Login, Register, Property as PropertyType } from '@/types';
 import axios, { AxiosResponse } from 'axios';
 
 export const apiUrl = import.meta.env.NODE === 'production' ? import.meta.env.VITE_API_URL : 'http://localhost:5000/api';
@@ -26,9 +26,15 @@ const Property = {
   get: (id: number) => requests.get(`/property/${id}`),
 };
 
+const Auth = {
+  register: ({ name, email, password }: Register) => requests.post(`/auth/register`, { name, email, password }),
+  login: ({ email, password }: Login) => requests.post(`/auth/login`, { email, password }),
+};
+
 const agent = {
   Properties,
   Property,
+  Auth,
 };
 
 export default agent;
