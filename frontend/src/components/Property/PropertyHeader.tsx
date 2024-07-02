@@ -1,4 +1,3 @@
-import { Property } from '@/types';
 import React from 'react';
 
 interface Props {

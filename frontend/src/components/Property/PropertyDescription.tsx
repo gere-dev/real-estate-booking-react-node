@@ -1,5 +1,4 @@
 import { Property } from '@/types';
-import React from 'react';
 
 export const PropertyDescription = ({ property }: { property: Property }) => {
   return (
