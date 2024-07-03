@@ -48,3 +48,21 @@ export const PROPERTY_CHECKBOX_OPTIONS = [
     name: 'gym',
   },
 ];
+
+export const LoginFields: {
+  email: string;
+  password: string;
+} = {
+  email: 'email',
+  password: 'password',
+};
+
+export const RegisterFields: {
+  name: string;
+  email: string;
+  password: string;
+} = {
+  name: 'name',
+  email: 'email',
+  password: 'password',
+};
