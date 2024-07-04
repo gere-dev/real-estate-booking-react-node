@@ -41,6 +41,15 @@ export const login = createAsyncThunk<{ user: User; token: string }, Login, { re
   }
 );
 
+export const logout = createAsyncThunk<void, { RejectValue: string }>('auth/logout', async (_, { rejectWithValue }) => {
+  try {
+    await agent.Auth.logout();
+  } catch (error) {
+    console.log(`Error at logout controller: ${error}`);
+    return rejectWithValue((error as Error).message);
+  }
+});
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -74,6 +83,11 @@ export const authSlice = createSlice({
         if (action.payload) {
           state.error = action.payload;
         }
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.status = 'idle';
+        state.user = null;
+        state.token = null;
       });
   },
 });

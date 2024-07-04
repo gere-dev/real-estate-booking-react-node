@@ -29,6 +29,7 @@ const Property = {
 const Auth = {
   register: ({ name, email, password }: Register) => requests.post(`/auth/register`, { name, email, password }),
   login: ({ email, password }: Login) => requests.post(`/auth/login`, { email, password }),
+  logout: () => requests.post(`/auth/logout`, {}),
 };
 
 const agent = {
