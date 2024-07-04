@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/property/:id' element={<Property />} />
-        <Route path='/account' element={<Listings />} />
+        <Route path='/account/:userId' element={<Listings />} />
         <Route path='/account/bookings' element={<Bookings />} />
         <Route path='/account/add-listing' element={<AddListing />} />
         <Route path='/login' element={<Login />} />

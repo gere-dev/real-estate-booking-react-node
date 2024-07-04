@@ -4,7 +4,7 @@ export interface Property {
   description: string;
   bed: number;
   price_per_night: number;
-  images: [string];
+  images: [string] | File[];
   address: string;
   city: string;
   state: string;
