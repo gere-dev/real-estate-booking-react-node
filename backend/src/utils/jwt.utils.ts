@@ -24,9 +24,9 @@ export const generateRefreshToken = (id: number): string => {
   return token;
 };
 
-export const verifyToken = async (token: string): Promise<any> => {
+export const verifyToken = (token: string) => {
   try {
-    const decoded = await jwt.verify(token.replace('Bearer ', ''), SECRET_KEY as string);
+    const decoded = jwt.verify(token.replace('Bearer ', ''), SECRET_KEY as string);
     return decoded;
   } catch (error) {
     throw new Error('token verification failed');

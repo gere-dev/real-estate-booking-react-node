@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 export interface Property {
   property_id: number;
   title: string;
@@ -31,4 +33,8 @@ export interface User {
   name: string;
   email: string;
   password: string;
+}
+
+export interface CustomRequest extends Request {
+  userId?: number;
 }

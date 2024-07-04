@@ -8,4 +8,5 @@ export const errorMessages = {
   invalidToken: 'Invalid token',
   userNotFound: 'User not found',
   userAlreadyExists: 'User already exists',
+  unauthorized: 'Unauthorized access, header is required',
 };
