@@ -28,6 +28,14 @@ const Property = {
   get: (id: number) => requests.get(`/property/${id}`),
 };
 
+const Listings = {
+  list: () => requests.get('/listings'),
+  create: (listing: PropertyType) => requests.post(`/listings/`, listing),
+  update: (listing: PropertyType) => requests.put(`/listings/${listing.property_id}`, listing),
+  delete: (propertyId: number) => requests.delete(`/listings/${propertyId}`),
+  getById: (id: number) => requests.get(`/listings/${id}`),
+};
+
 const Auth = {
   register: ({ name, email, password }: Register) => requests.post(`/auth/register`, { name, email, password }),
   login: ({ email, password }: Login) => requests.post(`/auth/login`, { email, password }),
@@ -39,6 +47,7 @@ const agent = {
   Properties,
   Property,
   Auth,
+  Listings,
 };
 
 axios.interceptors.response.use(
