@@ -1,3 +1,4 @@
+import { UserRole } from '@/constants/user.role';
 import db from '@/database/config/db';
 import { setCookies } from '@/utils/cookies.utils';
 import { generateAccessToken, generateRefreshToken, verifyToken } from '@/utils/jwt.utils';
@@ -26,9 +27,10 @@ export const register = async (req: Request, res: Response) => {
     const [savedUser] = await db.query<ResultSetHeader>('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', values);
 
     // generate access token and refresh token
+    const defaultRole: UserRole = UserRole.USER;
     const userId = savedUser.insertId;
-    const accessToken = generateAccessToken(userId);
-    const refreshToken = generateRefreshToken(userId);
+    const accessToken = generateAccessToken(userId, defaultRole);
+    const refreshToken = generateRefreshToken(userId, defaultRole);
 
     // save refresh token in database
     await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [userId, refreshToken]);
@@ -65,8 +67,8 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const accessToken = generateAccessToken(user.user_id);
-    const refreshToken = generateRefreshToken(user.user_id);
+    const accessToken = generateAccessToken(user.user_id, user.role);
+    const refreshToken = generateRefreshToken(user.user_id, user.role);
     await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user.user_id, refreshToken]);
 
     setCookies(res, accessToken, refreshToken);
@@ -99,7 +101,7 @@ export const refreshToken = async (req: Request, res: Response) => {
       // check if user userExists
       return res.status(401).json({ message: 'Unauthorized' });
     }
-    const accessToken = generateAccessToken(user.user_id);
+    const accessToken = generateAccessToken(user.user_id, user.role);
 
     // res.cookie('access_token', accessToken, { httpOnly: true, maxAge: 60 * 60 * 24 * 1000, secure: true, sameSite: 'none' });
     res.status(200).json({ accessToken });

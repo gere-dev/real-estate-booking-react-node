@@ -3,6 +3,7 @@ import validator from 'email-validator';
 import { errorMessages, EndPointPaths } from '@/constants';
 import { verifyToken } from '@/utils/jwt.utils';
 import { CustomRequest } from '@/types';
+import { UserRole } from '@/constants/user.role';
 export const validateCredentials = (req: Request, res: Response, next: NextFunction) => {
   const MIN_PASSWORD_LENGTH = 6;
 
@@ -37,12 +38,13 @@ export const validateUser = (req: CustomRequest, res: Response, next: NextFuncti
     return res.status(401).json({ message: errorMessages.unauthorized });
   }
   try {
-    const decoded = verifyToken(token) as { id: number };
+    const decoded = verifyToken(token) as { id: number; role: UserRole };
     if (!decoded) {
       return res.status(401).json({ message: errorMessages.invalidToken });
     }
 
-    req.userId = decoded.id;
+    req.user.id = decoded.id;
+    req.user.role = decoded.role;
   } catch (error) {
     console.log(error, 'auth error');
     return res.status(401).json({ message: errorMessages.invalidToken });

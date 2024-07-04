@@ -6,21 +6,21 @@ dotenv.config();
 
 const SECRET_KEY: string = process.env.JWT_SECRET as string;
 
-const generateToken = (id: number, secret_key: string, lifeTime: number) => {
-  const token = jwt.sign({ id }, secret_key as string, {
+const generateToken = (id: number, role: string = 'user', secret_key: string, lifeTime: number) => {
+  const token = jwt.sign({ id, role }, secret_key as string, {
     expiresIn: lifeTime,
   });
 
   return token;
 };
 
-export const generateAccessToken = (id: number): string => {
-  const token = generateToken(id, SECRET_KEY, ACCESS_TOKEN_MAX_AGE);
+export const generateAccessToken = (id: number, role: string): string => {
+  const token = generateToken(id, role, SECRET_KEY, ACCESS_TOKEN_MAX_AGE);
   return `Bearer ${token}`;
 };
 
-export const generateRefreshToken = (id: number): string => {
-  const token = generateToken(id, SECRET_KEY, REFRESH_TOKEN_MAX_AGE);
+export const generateRefreshToken = (id: number, role: string): string => {
+  const token = generateToken(id, role, SECRET_KEY, REFRESH_TOKEN_MAX_AGE);
   return token;
 };
 

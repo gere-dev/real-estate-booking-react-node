@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { UserRole } from './constants/user.role';
 
 export interface Property {
   property_id: number;
@@ -36,5 +37,8 @@ export interface User {
 }
 
 export interface CustomRequest extends Request {
-  userId?: number;
+  user: {
+    id?: number;
+    role?: UserRole;
+  };
 }

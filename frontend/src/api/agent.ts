@@ -37,8 +37,8 @@ const Listings = {
 };
 
 const Auth = {
-  register: ({ name, email, password }: Register) => requests.post(`/auth/register`, { name, email, password }),
-  login: ({ email, password }: Login) => requests.post(`/auth/login`, { email, password }),
+  register: (data: Register) => requests.post(`/auth/register`, data),
+  login: (data: Login) => requests.post(`/auth/login`, data),
   logout: () => requests.post(`/auth/logout`, {}),
   refresh: () => requests.post(`/auth/refresh`, {}),
 };
