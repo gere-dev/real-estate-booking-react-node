@@ -10,8 +10,8 @@ export const register = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
 
     // check if user already user
-    const [userData] = await db.query<any>('SELECT * FROM users WHERE email = ?', [email]);
-    const userExists = userData[0]; // get the first element of the array
+    const [result] = await db.query<any>('SELECT * FROM users WHERE email = ?', [email]);
+    const userExists = result[0]; // get the first element of the array
 
     if (userExists) {
       return res.status(401).json({ message: 'User already exists' });
@@ -23,10 +23,10 @@ export const register = async (req: Request, res: Response) => {
 
     // insert into database
     const values = [name, email, hashedPassword];
-    const [result] = await db.query<ResultSetHeader>('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', values);
+    const [savedUser] = await db.query<ResultSetHeader>('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', values);
 
     // generate access token and refresh token
-    const userId = result.insertId;
+    const userId = savedUser.insertId;
     const accessToken = generateAccessToken(userId);
     const refreshToken = generateRefreshToken(userId);
 
@@ -58,19 +58,21 @@ export const login = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+    console.log('logged in', user);
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    const accessToken = generateAccessToken(user.id);
-    const refreshToken = generateRefreshToken(user.id);
-    await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user.id, refreshToken]);
+    const accessToken = generateAccessToken(user.user_id);
+    const refreshToken = generateRefreshToken(user.user_id);
+    await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user.user_id, refreshToken]);
 
     setCookies(res, accessToken, refreshToken);
 
-    res.status(200).json({ user: { id: user.id, name: user.name, email: user.email } });
+    delete user.password;
+    res.status(200).json({ user, accessToken });
   } catch (error) {
     console.log(`Error at signIn controller: ${error}`);
     res.status(500).json({ message: 'Internal server error' });

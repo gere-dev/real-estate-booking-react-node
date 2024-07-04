@@ -1,5 +1,7 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
+import { login } from '@/state/auth/authSlice';
+import { useAppDispatch } from '@/state/hooks';
 import { AuthForm as AuthFormType, Login as LoginType } from '@/types';
 import { useState } from 'react';
 
@@ -8,10 +10,12 @@ export const Login = () => {
     email: '',
     password: '',
   });
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(formData);
 
+  const dispatch = useAppDispatch();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    dispatch(login(formData));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
