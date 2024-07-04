@@ -19,6 +19,6 @@ export const setCookies = (res: Response, accessToken: string, refreshToken: str
     };
   };
 
-  res.cookie(TokenNames.ACCESS_TOKEN, accessToken, cookieOptions(ACCESS_TOKEN_MAX_AGE));
+  // res.cookie(TokenNames.ACCESS_TOKEN, accessToken, cookieOptions(ACCESS_TOKEN_MAX_AGE));
   res.cookie(TokenNames.REFRESH_TOKEN, refreshToken, cookieOptions(REFRESH_TOKEN_MAX_AGE));
 };

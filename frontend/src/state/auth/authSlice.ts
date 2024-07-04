@@ -36,12 +36,13 @@ export const login = createAsyncThunk<{ user: User; accessToken: string }, Login
       const data = await agent.Auth.login(user);
       return data;
     } catch (error) {
+      console.log(`Error at login controller: ${error}`);
       return rejectWithValue((error as Error).message);
     }
   }
 );
 
-export const logout = createAsyncThunk<void, { RejectValue: string }>('auth/logout', async (_, { rejectWithValue }) => {
+export const logout = createAsyncThunk<void, void, { rejectValue: string }>('auth/logout', async (_, { rejectWithValue }) => {
   try {
     await agent.Auth.logout();
   } catch (error) {

@@ -1,3 +1,5 @@
+import { logout } from '@/state/auth/authSlice';
+import store from '@/state/store';
 import { Login, Register, Property as PropertyType } from '@/types';
 import axios, { AxiosResponse } from 'axios';
 
@@ -30,6 +32,7 @@ const Auth = {
   register: ({ name, email, password }: Register) => requests.post(`/auth/register`, { name, email, password }),
   login: ({ email, password }: Login) => requests.post(`/auth/login`, { email, password }),
   logout: () => requests.post(`/auth/logout`, {}),
+  refresh: () => requests.post(`/auth/refresh`, {}),
 };
 
 const agent = {
@@ -37,5 +40,33 @@ const agent = {
   Property,
   Auth,
 };
+
+axios.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const { status } = error.response;
+    const originalRequest = error.config;
+    if (status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const response = await Auth.refresh();
+        const newAccessToken = response.data.accessToken;
+
+        // Update access token in Axios headers
+        axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+        // Retry original request with new access token
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        return axios(originalRequest);
+      } catch (error) {
+        console.log(error, 'refresh error');
+        store.dispatch(logout());
+        return Promise.reject(error);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default agent;

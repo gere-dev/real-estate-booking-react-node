@@ -98,8 +98,9 @@ export const refreshToken = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const accessToken = generateAccessToken(user.user_id);
-    res.cookie('access_token', accessToken, { httpOnly: true, maxAge: 60 * 60 * 24 * 1000, secure: true, sameSite: 'none' });
-    res.status(200).json({ user: { id: user.user_id, name: user.name, email: user.email } });
+
+    // res.cookie('access_token', accessToken, { httpOnly: true, maxAge: 60 * 60 * 24 * 1000, secure: true, sameSite: 'none' });
+    res.status(200).json({ accessToken });
   } catch (error) {
     // check if user userExists
     console.log(`Error at refreshToken controller: ${error}`);
