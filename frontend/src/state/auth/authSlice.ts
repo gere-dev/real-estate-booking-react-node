@@ -17,11 +17,23 @@ const initialState: AuthState = {
   user: null,
 };
 
-export const register = createAsyncThunk<RegisterResponse, Register, { rejectValue: string }>(
+export const register = createAsyncThunk<{ user: User; token: string }, Register, { rejectValue: string }>(
   'auth/login',
   async (user: Register, { rejectWithValue }) => {
     try {
       const data = await agent.Auth.register(user);
+      return data;
+    } catch (error) {
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const login = createAsyncThunk<{ user: User; token: string }, Login, { rejectValue: string }>(
+  'auth/login',
+  async (user: Login, { rejectWithValue }) => {
+    try {
+      const data = await agent.Auth.login(user);
       return data;
     } catch (error) {
       return rejectWithValue((error as Error).message);
@@ -44,6 +56,20 @@ export const authSlice = createSlice({
         state.token = action.payload.token;
       })
       .addCase(register.rejected, (state, action) => {
+        state.status = 'failed';
+        if (action.payload) {
+          state.error = action.payload;
+        }
+      })
+      .addCase(login.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+      })
+      .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
         if (action.payload) {
           state.error = action.payload;
