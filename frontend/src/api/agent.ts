@@ -30,7 +30,7 @@ const Property = {
 
 const Listings = {
   list: () => requests.get('/listings'),
-  create: (listing: PropertyType) => requests.post(`/listings/`, listing),
+  create: (listing: PropertyType) => requests.post(`/listings`, listing),
   update: (listing: PropertyType) => requests.put(`/listings/${listing.property_id}`, listing),
   delete: (propertyId: number) => requests.delete(`/listings/${propertyId}`),
   getById: (id: number) => requests.get(`/listings/${id}`),

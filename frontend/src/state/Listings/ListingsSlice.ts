@@ -1,6 +1,6 @@
 import agent from '@/api/agent';
 import { Property } from '@/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const fetchListings = createAsyncThunk<Property[], void, { rejectValue: string }>('listings/fetchListings', async (_, { rejectWithValue }) => {
   try {
@@ -30,24 +30,16 @@ const listingsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchListings.pending, (state, action) => {
+      .addCase(fetchListings.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchListings.fulfilled, (state, action) => {
+      .addCase(fetchListings.fulfilled, (state, action: PayloadAction<Property[]>) => {
         state.status = 'succeeded';
         state.listings = action.payload;
       })
       .addCase(fetchListings.rejected, (state, action) => {
         state.status = 'failed';
-        if (action.payload) {
-          state.error = action.payload;
-        }
-      })
-      .addCase(fetchListings.rejected, (state, action) => {
-        state.status = 'failed';
-        if (action.payload) {
-          state.error = action.payload;
-        }
+        state.error = action.payload ? action.payload : 'Unknown error';
       });
   },
 });

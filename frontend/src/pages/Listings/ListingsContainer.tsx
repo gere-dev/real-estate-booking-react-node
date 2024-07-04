@@ -1,10 +1,16 @@
-import React from 'react';
-import { useAppSelector } from '@/state/hooks';
-import { selectProperties } from '@/state/properties/selectors';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { ListingsList } from '@/pages';
+import { selectListings } from '@/state/selectors';
+import { fetchListings } from '@/state/Listings/ListingsSlice';
 
 export const ListingsContainer = () => {
-  const properties = useAppSelector(selectProperties);
+  const properties = useAppSelector(selectListings);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchListings());
+  }, [dispatch]);
   return (
     <ul className='flex flex-1 flex-col gap-4 '>
       {properties.map((property) => {
