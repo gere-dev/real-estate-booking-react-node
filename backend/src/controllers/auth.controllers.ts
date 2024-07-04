@@ -27,18 +27,18 @@ export const register = async (req: Request, res: Response) => {
 
     // generate access token and refresh token
     const defaultRole: UserRole = UserRole.USER;
-    const userId = savedUser.insertId;
-    const accessToken = generateAccessToken(userId, defaultRole);
-    const refreshToken = generateRefreshToken(userId, defaultRole);
+    const user_id = savedUser.insertId;
+    const accessToken = generateAccessToken(user_id, defaultRole);
+    const refreshToken = generateRefreshToken(user_id, defaultRole);
 
     // save refresh token in database
-    await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [userId, refreshToken]);
+    await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user_id, refreshToken]);
 
     // set cookie
     setCookies(res, accessToken, refreshToken);
 
     const user = {
-      id: userId,
+      user_id,
       name,
       email,
     };
@@ -59,8 +59,8 @@ export const login = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-    console.log('logged in', user);
 
+    // compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid email or password' });

@@ -4,6 +4,7 @@ import { errorMessages, EndPointPaths } from '@/constants';
 import { verifyToken } from '@/utils/jwt.utils';
 import { CustomRequest } from '@/types';
 import { UserRole } from '@/constants/user.role';
+import db from '@/database/config/db';
 export const validateCredentials = (req: Request, res: Response, next: NextFunction) => {
   const MIN_PASSWORD_LENGTH = 6;
 
@@ -27,7 +28,7 @@ export const validateCredentials = (req: Request, res: Response, next: NextFunct
   next();
 };
 
-export const validateUser = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const authenticateUser = (req: CustomRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ message: errorMessages.unauthorized });
@@ -39,8 +40,15 @@ export const validateUser = (req: CustomRequest, res: Response, next: NextFuncti
   }
   try {
     const decoded = verifyToken(token) as { id: number; role: UserRole };
+
     if (!decoded) {
       return res.status(401).json({ message: errorMessages.invalidToken });
+    }
+
+    const user = db.query('SELECT * FROM users WHERE id = ?', [decoded.id]);
+
+    if (!user) {
+      return res.status(401).json({ message: errorMessages.userNotFound });
     }
 
     req.user.id = decoded.id;
