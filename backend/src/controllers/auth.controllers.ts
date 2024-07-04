@@ -8,7 +8,14 @@ import { ResultSetHeader } from 'mysql2';
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
-    console.log(name, email, password);
+
+    // check if user already user
+    const [userData] = await db.query<any>('SELECT * FROM users WHERE email = ?', [email]);
+    const userExists = userData[0]; // get the first element of the array
+
+    if (userExists) {
+      return res.status(401).json({ message: 'User already exists' });
+    }
 
     // hash the password
     const SALT = 10;
@@ -35,7 +42,7 @@ export const register = async (req: Request, res: Response) => {
       email,
     };
 
-    res.status(201).json({ user, token: accessToken });
+    res.status(201).json({ user, accessToken });
   } catch (error) {
     console.log(`Error at register controller: ${error}`);
     res.status(500).json({ message: 'Internal server error' });
@@ -85,14 +92,14 @@ export const refreshToken = async (req: Request, res: Response) => {
     const [result] = await db.query<any>('SELECT * FROM refresh_tokens WHERE token = ?', [refreshToken]);
     const user = result[0]; // get the first element of the array
     if (!user) {
-      // check if user exists
+      // check if user userExists
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const accessToken = generateAccessToken(user.user_id);
     res.cookie('access_token', accessToken, { httpOnly: true, maxAge: 60 * 60 * 24 * 1000, secure: true, sameSite: 'none' });
     res.status(200).json({ user: { id: user.user_id, name: user.name, email: user.email } });
   } catch (error) {
-    // check if user exists
+    // check if user userExists
     console.log(`Error at refreshToken controller: ${error}`);
     res.status(500).json({ message: 'Internal server error' });
   }

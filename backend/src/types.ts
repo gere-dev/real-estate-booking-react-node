@@ -25,3 +25,10 @@ export interface Image {
 export interface PropertyWithImages extends Omit<Property, 'image_url'> {
   images?: [string];
 }
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}

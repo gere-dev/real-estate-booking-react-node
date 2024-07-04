@@ -6,19 +6,19 @@ import { Login, Register } from '@/types';
 interface AuthState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
-  token: string | null;
+  accessToken: string | null;
   user: User | null;
 }
 
 const initialState: AuthState = {
   status: 'idle',
   error: null,
-  token: null,
+  accessToken: null,
   user: null,
 };
 
-export const register = createAsyncThunk<{ user: User; token: string }, Register, { rejectValue: string }>(
-  'auth/login',
+export const register = createAsyncThunk<{ user: User; accessToken: string }, Register, { rejectValue: string }>(
+  'auth/register',
   async (user: Register, { rejectWithValue }) => {
     try {
       const data = await agent.Auth.register(user);
@@ -29,7 +29,7 @@ export const register = createAsyncThunk<{ user: User; token: string }, Register
   }
 );
 
-export const login = createAsyncThunk<{ user: User; token: string }, Login, { rejectValue: string }>(
+export const login = createAsyncThunk<{ user: User; accessToken: string }, Login, { rejectValue: string }>(
   'auth/login',
   async (user: Login, { rejectWithValue }) => {
     try {
@@ -62,7 +62,7 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.accessToken = action.payload.accessToken;
       })
       .addCase(register.rejected, (state, action) => {
         state.status = 'failed';
@@ -76,7 +76,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
@@ -87,7 +87,9 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.status = 'idle';
         state.user = null;
-        state.token = null;
+        state.accessToken = null;
       });
   },
 });
+
+export default authSlice.reducer;
