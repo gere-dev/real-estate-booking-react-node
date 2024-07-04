@@ -11,15 +11,17 @@ const generateToken = (id: number, secret_key: string, lifeTime: number) => {
     expiresIn: lifeTime,
   });
 
-  return `Bearer ${token}`;
+  return token;
 };
 
 export const generateAccessToken = (id: number): string => {
-  return generateToken(id, SECRET_KEY, ACCESS_TOKEN_MAX_AGE);
+  const token = generateToken(id, SECRET_KEY, ACCESS_TOKEN_MAX_AGE);
+  return `Bearer ${token}`;
 };
 
 export const generateRefreshToken = (id: number): string => {
-  return generateToken(id, SECRET_KEY, REFRESH_TOKEN_MAX_AGE);
+  const token = generateToken(id, SECRET_KEY, REFRESH_TOKEN_MAX_AGE);
+  return token;
 };
 
 export const verifyToken = async (token: string): Promise<any> => {

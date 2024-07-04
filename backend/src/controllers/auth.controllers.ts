@@ -86,6 +86,8 @@ export const refreshToken = async (req: Request, res: Response) => {
     if (!refreshToken) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
+
+    // verify token
     const decoded = await verifyToken(refreshToken);
     if (!decoded) {
       return res.status(401).json({ message: 'Invalid token' });
