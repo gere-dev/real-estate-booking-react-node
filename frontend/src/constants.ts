@@ -1,5 +1,6 @@
 import { BiDumbbell } from 'react-icons/bi';
 import { MdDriveEta, MdPets, MdPool, MdTv, MdWifi, MdWorkOutline } from 'react-icons/md';
+import { Login, Register } from './types';
 
 export const ACCOUNT_NAV = [
   {
@@ -49,19 +50,12 @@ export const PROPERTY_CHECKBOX_OPTIONS = [
   },
 ];
 
-export const LoginFields: {
-  email: string;
-  password: string;
-} = {
+export const LoginFields: Login = {
   email: 'email',
   password: 'password',
 };
 
-export const RegisterFields: {
-  name: string;
-  email: string;
-  password: string;
-} = {
+export const RegisterFields: Register = {
   name: 'name',
   email: 'email',
   password: 'password',

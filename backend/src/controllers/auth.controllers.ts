@@ -8,6 +8,7 @@ import { ResultSetHeader } from 'mysql2';
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password } = req.body;
+    console.log(name, email, password);
 
     // hash the password
     const SALT = 10;
@@ -34,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
       email,
     };
 
-    res.status(201).json(user);
+    res.status(201).json({ user, token: accessToken });
   } catch (error) {
     console.log(`Error at register controller: ${error}`);
     res.status(500).json({ message: 'Internal server error' });

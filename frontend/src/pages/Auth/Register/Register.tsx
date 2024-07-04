@@ -2,6 +2,8 @@ import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
 import { Register as RegisterType, Login } from '@/types';
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { useState } from 'react';
+import { useAppDispatch } from '@/state/hooks';
+import { register } from '@/state/auth/authSlice';
 export const Register = () => {
   const [formData, setFormData] = useState<RegisterType>({
     name: '',
@@ -9,9 +11,11 @@ export const Register = () => {
     password: '',
   });
 
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(register(formData));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
