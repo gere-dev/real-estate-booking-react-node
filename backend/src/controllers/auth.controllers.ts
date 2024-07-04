@@ -1,7 +1,6 @@
 import { UserRole } from '@/constants/user.role';
 import db from '@/database/config/db';
-import { setCookies } from '@/utils/cookies.utils';
-import { generateAccessToken, generateRefreshToken, verifyToken } from '@/utils/jwt.utils';
+import { generateAccessToken, generateRefreshToken, verifyToken, setCookies } from '@/utils';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { ResultSetHeader } from 'mysql2';
