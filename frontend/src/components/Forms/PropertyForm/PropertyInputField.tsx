@@ -5,7 +5,7 @@ interface InputProps extends ComponentProps<'input'> {
   description?: string;
 }
 
-export const Input = ({ label, description, ...props }: InputProps) => {
+export const PropertyInputField = ({ label, description, ...props }: InputProps) => {
   return (
     <div>
       <div className='flex flex-col'>

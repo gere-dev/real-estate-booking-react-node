@@ -4,7 +4,7 @@ interface TextareaProps extends ComponentProps<'textarea'> {
   label?: string;
   description?: string;
 }
-export const TextArea = ({ label, description, ...props }: TextareaProps) => {
+export const PropertyTextareaField = ({ label, description, ...props }: TextareaProps) => {
   return (
     <div>
       <div className='flex flex-col'>

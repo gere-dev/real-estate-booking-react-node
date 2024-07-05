@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Input } from './Input';
-import { TextArea } from './TextArea';
-import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer } from '@/components';
+import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
 import { NewProperty, Property } from '@/types';
 
 interface Props {
@@ -10,6 +8,8 @@ interface Props {
 
 export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
   const [formData, setFormData] = useState<NewProperty | Property>(initialFormData);
+
+  console.log(formData);
 
   const onRemove = (index: number) => {
     setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
@@ -34,25 +34,31 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
 
   return (
     <form className='flex-1 flex gap-4 flex-col' action=''>
-      <Input
+      <PropertyInputField
         onChange={handleChange}
         name='title'
         value={formData.title}
         label='Title'
         description='Title for your place, should be short and catchy as in advertisement'
       />
-      <Input onChange={handleChange} name='address' value={formData.address} label='address' description='Address to this place' />
-      <Input onChange={handleChange} name='city' value={formData.city} label='city' description='City where the place is located' />
-      <Input
+      <PropertyInputField onChange={handleChange} name='address' value={formData.address} label='address' description='Address to this place' />
+      <PropertyInputField onChange={handleChange} name='city' value={formData.city} label='city' description='City where the place is located' />
+      <PropertyInputField
         onChange={handleChange}
-        name='province'
+        name='state'
         value={formData.state}
         label='province/state'
         description='Province/State where the place is located'
       />
       <UploadPropertyImages onChange={handleChange} images={formData.images} onRemove={onRemove} />
-      <TextArea onChange={handleChange} name='description' value={formData.description} label='Description' description='Description of the place.' />
-      <TextArea
+      <PropertyTextareaField
+        onChange={handleChange}
+        name='description'
+        value={formData.description}
+        label='Description'
+        description='Description of the place.'
+      />
+      <PropertyTextareaField
         onChange={handleChange}
         name='extraInfo'
         value={formData.extraInfo}
