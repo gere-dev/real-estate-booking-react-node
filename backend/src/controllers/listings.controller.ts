@@ -21,3 +21,15 @@ export const getListings = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const AddListing = async (req: Request, res: Response) => {
+  const { property } = req.body;
+  try {
+    const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>('INSERT INTO properties SET ?', [property]);
+    const response = formatPropertiesData(rows);
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
