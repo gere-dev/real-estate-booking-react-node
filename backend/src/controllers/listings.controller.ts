@@ -22,7 +22,7 @@ export const getListings = async (req: Request, res: Response) => {
   }
 };
 
-export const AddListing = async (req: Request, res: Response) => {
+export const createListing = async (req: Request, res: Response) => {
   const { property } = req.body;
   try {
     const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>('INSERT INTO properties SET ?', [property]);
