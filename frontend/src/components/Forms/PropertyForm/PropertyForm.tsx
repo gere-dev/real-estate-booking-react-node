@@ -9,8 +9,6 @@ interface Props {
 export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
   const [formData, setFormData] = useState<NewProperty | Property>(initialFormData);
 
-  console.log(formData);
-
   const onRemove = (index: number) => {
     setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
   };
