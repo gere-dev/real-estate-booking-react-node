@@ -12,6 +12,19 @@ export const fetchListings = createAsyncThunk<Property[], void, { rejectValue: s
   }
 });
 
+export const createListing = createAsyncThunk<Property, Property, { rejectValue: string }>(
+  'listings/createListing',
+  async (listing, { rejectWithValue }) => {
+    try {
+      const data = await agent.Listings.create(listing);
+      return data;
+    } catch (error) {
+      console.log((error as Error).message);
+      return rejectWithValue((error as Error).message);
+    }
+  }
+);
+
 type ListingsState = {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   listings: Property[];
@@ -38,6 +51,18 @@ const listingsSlice = createSlice({
         state.listings = action.payload;
       })
       .addCase(fetchListings.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload ? action.payload : 'Unknown error';
+      })
+      // create listing
+      .addCase(createListing.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createListing.fulfilled, (state, action: PayloadAction<Property>) => {
+        state.status = 'succeeded';
+        state.listings.push(action.payload);
+      })
+      .addCase(createListing.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload ? action.payload : 'Unknown error';
       });
