@@ -1,8 +1,9 @@
+import { apiUrl } from '@/api/agent';
 import React, { useState } from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
 
 interface Props {
-  images: File[];
+  images: (string | File)[];
 
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
@@ -16,9 +17,10 @@ export const UploadPropertyImages = ({ images, onChange, onRemove }: Props) => {
         <input name='images' multiple onChange={onChange} className='hidden ' type='file' id='upload' />
       </label>
       {images.map((image, index) => {
+        const imageUrl = typeof image === 'string' ? `${apiUrl}/uploads/${image}` : URL.createObjectURL(image);
         return (
           <figure key={index} className='relative'>
-            <img className='h-28 w-28  border-gray-500  object-cover rounded outline-none' src={URL.createObjectURL(image)} alt='Property Image' />
+            <img className='h-28 w-28  border-gray-500  object-cover rounded outline-none' src={imageUrl} alt='Property Image' />
             <button
               type='button'
               onClick={() => onRemove(index)}

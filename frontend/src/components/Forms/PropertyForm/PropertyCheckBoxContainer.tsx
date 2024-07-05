@@ -5,7 +5,7 @@ import { CheckBoxList } from './PropertyCheckBoxList';
 interface Props {
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-export const CheckBoxContainer = ({ handleChange }: Props) => {
+export const PropertyCheckBoxContainer = ({ handleChange }: Props) => {
   return (
     <div>
       <h2 className='text-semibold text-gray-700'>Utils</h2>

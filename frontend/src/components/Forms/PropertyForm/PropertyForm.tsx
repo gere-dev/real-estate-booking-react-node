@@ -1,43 +1,15 @@
 import React, { useState } from 'react';
 import { Input } from './Input';
 import { TextArea } from './TextArea';
-import { RectangleButton, UploadPropertyImages } from '@/components';
-import { CheckBoxContainer } from './PropertyCheckBoxContainer';
+import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer } from '@/components';
+import { NewProperty, Property } from '@/types';
 
-type FormType = {
-  title: string;
-  description: string;
-  address: string;
-  city: string;
-  province: string;
-  images: File[];
-  extraInfo: string;
-  wifi: boolean;
-  parking: boolean;
-  pets: boolean;
-  gym: boolean;
-  pool: boolean;
-  netflix: boolean;
-};
+interface Props {
+  initialFormData: NewProperty | Property;
+}
 
-const initialFormData: FormType = {
-  title: '',
-  description: '',
-  address: '',
-  city: '',
-  province: '',
-  images: [],
-  extraInfo: '',
-  wifi: false,
-  parking: false,
-  pets: false,
-  gym: false,
-  pool: false,
-  netflix: false,
-};
-
-export const PropertyForm = () => {
-  const [formData, setFormData] = useState<FormType>(initialFormData);
+export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
+  const [formData, setFormData] = useState<NewProperty | Property>(initialFormData);
 
   const onRemove = (index: number) => {
     setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
@@ -74,7 +46,7 @@ export const PropertyForm = () => {
       <Input
         onChange={handleChange}
         name='province'
-        value={formData.province}
+        value={formData.state}
         label='province/state'
         description='Province/State where the place is located'
       />
@@ -87,7 +59,7 @@ export const PropertyForm = () => {
         label='Extra info'
         description='Extra information about the property'
       />
-      <CheckBoxContainer handleChange={handleChange} />
+      <PropertyCheckBoxContainer handleChange={handleChange} />
 
       <div className='flex flex-col md:flex-row gap-4'>
         <RectangleButton type='submit' label='Submit' />
