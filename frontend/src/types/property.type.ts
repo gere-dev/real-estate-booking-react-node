@@ -4,7 +4,7 @@ export interface Property {
   description: string;
   bed: number;
   price_per_night: number;
-  images: [string] | File[];
+  images: string[]; // Array of strings representing image URLs
   address: string;
   city: string;
   state: string;
@@ -15,4 +15,8 @@ export interface Property {
   gym: boolean;
   pool: boolean;
   netflix: boolean;
+}
+
+export interface NewProperty extends Omit<Property, 'property_id' | 'images'> {
+  images: File[]; // Array of File objects for new property images
 }

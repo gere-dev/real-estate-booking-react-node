@@ -1,6 +1,6 @@
 import { logout } from '@/state/auth/authSlice';
 import store from '@/state/store';
-import { Login, Register, Property as PropertyType } from '@/types';
+import { Login, Register, Property as PropertyType, NewProperty } from '@/types';
 import axios, { AxiosResponse } from 'axios';
 
 export const apiUrl = import.meta.env.NODE === 'production' ? import.meta.env.VITE_API_URL : 'http://localhost:5000/api';
@@ -30,7 +30,7 @@ const Property = {
 
 const Listings = {
   list: () => requests.get('/listings'),
-  create: (listing: PropertyType) => requests.post(`/listings`, listing),
+  create: (listing: NewProperty) => requests.post(`/listings`, listing),
   update: (listing: PropertyType) => requests.put(`/listings/${listing.property_id}`, listing),
   delete: (propertyId: number) => requests.delete(`/listings/${propertyId}`),
   getById: (id: number) => requests.get(`/listings/${id}`),

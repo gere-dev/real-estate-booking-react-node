@@ -1,5 +1,5 @@
 import agent from '@/api/agent';
-import { Property } from '@/types';
+import { NewProperty, Property } from '@/types';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export const fetchListings = createAsyncThunk<Property[], void, { rejectValue: string }>('listings/fetchListings', async (_, { rejectWithValue }) => {
@@ -12,7 +12,7 @@ export const fetchListings = createAsyncThunk<Property[], void, { rejectValue: s
   }
 });
 
-export const createListing = createAsyncThunk<Property, Property, { rejectValue: string }>(
+export const createListing = createAsyncThunk<Property, NewProperty, { rejectValue: string }>(
   'listings/createListing',
   async (listing, { rejectWithValue }) => {
     try {
