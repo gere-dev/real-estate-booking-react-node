@@ -12,7 +12,7 @@ export const fetchListings = createAsyncThunk<Property[], void, { rejectValue: s
   }
 });
 
-export const createListing = createAsyncThunk<Property, NewProperty, { rejectValue: string }>(
+export const createListing = createAsyncThunk<Property, FormData, { rejectValue: string }>(
   'listings/createListing',
   async (listing, { rejectWithValue }) => {
     try {

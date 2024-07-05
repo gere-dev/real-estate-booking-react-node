@@ -24,8 +24,10 @@ export const getListings = async (req: Request, res: Response) => {
 
 export const createListing = async (req: Request, res: Response) => {
   const { property } = req.body;
+  const images = req.files as Express.Multer.File[];
+  const propertyData = { ...property, images: images.map((image) => image.filename) };
   try {
-    const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>('INSERT INTO properties SET ?', [property]);
+    const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>('INSERT INTO properties SET ?', [[propertyData]]);
     const response = formatPropertiesData(rows);
     res.json(response);
   } catch (error) {

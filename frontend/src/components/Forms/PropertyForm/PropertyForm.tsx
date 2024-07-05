@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
 import { NewProperty, Property } from '@/types';
+import { useAppDispatch } from '@/state/hooks';
+import { createListing } from '@/state/Listings/ListingsSlice';
+import { convertToFormData } from '@/utils/convert.formdata';
 
 interface Props {
   initialFormData: NewProperty | Property;
@@ -29,9 +32,18 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
+  const dispatch = useAppDispatch();
+
+  const handleSummit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formDataToSend = convertToFormData(formData);
+
+    dispatch(createListing(formDataToSend));
+  };
 
   return (
-    <form className='flex-1 flex gap-4 flex-col' action=''>
+    <form onSubmit={handleSummit} className='flex-1 flex gap-4 flex-col' action=''>
       <PropertyInputField
         onChange={handleChange}
         name='title'

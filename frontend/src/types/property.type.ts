@@ -1,5 +1,6 @@
 export interface Property {
   property_id: number;
+  user_id: number;
   title: string;
   description: string;
   bed: number;
@@ -8,7 +9,6 @@ export interface Property {
   address: string;
   city: string;
   state: string;
-  user_id: number;
   wifi: boolean;
   parking: boolean;
   pets: boolean;
