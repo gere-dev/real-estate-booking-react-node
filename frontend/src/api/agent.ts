@@ -7,7 +7,7 @@ export const apiUrl = import.meta.env.NODE === 'production' ? import.meta.env.VI
 
 axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;
-
+axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
@@ -30,7 +30,7 @@ const Property = {
 
 const Listings = {
   list: () => requests.get('/listings'),
-  create: (listing: FormData) => requests.post(`/listings`, listing),
+  create: (listing: object) => requests.post(`/listings`, listing),
   update: (listing: PropertyType) => requests.put(`/listings/${listing.property_id}`, listing),
   delete: (propertyId: number) => requests.delete(`/listings/${propertyId}`),
   getById: (id: number) => requests.get(`/listings/${id}`),
