@@ -1,70 +1,86 @@
-import agent from '@/api/agent';
-import { NewProperty, Property } from '@/types';
+// Assuming this is listingsSlice.ts
+
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import agent from '@/api/agent';
+import axios from 'axios';
+import { NewProperty, Property } from '@/types';
 
-export const fetchListings = createAsyncThunk<Property[], void, { rejectValue: string }>('listings/fetchListings', async (_, { rejectWithValue }) => {
-  try {
-    const data = await agent.Listings.list();
-    return data;
-  } catch (error) {
-    console.log((error as Error).message);
-    return rejectWithValue((error as Error).message);
-  }
-});
-
-export const createListing = createAsyncThunk<Property, FormData, { rejectValue: string }>(
-  'listings/createListing',
-  async (listing, { rejectWithValue }) => {
+export const fetchListings = createAsyncThunk<Array<Property>, void, { rejectValue: unknown }>(
+  'fetchListings/listings',
+  async (_, { rejectWithValue }) => {
     try {
-      const data = await agent.Listings.create(listing);
+      const data = await agent.Listings.list();
       return data;
-    } catch (error) {
-      console.log((error as Error).message);
-      return rejectWithValue((error as Error).message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log(error.response.data);
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue({ message: 'Unknown error occurred while fetching listings' });
+      }
     }
   }
 );
 
-type ListingsState = {
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+export const createListings = createAsyncThunk<Property, NewProperty, { rejectValue: unknown }>(
+  'createListings/listings',
+  async (listing: NewProperty, { rejectWithValue }) => {
+    try {
+      const data = await agent.Listings.create(listing);
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log(error.response.data);
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue({ message: 'Unknown error occurred while creating listing' });
+      }
+    }
+  }
+);
+
+type listingsState = {
   listings: Property[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 };
 
-const initialState: ListingsState = {
-  status: 'idle',
+const initialState: listingsState = {
   listings: [],
+  status: 'idle',
   error: null,
 };
 
-const listingsSlice = createSlice({
-  name: 'listings',
+export const listingsSlice = createSlice({
+  name: 'userListings',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // fetch user listings
       .addCase(fetchListings.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchListings.fulfilled, (state, action: PayloadAction<Property[]>) => {
+      .addCase(fetchListings.fulfilled, (state, action: PayloadAction<Array<Property>>) => {
         state.status = 'succeeded';
         state.listings = action.payload;
       })
-      .addCase(fetchListings.rejected, (state, action) => {
+      .addCase(fetchListings.rejected, (state, action: PayloadAction<unknown>) => {
         state.status = 'failed';
-        state.error = action.payload ? action.payload : 'Unknown error';
+        state.error = action.payload as string;
       })
-      // create listing
-      .addCase(createListing.pending, (state) => {
+
+      // create user listing
+      .addCase(createListings.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(createListing.fulfilled, (state, action: PayloadAction<Property>) => {
+      .addCase(createListings.fulfilled, (state, action: PayloadAction<Property>) => {
         state.status = 'succeeded';
-        state.listings.push(action.payload);
+        state.listings = [action.payload, ...state.listings];
       })
-      .addCase(createListing.rejected, (state, action) => {
+      .addCase(createListings.rejected, (state, action: PayloadAction<unknown>) => {
         state.status = 'failed';
-        state.error = action.payload ? action.payload : 'Unknown error';
+        state.error = action.payload as string;
       });
   },
 });
