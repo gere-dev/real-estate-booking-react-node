@@ -1,18 +1,18 @@
-import propertiesSlice from './properties/propertiesSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 //Reducers
+import propertiesSlice from './properties/propertiesSlice';
 import propertySlice from './property/propertySlice';
 import authSlice from './auth/authSlice';
-import ListingsSlice from './Listings/ListingsSlice';
+import listingsSlice from './listings/listingsSlice';
 
 const rootReducer = combineReducers({
   properties: propertiesSlice,
   property: propertySlice,
   auth: authSlice,
-  listings: ListingsSlice,
+  listings: listingsSlice,
 });
 // Persistor
 const persistConfig = {

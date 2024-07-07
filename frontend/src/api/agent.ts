@@ -71,32 +71,4 @@ const agent = {
   Listings,
 };
 
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const { status } = error.response;
-    const originalRequest = error.config;
-    if (status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const response = await Auth.refresh();
-        const newAccessToken = response.data.accessToken;
-
-        // Update access token in Axios headers
-        axios.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-
-        // Retry original request with new access token
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        return axios(originalRequest);
-      } catch (error) {
-        console.log(error, 'refresh error');
-        store.dispatch(logout());
-        return Promise.reject(error);
-      }
-    }
-    return Promise.reject(error);
-  }
-);
-
 export default agent;

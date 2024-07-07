@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
 import { NewProperty, Property } from '@/types';
+import { useAppDispatch } from '@/state/hooks';
+import { createListings } from '@/state/listings/listingsSlice';
 
 interface Props {
   initialFormData: NewProperty | Property;
@@ -28,6 +30,12 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
+  };
+  const dispatch = useAppDispatch();
+
+  const onSubmits = async () => {
+    dispatch(createListings(formData));
+    console.log(formData);
   };
 
   return (
