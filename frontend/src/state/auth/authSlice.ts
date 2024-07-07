@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import agent from '@/api/agent';
-import { Login, Register, User } from '@/types';
+import { Login, Register, Status, User } from '@/types';
 
 interface AuthState {
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: Status;
   error: string | null;
   accessToken: string | null;
   isAuth: boolean;
@@ -11,7 +11,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  status: 'idle',
+  status: Status.IDLE,
   error: null,
   accessToken: null,
   isAuth: false,
@@ -59,37 +59,37 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
-        state.status = 'loading';
+        state.status = Status.LOADING;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = Status.SUCCEEDED;
         state.user = action.payload.user;
         state.isAuth = true;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(register.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = Status.FAILED;
         if (action.payload) {
           state.error = action.payload;
         }
       })
       .addCase(login.pending, (state) => {
-        state.status = 'loading';
+        state.status = Status.LOADING;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = Status.SUCCEEDED;
         state.user = action.payload.user;
         state.isAuth = true;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = Status.FAILED;
         if (action.payload) {
           state.error = action.payload;
         }
       })
       .addCase(logout.fulfilled, (state) => {
-        state.status = 'idle';
+        state.status = Status.SUCCEEDED;
         state.user = null;
         state.accessToken = null;
       });

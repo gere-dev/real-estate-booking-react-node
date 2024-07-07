@@ -1,2 +1,3 @@
 export * from './auth.type';
 export * from './property.type';
+export * from './redux.status';
