@@ -6,6 +6,7 @@ interface AuthState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   accessToken: string | null;
+  isAuth: boolean;
   user: User | null;
 }
 
@@ -13,6 +14,7 @@ const initialState: AuthState = {
   status: 'idle',
   error: null,
   accessToken: null,
+  isAuth: false,
   user: null,
 };
 
@@ -62,6 +64,7 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload.user;
+        state.isAuth = true;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(register.rejected, (state, action) => {
@@ -76,6 +79,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload.user;
+        state.isAuth = true;
         state.accessToken = action.payload.accessToken;
       })
       .addCase(login.rejected, (state, action) => {
