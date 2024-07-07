@@ -126,3 +126,25 @@ export const logout = async (req: Request, res: Response) => {
   });
   res.status(200).json({ message: 'Logged out successfully' });
 };
+
+export const privateRoutes = async (req: Request, res: Response) => {
+  let authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+    const decoded = await verifyToken(token);
+    if (!decoded) {
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+    res.status(200).json({ message: 'Private route accessed successfully' });
+  } catch (error) {
+    console.log(`Error at privateRoutes controller: ${error}`);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

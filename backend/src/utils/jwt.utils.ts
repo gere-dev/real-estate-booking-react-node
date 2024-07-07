@@ -26,7 +26,7 @@ export const generateRefreshToken = (id: number, role: string): string => {
 
 export const verifyToken = (token: string) => {
   try {
-    const decoded = jwt.verify(token.replace('Bearer ', ''), SECRET_KEY as string);
+    const decoded = jwt.verify(token, SECRET_KEY as string);
     return decoded;
   } catch (error) {
     throw new Error('token verification failed');
