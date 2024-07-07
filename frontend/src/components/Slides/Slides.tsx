@@ -5,7 +5,7 @@ import { CgClose } from 'react-icons/cg';
 import { IconType } from 'react-icons';
 
 interface Props {
-  images?: string[];
+  images?: (string | File)[];
   closeSlide: () => void;
   isSlideOpen: boolean;
 }

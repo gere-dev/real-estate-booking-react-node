@@ -1,5 +1,3 @@
-import { logout } from '@/state/auth/authSlice';
-import store from '@/state/store';
 import { Login, Register, Property as PropertyType, NewProperty } from '@/types';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 

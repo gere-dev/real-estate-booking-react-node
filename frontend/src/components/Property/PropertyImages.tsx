@@ -2,7 +2,7 @@ import React from 'react';
 import { apiUrl } from '@/api/agent';
 import { Slides } from '@/components';
 interface Props {
-  images?: [string];
+  images?: (string | File)[];
 }
 export const PropertyImages: React.FC<Props> = ({ images }) => {
   const [isSlideOpen, setIsSlideOpen] = React.useState(false);

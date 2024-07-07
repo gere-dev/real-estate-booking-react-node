@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RegisterResponse, User } from './types';
 import agent from '@/api/agent';
-import { Login, Register } from '@/types';
+import { Login, Register, User } from '@/types';
 
 interface AuthState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';

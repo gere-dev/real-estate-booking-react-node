@@ -1,4 +1,3 @@
-import { apiUrl } from '@/api/agent';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { fetchProperty } from '@/state/property/propertySlice';
 import { selectProperty } from '@/state/selectors';

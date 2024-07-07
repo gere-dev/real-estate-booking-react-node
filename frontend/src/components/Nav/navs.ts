@@ -1,12 +1,8 @@
 import { IoHomeSharp } from 'react-icons/io5';
 import { RiLogoutCircleRFill, RiLoginCircleFill } from 'react-icons/ri';
 import { FaCircleUser } from 'react-icons/fa6';
-import { IconType } from 'react-icons';
-export type Nav = {
-  title: string;
-  path?: string;
-  icon?: IconType;
-};
+import { Nav } from './types';
+
 export const navs: Nav[] = [
   {
     title: 'Home',

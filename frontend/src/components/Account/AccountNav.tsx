@@ -1,5 +1,4 @@
 import { ACCOUNT_NAV } from '@/constants';
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export const AccountNav = () => {
