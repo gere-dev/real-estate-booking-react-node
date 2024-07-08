@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE } from '@/constants/tokens.max.age';
+import { error } from 'console';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ export const verifyToken = (token: string) => {
     const decoded = jwt.verify(token, SECRET_KEY);
     return decoded;
   } catch (error) {
-    throw new Error('token verification failed');
+    console.error('Error verifying token:', error);
+    return null; // Return null or handle error as needed
   }
 };

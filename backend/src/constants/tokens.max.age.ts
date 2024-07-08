@@ -1,2 +1,2 @@
-export const ACCESS_TOKEN_MAX_AGE = 60 * 15 * 1000; // 15 minutes in milliseconds
-export const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 1000; // 24 hours in milliseconds
+export const ACCESS_TOKEN_MAX_AGE = 6 * 10; // 15 minutes in milliseconds
+export const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 1000; // 24 hours in milliseconds

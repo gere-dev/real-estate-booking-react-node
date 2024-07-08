@@ -80,9 +80,29 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+export const logout = async (req: Request, res: Response) => {
+  res.clearCookie('access_token', {
+    maxAge: 0, // Expire immediately
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  });
+  res.clearCookie('refresh_token', {
+    maxAge: 0, // Expire immediately
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+  });
+  res.status(200).json({ message: 'Logged out successfully' });
+};
+
 export const refreshToken = async (req: Request, res: Response) => {
+  console.log('refresh requested');
   try {
     const refreshToken = req.cookies.refresh_token;
+
+    console.log(refreshToken);
+
     if (!refreshToken) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -107,24 +127,8 @@ export const refreshToken = async (req: Request, res: Response) => {
   } catch (error) {
     // check if user userExists
     console.log(`Error at refreshToken controller: ${error}`);
-    res.status(401).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error refresh token' });
   }
-};
-
-export const logout = async (req: Request, res: Response) => {
-  res.clearCookie('access_token', {
-    maxAge: 0, // Expire immediately
-    httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
-  });
-  res.clearCookie('refresh_token', {
-    maxAge: 0, // Expire immediately
-    httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
-  });
-  res.status(200).json({ message: 'Logged out successfully' });
 };
 
 export const privateRoutes = async (req: Request, res: Response) => {
@@ -135,17 +139,17 @@ export const privateRoutes = async (req: Request, res: Response) => {
   }
   const token = authHeader.split(' ')[1];
   if (!token) {
-    return res.status(401).json({ message: 'Unauthorized' });
+    return res.status(401).json({ message: 'token is not found' });
   }
 
   try {
     const decoded = verifyToken(token);
     if (!decoded) {
-      return res.status(401).json({ message: 'Invalid token' });
+      return res.status(403).json({ message: 'Invalid token' });
     }
     res.status(200).json({ message: 'Private route accessed successfully' });
   } catch (error) {
     console.log(`Error at privateRoutes controller: ${error}`);
-    res.status(401).json({ message: 'Internal server error' });
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

@@ -6,6 +6,9 @@ export const apiUrl = import.meta.env.NODE === 'production' ? import.meta.env.VI
 export const privateInstance: AxiosInstance = axios.create({
   baseURL: apiUrl,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'multipart/form-data',
+  },
 });
 
 export const publicInstance: AxiosInstance = axios.create({
@@ -60,7 +63,7 @@ const Auth = {
   register: (data: Register) => publicRequests.post(`/auth/register`, data),
   login: (data: Login) => publicRequests.post(`/auth/login`, data),
   logout: () => publicRequests.post(`/auth/logout`, {}),
-  refresh: () => publicRequests.get(`/auth/refresh`),
+  refresh: () => privateRequests.get(`/auth/refresh`),
 };
 
 const agent = {

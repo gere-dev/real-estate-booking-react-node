@@ -23,9 +23,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 privateInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const accessToken = localStorage.getItem('accessToken');
+    if (!config.headers.Authorization) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -34,34 +34,27 @@ privateInstance.interceptors.request.use(
   }
 );
 
-// Interceptor to handle token refresh on 401 Unauthorized responses
 privateInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { status } = error.response;
-    const originalRequest = error.config;
+    const previousRequest = error?.config;
 
-    if (status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    console.log(previousRequest, 'this is previousRequest');
 
-      try {
-        const response = await agent.Auth.refresh();
+    if (status === 403 && !previousRequest?.sent) {
+      previousRequest.sent = true;
+      const response = await agent.Auth.refresh();
 
-        const newAccessToken = response.accessToken;
+      const newAccessToken = response.accessToken;
+      console.log('requested for a new access token and returned a new one', newAccessToken);
 
-        // Update access token in Axios headers
-        localStorage.setItem('accessToken', newAccessToken); // Update token in localStorage or sessionStorage if needed
-        privateInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-
-        // Retry original request with new access token
-        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        return privateInstance(originalRequest);
-      } catch (error) {
-        console.error('Error refreshing token');
-        store.dispatch(logout());
-        return Promise.reject(error);
-      }
+      localStorage.setItem('accessToken', newAccessToken);
+      previousRequest.headers.authorization = `Bearer ${newAccessToken}`;
+      return privateInstance(previousRequest);
     }
+    store.dispatch(logout());
+    console.error('Error refreshing token');
     return Promise.reject(error);
   }
 );
