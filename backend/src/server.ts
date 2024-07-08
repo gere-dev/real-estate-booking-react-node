@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import routes from '@/routes';
 import path from 'path';
+import cookieParse from 'cookie-parser';
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use('api/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.use(cookieParse());
 
 app.use(express.static('public'));
 app.use(express.static('dist'));

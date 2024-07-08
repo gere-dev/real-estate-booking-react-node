@@ -3,4 +3,5 @@ export enum Status {
   LOADING = 'loading',
   SUCCEEDED = 'succeeded',
   FAILED = 'failed',
+  LOGGED_OUT = 'logged_out',
 }

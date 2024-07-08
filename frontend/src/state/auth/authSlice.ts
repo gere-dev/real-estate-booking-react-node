@@ -66,6 +66,7 @@ export const authSlice = createSlice({
         state.user = action.payload.user;
         state.isAuth = true;
         state.accessToken = action.payload.accessToken;
+        localStorage.setItem('accessToken', action.payload.accessToken);
       })
       .addCase(register.rejected, (state, action) => {
         state.status = Status.FAILED;
@@ -81,6 +82,7 @@ export const authSlice = createSlice({
         state.user = action.payload.user;
         state.isAuth = true;
         state.accessToken = action.payload.accessToken;
+        localStorage.setItem('accessToken', action.payload.accessToken);
       })
       .addCase(login.rejected, (state, action) => {
         state.status = Status.FAILED;
@@ -89,9 +91,11 @@ export const authSlice = createSlice({
         }
       })
       .addCase(logout.fulfilled, (state) => {
-        state.status = Status.SUCCEEDED;
+        state.status = Status.LOGGED_OUT;
         state.user = null;
         state.accessToken = null;
+        state.isAuth = false;
+        localStorage.removeItem('accessToken');
       });
   },
 });

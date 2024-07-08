@@ -35,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
     await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user_id, refreshToken]);
 
     // set cookie
-    setCookies(res, accessToken, refreshToken);
+    setCookies(res, refreshToken);
 
     const user = {
       user_id,
@@ -70,7 +70,7 @@ export const login = async (req: Request, res: Response) => {
     const refreshToken = generateRefreshToken(user.user_id, user.role);
     await db.query<ResultSetHeader>('INSERT INTO refresh_tokens (user_id, token) VALUES (?, ?)', [user.user_id, refreshToken]);
 
-    setCookies(res, accessToken, refreshToken);
+    setCookies(res, refreshToken);
 
     delete user.password;
     res.status(200).json({ user, accessToken });
@@ -83,7 +83,6 @@ export const login = async (req: Request, res: Response) => {
 export const refreshToken = async (req: Request, res: Response) => {
   try {
     const refreshToken = req.cookies.refresh_token;
-
     if (!refreshToken) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
@@ -98,7 +97,8 @@ export const refreshToken = async (req: Request, res: Response) => {
     const user = result[0]; // get the first element of the array
     if (!user) {
       // check if user userExists
-      return res.status(401).json({ message: 'Unauthorized' });
+      console.log('refresh token not found in db');
+      return res.status(401).json({ message: 'Unauthorized refresh token not found in db' });
     }
     const accessToken = generateAccessToken(user.user_id, user.role);
 
@@ -107,7 +107,7 @@ export const refreshToken = async (req: Request, res: Response) => {
   } catch (error) {
     // check if user userExists
     console.log(`Error at refreshToken controller: ${error}`);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(401).json({ message: 'Internal server error' });
   }
 };
 
@@ -129,6 +129,7 @@ export const logout = async (req: Request, res: Response) => {
 
 export const privateRoutes = async (req: Request, res: Response) => {
   let authHeader = req.headers.authorization;
+
   if (!authHeader) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
@@ -138,13 +139,13 @@ export const privateRoutes = async (req: Request, res: Response) => {
   }
 
   try {
-    const decoded = await verifyToken(token);
+    const decoded = verifyToken(token);
     if (!decoded) {
       return res.status(401).json({ message: 'Invalid token' });
     }
     res.status(200).json({ message: 'Private route accessed successfully' });
   } catch (error) {
     console.log(`Error at privateRoutes controller: ${error}`);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(401).json({ message: 'Internal server error' });
   }
 };

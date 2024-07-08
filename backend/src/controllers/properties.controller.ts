@@ -42,7 +42,6 @@ export const getProperties = async (req: Request, res: Response) => {
     }
 
     const response = Object.values(properties);
-    console.log(rows);
     res.json(response);
   } catch (error) {
     console.error(error);

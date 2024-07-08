@@ -9,7 +9,7 @@ type COOKIE_OPTIONS = {
   sameSite: 'none' | 'lax' | 'strict';
 };
 
-export const setCookies = (res: Response, accessToken: string, refreshToken: string) => {
+export const setCookies = (res: Response, refreshToken: string) => {
   const cookieOptions = (maxAge: number): COOKIE_OPTIONS => {
     return {
       httpOnly: true,
