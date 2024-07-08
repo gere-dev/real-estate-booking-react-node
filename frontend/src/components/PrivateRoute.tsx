@@ -3,6 +3,7 @@ import { selectIsAuth } from '@/state/selectors';
 import { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { privateInstance } from '@/api/agent';
+import { logout } from '@/state/auth/authSlice';
 
 export const PrivateRoute = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -12,12 +13,15 @@ export const PrivateRoute = () => {
   useEffect(() => {
     const checkAuth = async () => {
       if (!isAuth) {
+        dispatch(logout());
         return;
       }
       try {
-        await privateInstance.get('/private-route');
+        await privateInstance.get('/auth/private-route');
       } catch (error) {
         console.log(error);
+        dispatch(logout());
+        return;
       }
     };
 
