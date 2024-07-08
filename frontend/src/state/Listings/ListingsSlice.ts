@@ -1,5 +1,3 @@
-// Assuming this is listingsSlice.ts
-
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import agent from '@/api/agent';
 import axios from 'axios';

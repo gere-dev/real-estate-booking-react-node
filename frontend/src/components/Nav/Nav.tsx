@@ -1,9 +1,17 @@
 import React from 'react';
 import { navs } from './navs';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { NavList } from './NavList';
+import { RiLoginCircleFill, RiLogoutCircleRFill } from 'react-icons/ri';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { selectIsAuth } from '@/state/selectors';
+import { logout } from '@/state/auth/authSlice';
 
 export const Nav = () => {
+  const isAuth = useAppSelector(selectIsAuth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   return (
     <header className='border-b'>
       <div className='flex justify-between items-center py-2 max-width-container'>
@@ -15,6 +23,11 @@ export const Nav = () => {
             {navs.map((nav) => {
               return <NavList nav={nav} key={nav.title} />;
             })}
+            <li className='flex hover:bg-primary hover:bg-opacity-40 rounded'>
+              <button onClick={() => (isAuth ? dispatch(logout()) : navigate('/login'))} className='text-2xl text-primary px-2 py-2'>
+                {isAuth ? <RiLogoutCircleRFill /> : <RiLoginCircleFill />}
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
