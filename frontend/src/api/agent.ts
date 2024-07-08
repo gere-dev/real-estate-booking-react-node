@@ -10,6 +10,7 @@ export const privateInstance: AxiosInstance = axios.create({
 
 export const publicInstance: AxiosInstance = axios.create({
   baseURL: apiUrl,
+  withCredentials: true,
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
@@ -59,7 +60,7 @@ const Auth = {
   register: (data: Register) => publicRequests.post(`/auth/register`, data),
   login: (data: Login) => publicRequests.post(`/auth/login`, data),
   logout: () => publicRequests.post(`/auth/logout`, {}),
-  refresh: () => publicRequests.post(`/auth/refresh`, {}),
+  refresh: () => publicRequests.get(`/auth/refresh`),
 };
 
 const agent = {
