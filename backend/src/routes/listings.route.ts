@@ -4,6 +4,6 @@ import { Router } from 'express';
 
 const router = Router();
 
-router.get('/', getListings);
-router.post('/', upload.array('images'), createListing);
+router.get('/fetch', getListings);
+router.post('/create', upload.array('images'), createListing);
 export default router;

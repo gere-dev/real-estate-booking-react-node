@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS properties(
     user_id INT NOT NULL,
     title VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
+    extraInfo TEXT NOT NULL,
     bed INT NOT NULL,
     address VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
