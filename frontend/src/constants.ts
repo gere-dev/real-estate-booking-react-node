@@ -5,7 +5,7 @@ import { Login, Register } from './types';
 export const ACCOUNT_NAV = [
   {
     title: 'Listings',
-    path: '/account',
+    path: (userId: number) => `/account/${userId}`,
   },
   {
     title: 'Bookings',
