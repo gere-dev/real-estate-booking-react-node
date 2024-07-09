@@ -52,8 +52,8 @@ const Property = {
 };
 
 const Listings = {
-  list: () => privateRequests.get('/listings'),
-  create: (listing: NewProperty) => privateRequests.post(`/listings`, listing),
+  list: () => privateRequests.get('/listings/fetch'),
+  create: (listing: FormData) => privateRequests.post(`/listings/create`, listing),
   update: (listing: PropertyType) => privateRequests.put(`/listings/${listing.property_id}`, listing),
   delete: (propertyId: number) => privateRequests.delete(`/listings/${propertyId}`),
   getById: (id: number) => privateRequests.get(`/listings/${id}`),
