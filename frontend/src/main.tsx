@@ -40,8 +40,6 @@ privateInstance.interceptors.response.use(
     const { status } = error.response;
     const previousRequest = error?.config;
 
-    console.log(previousRequest, 'this is previousRequest');
-
     if (status === 403 && !previousRequest?.sent) {
       previousRequest.sent = true;
       const response = await agent.Auth.refresh();

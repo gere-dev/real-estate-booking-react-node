@@ -2,8 +2,8 @@ import agent from '@/api/agent';
 import { Property } from '@/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchProperty = createAsyncThunk<Property, number, { rejectValue: string }>(
-  'property/fetchProperty',
+export const fetchPropertyById = createAsyncThunk<Property, number, { rejectValue: string }>(
+  'property/fetchPropertyById',
   async (id: number, { rejectWithValue }) => {
     try {
       const data = await agent.Property.get(id);
@@ -33,14 +33,14 @@ const propertySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProperty.pending, (state) => {
+      .addCase(fetchPropertyById.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchProperty.fulfilled, (state, action) => {
+      .addCase(fetchPropertyById.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.property = action.payload;
       })
-      .addCase(fetchProperty.rejected, (state, action) => {
+      .addCase(fetchPropertyById.rejected, (state, action) => {
         state.status = 'failed';
         state.property = {} as Property;
         if (action.payload) {

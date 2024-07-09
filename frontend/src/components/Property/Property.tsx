@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { fetchProperty } from '@/state/property/propertySlice';
+import { fetchPropertyById } from '@/state/property/propertySlice';
 import { selectProperty } from '@/state/selectors';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ export const Property = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProperty(Number(id)));
+    dispatch(fetchPropertyById(Number(id)));
     window.scrollTo(0, 0);
   }, [id, dispatch]);
 
