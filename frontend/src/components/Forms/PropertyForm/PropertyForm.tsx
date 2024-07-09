@@ -3,6 +3,7 @@ import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, Prope
 import { NewProperty, Property } from '@/types';
 import { useAppDispatch } from '@/state/hooks';
 import { createListings } from '@/state/listings/listingsSlice';
+import { convertToFormData } from '@/utils/convert.formdata';
 
 interface Props {
   initialFormData: NewProperty | Property;
@@ -33,13 +34,16 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
   };
   const dispatch = useAppDispatch();
 
-  const onSubmits = async () => {
-    dispatch(createListings(formData));
-    console.log(formData);
+  const onSubmits = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formDataToSend = convertToFormData(formData);
+    dispatch(createListings(formDataToSend));
+
+    setFormData(initialFormData);
   };
 
   return (
-    <form className='flex-1 flex gap-4 flex-col' action=''>
+    <form onSubmit={onSubmits} className='flex-1 flex gap-4 flex-col' action=''>
       <PropertyInputField
         onChange={handleChange}
         name='title'
