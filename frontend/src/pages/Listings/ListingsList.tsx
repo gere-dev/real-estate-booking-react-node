@@ -1,7 +1,7 @@
 import { apiUrl } from '@/api/agent';
 import { Property } from '@/types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { MdOutlineSingleBed, MdOutlineWifi, MdEdit, MdDelete } from 'react-icons/md';
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
 }
 
 export const ListingsList: React.FC<Props> = ({ property }) => {
+  const navigate = useNavigate();
   const imageUrl = property?.images?.length > 0 ? `${apiUrl}/uploads/${property.images[0]}` : 'https://picsum.photos/300';
   return (
     <li className='flex gap-4 shadow-lg shadow-zinc-200 p-3 rounded'>
@@ -36,7 +37,10 @@ export const ListingsList: React.FC<Props> = ({ property }) => {
           </div>
         </div>
         <div className='flex flex-col justify-between'>
-          <button className='p-2 bg-gray-200 text-gray-700 rounded shadow-md'>
+          <button
+            onClick={() => navigate(`/account/edit-listing/properties/${property.property_id}`)}
+            className='p-2 bg-gray-200 text-gray-700 rounded shadow-md'
+          >
             <MdEdit />
           </button>
           <button className='p-2 bg-gray-200 text-gray-700 rounded shadow-md'>
