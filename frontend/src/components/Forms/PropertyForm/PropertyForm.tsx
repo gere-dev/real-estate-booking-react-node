@@ -7,9 +7,10 @@ import { convertToFormData } from '@/utils/convert.formdata';
 
 interface Props {
   initialFormData: NewProperty | Property;
+  isEditing?: boolean;
 }
 
-export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
+export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = false }) => {
   const [formData, setFormData] = useState<NewProperty | Property>(initialFormData);
 
   const onRemove = (index: number) => {
@@ -37,9 +38,10 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData }) => {
   const onSubmits = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formDataToSend = convertToFormData(formData);
-    dispatch(createListings(formDataToSend));
-
-    setFormData(initialFormData);
+    if (!isEditing) {
+      dispatch(createListings(formDataToSend));
+      setFormData(initialFormData);
+    }
   };
 
   return (

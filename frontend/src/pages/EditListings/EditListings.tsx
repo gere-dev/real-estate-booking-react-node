@@ -26,7 +26,7 @@ export const EditListings = () => {
   }
   return (
     <AccountContainer>
-      <PropertyForm initialFormData={property} />
+      <PropertyForm isEditing={true} initialFormData={property} />
     </AccountContainer>
   );
 };

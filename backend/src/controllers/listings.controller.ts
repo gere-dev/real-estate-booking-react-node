@@ -73,3 +73,61 @@ export const createListing = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const updateListing = async (req: Request, res: Response) => {
+  const property = {
+    property_id: parseInt(req.params.propertyId),
+    title: req.body.title,
+    address: req.body.address,
+    city: req.body.city,
+    state: req.body.state,
+    description: req.body.description,
+    extraInfo: req.body.extraInfo,
+    price_per_night: parseInt(req.body.price_per_night),
+    bed: parseInt(req.body.bed),
+    wifi: req.body.wifi === 'true',
+    parking: req.body.parking === 'true',
+    pets: req.body.pets === 'true',
+    netflix: req.body.netflix === 'true',
+    gym: req.body.gym === 'true',
+    pool: req.body.pool === 'true',
+  };
+  const imagesToAdd = req.files as Express.Multer.File[];
+  const imagesToDelete = (req.body.imagesToDelete as string[]) || [];
+
+  if (isNaN(property.property_id) || isNaN(property.price_per_night) || isNaN(property.bed)) {
+    return res.status(400).json({ error: 'Invalid numeric input' });
+  }
+  try {
+    await db.query('UPDATE properties SET ? WHERE property_id = ?', [property, property.property_id]);
+
+    // Delete images
+    if (imagesToDelete.length > 0) {
+      const deleteImages = imagesToDelete.map(async (image) => {
+        await db.query('DELETE FROM images WHERE image_url = ?', [image]);
+      });
+
+      await Promise.all(deleteImages);
+    }
+    // Add new images
+    if (imagesToAdd.length > 0) {
+      const addNewImages = imagesToAdd.map(async (image) => {
+        await db.query('INSERT INTO images SET ?', [{ property_id: property.property_id, image_url: image.filename }]);
+      });
+
+      await Promise.all(addNewImages);
+    }
+
+    const query = `
+    SELECT p.*, i.image_url
+    FROM properties p
+    LEFT JOIN images i ON p.property_id = i.property_id
+  `;
+    const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>(query, [property.property_id]);
+    const response = formatPropertiesData(rows);
+    res.json(response);
+  } catch (error) {
+    console.error(`Error updating listing controller: ${error}`);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
