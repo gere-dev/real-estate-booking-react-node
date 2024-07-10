@@ -8,8 +8,8 @@ import { PropertyImages, PropertyHeader, PropertyDescription } from '@/component
 export const Property = () => {
   const { id } = useParams();
 
-  const property = useAppSelector(selectProperty);
   const dispatch = useAppDispatch();
+  const property = useAppSelector(selectProperty);
 
   useEffect(() => {
     dispatch(fetchPropertyById(Number(id)));

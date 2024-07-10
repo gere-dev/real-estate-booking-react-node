@@ -1,5 +1,5 @@
 import { apiUrl } from '@/api/agent';
-import React, { useState } from 'react';
+import React from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
 
 interface Props {
@@ -16,7 +16,7 @@ export const UploadPropertyImages = ({ images, onChange, onRemove }: Props) => {
         <MdCloudUpload size={24} /> Upload
         <input name='images' multiple onChange={onChange} className='hidden ' type='file' id='upload' />
       </label>
-      {images.map((image, index) => {
+      {images?.map((image, index) => {
         const imageUrl = typeof image === 'string' ? `${apiUrl}/uploads/${image}` : URL.createObjectURL(image);
         return (
           <figure key={index} className='relative'>
