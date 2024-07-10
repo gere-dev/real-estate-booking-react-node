@@ -10,7 +10,7 @@ interface Props {
 }
 export const NavList = ({ nav }: Props) => {
   const user = useAppSelector(selectUser);
-  console.log(user);
+
   return (
     <li className='flex hover:bg-primary hover:bg-opacity-40 rounded'>
       <Link className=' text-primary px-2 py-2' to={nav.path === '/account' ? `/account/${user?.user_id}` : `${nav.path}`}>

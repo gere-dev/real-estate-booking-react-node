@@ -20,9 +20,9 @@ export const fetchListings = createAsyncThunk<Array<Property>, void, { rejectVal
   }
 );
 
-export const createListings = createAsyncThunk<Property, NewProperty, { rejectValue: unknown }>(
+export const createListings = createAsyncThunk<Property, FormData, { rejectValue: unknown }>(
   'createListings/listings',
-  async (listing: NewProperty, { rejectWithValue }) => {
+  async (listing, { rejectWithValue }) => {
     try {
       const data = await agent.Listings.create(listing);
       return data;
