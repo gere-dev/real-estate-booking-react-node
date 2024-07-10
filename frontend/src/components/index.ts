@@ -6,5 +6,5 @@ export * from './Loading';
 export * from './Property';
 export * from './Slides';
 export * from './Account';
-
+export * from './PrivateRoute';
 export * from './Buttons';

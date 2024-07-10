@@ -1,9 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
-import { Nav, Property } from '@/components';
-import { Home, Login, Register, Bookings, AddListing, Listings, NotFound } from '@/pages';
+import { Nav, PrivateRoute, Property } from '@/components';
+import { Home, Login, Register, Bookings, AddListing, Listings, NotFound, EditListings } from '@/pages';
 import './App.css';
-import { PrivateRoute } from './components/PrivateRoute';
-import { EditListings } from './pages/EditListings/EditListings';
 function App() {
   return (
     <>
