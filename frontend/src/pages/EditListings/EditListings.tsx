@@ -12,6 +12,10 @@ export const EditListings = () => {
   const dispatch = useAppDispatch();
   const property = useAppSelector(selectProperty);
   const propertyStatus = useAppSelector(selectPropertyStatus);
+  const initialState = {
+    ...property,
+    images_to_delete: [],
+  };
 
   useEffect(() => {
     dispatch(fetchPropertyById(Number(propertyId)));
@@ -26,7 +30,7 @@ export const EditListings = () => {
   }
   return (
     <AccountContainer>
-      <PropertyForm isEditing={true} initialFormData={property} />
+      <PropertyForm isEditing={true} initialFormData={initialState} />
     </AccountContainer>
   );
 };

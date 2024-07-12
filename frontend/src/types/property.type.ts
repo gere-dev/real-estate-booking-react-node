@@ -19,3 +19,7 @@ export interface Property {
 }
 
 export interface NewProperty extends Omit<Property, 'property_id'> {}
+
+export interface UpdateProperty extends Property {
+  images_to_delete: (File | string)[];
+}
