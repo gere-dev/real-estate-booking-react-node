@@ -55,7 +55,7 @@ const Listings = {
   list: () => privateRequests.get('/listings/fetch'),
   create: (listing: FormData) => privateRequests.post(`/listings/create`, listing),
   update: (property: FormData, propertyId: number) => privateRequests.put(`/listings/update-listings/${propertyId}`, property),
-  delete: (propertyId: number) => privateRequests.delete(`/listings/${propertyId}`),
+  delete: (propertyId: number) => privateRequests.delete(`/listings/delete/${propertyId}`),
   getById: (id: number) => privateRequests.get(`/listings/${id}`),
 };
 
