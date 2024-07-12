@@ -29,10 +29,12 @@ export const formatPropertiesData = (rows: Property[]): PropertyWithImages[] => 
         pool: row?.pool,
         netflix: row?.netflix,
         user_id: row?.user_id,
-        images: [row?.image_url],
+        images: [],
       };
-    } else {
-      properties[propertyId]?.images?.push(row?.image_url);
+    }
+
+    if (row.image_url !== null) {
+      properties[propertyId].images.push(row.image_url);
     }
   }
 

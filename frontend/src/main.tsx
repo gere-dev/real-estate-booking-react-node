@@ -51,7 +51,7 @@ privateInstance.interceptors.response.use(
       previousRequest.headers.authorization = `Bearer ${newAccessToken}`;
       return privateInstance(previousRequest);
     }
-    store.dispatch(logout());
+    // store.dispatch(logout());
     console.error('Error refreshing token');
     return Promise.reject(error);
   }

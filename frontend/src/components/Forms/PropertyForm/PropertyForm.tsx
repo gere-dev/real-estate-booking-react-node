@@ -1,20 +1,33 @@
 import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
-import { NewProperty, Property } from '@/types';
+import { NewProperty, Property, UpdateProperty } from '@/types';
 import { useAppDispatch } from '@/state/hooks';
 import { createListings, updateListings } from '@/state/listings/listingsSlice';
 import { convertToFormData } from '@/utils/convert.formdata';
 
 interface Props {
-  initialFormData: NewProperty | Property;
+  initialFormData: NewProperty | UpdateProperty;
   isEditing?: boolean;
 }
 
 export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = false }) => {
-  const [formData, setFormData] = useState<NewProperty | Property>(initialFormData);
+  const [formData, setFormData] = useState<NewProperty | UpdateProperty>(initialFormData);
 
   const onRemove = (index: number) => {
-    setFormData({ ...formData, images: formData.images.filter((_, i) => i !== index) });
+    if (!isEditing) {
+      const updatedFormData = { ...formData };
+      updatedFormData.images = updatedFormData.images.filter((_, i) => i !== index);
+      setFormData(updatedFormData);
+    } else {
+      const updatedFormData = { ...formData } as UpdateProperty;
+      const image_to_delete = updatedFormData.images[index];
+      if (typeof image_to_delete === 'string') {
+        updatedFormData.images_to_delete.push(image_to_delete);
+      }
+      updatedFormData.images = updatedFormData.images.filter((_, i) => i !== index);
+
+      setFormData(updatedFormData);
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
@@ -38,14 +51,18 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
   const onSubmits = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formDataToSend = convertToFormData(formData);
+    // console.log('formDataToSend', formDataToSend);
     if (!isEditing) {
       dispatch(createListings(formDataToSend));
       setFormData(initialFormData);
     } else {
-      const propertyData = initialFormData as Property;
+      const propertyData = { ...formData } as UpdateProperty;
       dispatch(updateListings({ property: formDataToSend, propertyId: propertyData.property_id }));
+      propertyData.images_to_delete = [];
+      setFormData(propertyData);
     }
   };
+  console.log(formData);
 
   return (
     <form onSubmit={onSubmits} className='flex-1 flex gap-4 flex-col' action=''>
