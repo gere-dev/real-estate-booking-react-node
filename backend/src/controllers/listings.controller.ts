@@ -138,3 +138,30 @@ export const updateListing = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+export const deleteListing = async (req: Request, res: Response) => {
+  const { propertyId } = req.params;
+  try {
+    const [images]: [[], FieldPacket[]] = await db.query<[] & FieldPacket[]>('SELECT image_url FROM images WHERE property_id = ?', [propertyId]);
+
+    // Delete images from the uploads folder
+    if (images.length > 0) {
+      const deleteFilePromises = images.map(async (image) => {
+        await fs.unlink(`src/uploads/${image}`, (err) => {
+          console.log(err);
+        });
+      });
+      await Promise.all(deleteFilePromises);
+    }
+
+    // Delete image records from the database
+    await db.query('DELETE FROM images WHERE property_id = ?', [propertyId]);
+    await db.query('DELETE FROM properties WHERE property_id = ?', [propertyId]);
+    db.commit();
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(`Error deleting listing controller: ${error}`);
+    db.rollback();
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
