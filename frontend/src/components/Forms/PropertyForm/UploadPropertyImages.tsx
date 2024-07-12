@@ -16,21 +16,23 @@ export const UploadPropertyImages = ({ images, onChange, onRemove }: Props) => {
         <MdCloudUpload size={24} /> Upload
         <input name='images' multiple onChange={onChange} className='hidden ' type='file' id='upload' />
       </label>
-      {images?.map((image, index) => {
-        const imageUrl = typeof image === 'string' ? `${apiUrl}/uploads/${image}` : URL.createObjectURL(image);
-        return (
-          <figure key={index} className='relative'>
-            <img className='h-28 w-28  border-gray-500  object-cover rounded outline-none' src={imageUrl} alt='Property Image' />
-            <button
-              type='button'
-              onClick={() => onRemove(index)}
-              className='text-gray-500 bg-opacity-80 bg-gray-200 p-2 h-10 w-10 absolute rounded-full flex items-center justify-center -bottom-4 -left-4'
-            >
-              <MdDelete />
-            </button>
-          </figure>
-        );
-      })}
+      {images?.length > 0 &&
+        images.map((image, index) => {
+          const imageUrl = typeof image === 'string' ? `${apiUrl}/uploads/${image}` : URL.createObjectURL(image as File);
+
+          return (
+            <figure key={index} className='relative'>
+              <img className='h-28 w-28  border-gray-500  object-cover rounded outline-none' src={imageUrl} alt='Property Image' />
+              <button
+                type='button'
+                onClick={() => onRemove(index)}
+                className='text-gray-500 bg-opacity-80 bg-gray-200 p-2 h-10 w-10 absolute rounded-full flex items-center justify-center -bottom-4 -left-4'
+              >
+                <MdDelete />
+              </button>
+            </figure>
+          );
+        })}
     </div>
   );
 };

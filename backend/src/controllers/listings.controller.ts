@@ -1,8 +1,9 @@
+import { Request, Response } from 'express';
 import db from '@/database/config/db';
+import { FieldPacket, RowDataPacket } from 'mysql2';
 import { Property, PropertyWithImages } from '@/types';
 import { formatPropertiesData } from '@/utils';
-import { Request, Response } from 'express';
-import { FieldPacket, RowDataPacket } from 'mysql2';
+import fs from 'fs';
 
 export const getListings = async (req: Request, res: Response) => {
   const query = `
@@ -14,7 +15,6 @@ export const getListings = async (req: Request, res: Response) => {
     const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>(query);
 
     const response = formatPropertiesData(rows);
-
     res.json(response);
   } catch (error) {
     console.error(error);
@@ -93,7 +93,8 @@ export const updateListing = async (req: Request, res: Response) => {
     pool: req.body.pool === 'true',
   };
   const imagesToAdd = req.files as Express.Multer.File[];
-  const imagesToDelete = (req.body.imagesToDelete as string[]) || [];
+  let imagesToDelete = (req.body.images_to_delete as string[]) || [];
+  console.log(req.body, imagesToAdd);
 
   if (isNaN(property.property_id) || isNaN(property.price_per_night) || isNaN(property.bed)) {
     return res.status(400).json({ error: 'Invalid numeric input' });
@@ -103,8 +104,14 @@ export const updateListing = async (req: Request, res: Response) => {
 
     // Delete images
     if (imagesToDelete.length > 0) {
-      const deleteImages = imagesToDelete.map(async (image) => {
+      const deleteImages = imagesToDelete.map(async (image, index) => {
         await db.query('DELETE FROM images WHERE image_url = ?', [image]);
+        await fs.unlink(`src/uploads/${image}`, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+        imagesToDelete.splice(index, 1);
       });
 
       await Promise.all(deleteImages);
