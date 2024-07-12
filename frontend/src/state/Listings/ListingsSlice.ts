@@ -37,6 +37,23 @@ export const createListings = createAsyncThunk<Property, FormData, { rejectValue
   }
 );
 
+export const updateListings = createAsyncThunk<Property, { property: FormData; propertyId: number }, { rejectValue: unknown }>(
+  'updateListings/listings',
+  async ({ property, propertyId }, { rejectWithValue }) => {
+    try {
+      const data = await agent.Listings.update(property, propertyId);
+      return data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.log(error.response.data);
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue({ message: 'Unknown error occurred while updating listing' });
+      }
+    }
+  }
+);
+
 type listingsState = {
   listings: Property[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -77,6 +94,19 @@ export const listingsSlice = createSlice({
         state.listings = [action.payload, ...state.listings];
       })
       .addCase(createListings.rejected, (state, action: PayloadAction<unknown>) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+
+      // update user listing
+      .addCase(updateListings.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateListings.fulfilled, (state, action: PayloadAction<Property>) => {
+        state.status = 'succeeded';
+        state.listings = state.listings.map((listing) => (listing.property_id === action.payload.property_id ? action.payload : listing));
+      })
+      .addCase(updateListings.rejected, (state, action: PayloadAction<unknown>) => {
         state.status = 'failed';
         state.error = action.payload as string;
       });

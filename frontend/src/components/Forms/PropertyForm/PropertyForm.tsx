@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
 import { NewProperty, Property } from '@/types';
 import { useAppDispatch } from '@/state/hooks';
-import { createListings } from '@/state/listings/listingsSlice';
+import { createListings, updateListings } from '@/state/listings/listingsSlice';
 import { convertToFormData } from '@/utils/convert.formdata';
 
 interface Props {
@@ -41,6 +41,9 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
     if (!isEditing) {
       dispatch(createListings(formDataToSend));
       setFormData(initialFormData);
+    } else {
+      const propertyData = initialFormData as Property;
+      dispatch(updateListings({ property: formDataToSend, propertyId: propertyData.property_id }));
     }
   };
 
@@ -80,7 +83,7 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
       <PropertyCheckBoxContainer handleChange={handleChange} />
 
       <div className='flex flex-col md:flex-row gap-4'>
-        <RectangleButton type='submit' label='Submit' />
+        <RectangleButton type='submit' label={isEditing ? 'Update' : 'Create'} />
         <RectangleButton className='bg-white border border-gray-300 text-gray-500' label='Cancel' />
       </div>
     </form>
