@@ -2,14 +2,15 @@ import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/com
 import { useState } from 'react';
 
 export const FilterForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{ location: string; price: number; bed: number }>({
     location: '',
     price: '',
     bed: '',
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const newValue = name === 'price' ? parseFloat(value) : value;
+    setFormData({ ...formData, [name]: newValue });
   };
 
   const handleSummit = (e: React.FormEvent<HTMLFormElement>) => {
