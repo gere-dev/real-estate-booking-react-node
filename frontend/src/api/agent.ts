@@ -48,7 +48,7 @@ const Properties = {
 };
 
 const Property = {
-  get: (id: number) => privateRequests.get(`/property/${id}`),
+  get: (id: number) => privateRequests.get(`/property/fetch/${id}`),
 };
 
 const Listings = {

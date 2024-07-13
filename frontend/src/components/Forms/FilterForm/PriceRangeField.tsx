@@ -4,7 +4,7 @@ import { BiDollar } from 'react-icons/bi';
 import { Slider } from '@mui/material';
 
 export const PriceRangeField = ({ ...props }: ComponentProps<'input'>) => {
-  const [value, setValue] = useState<number[]>([20, 100]);
+  const [value, setValue] = useState<number[]>([20, 98]);
 
   const minDistance = 20;
 
