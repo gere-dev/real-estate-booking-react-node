@@ -4,6 +4,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { MdOutlineSingleBed, MdOutlineWifi, MdEdit, MdDelete } from 'react-icons/md';
+import { useAppDispatch } from '@/state/hooks';
+import { deleteListings } from '@/state/listings/listingsSlice';
 interface Props {
   property: Property;
 }
@@ -11,6 +13,7 @@ interface Props {
 export const ListingsList: React.FC<Props> = ({ property }) => {
   const navigate = useNavigate();
   const imageUrl = property?.images?.length > 0 ? `${apiUrl}/uploads/${property.images[0]}` : 'https://picsum.photos/300';
+  const dispatch = useAppDispatch();
   return (
     <li className='flex gap-4 shadow-lg shadow-zinc-200 p-3 rounded'>
       <figure className=''>
@@ -43,7 +46,7 @@ export const ListingsList: React.FC<Props> = ({ property }) => {
           >
             <MdEdit />
           </button>
-          <button className='p-2 bg-gray-200 text-gray-700 rounded shadow-md'>
+          <button onClick={() => dispatch(deleteListings(property.property_id))} className='p-2 bg-gray-200 text-gray-700 rounded shadow-md'>
             <MdDelete />
           </button>
         </div>

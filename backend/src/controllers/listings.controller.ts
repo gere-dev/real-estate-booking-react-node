@@ -143,11 +143,12 @@ export const deleteListing = async (req: Request, res: Response) => {
   const { propertyId } = req.params;
   try {
     const [images]: [[], FieldPacket[]] = await db.query<[] & FieldPacket[]>('SELECT image_url FROM images WHERE property_id = ?', [propertyId]);
+    console.log(images);
 
     // Delete images from the uploads folder
     if (images.length > 0) {
-      const deleteFilePromises = images.map(async (image) => {
-        await fs.unlink(`src/uploads/${image}`, (err) => {
+      const deleteFilePromises = images.map(async (image: { image_url: string }) => {
+        await fs.unlink(`src/uploads/${image.image_url}`, (err) => {
           console.log(err);
         });
       });
@@ -157,11 +158,11 @@ export const deleteListing = async (req: Request, res: Response) => {
     // Delete image records from the database
     await db.query('DELETE FROM images WHERE property_id = ?', [propertyId]);
     await db.query('DELETE FROM properties WHERE property_id = ?', [propertyId]);
-    db.commit();
     res.sendStatus(200);
+    // db.commit();
   } catch (error) {
     console.error(`Error deleting listing controller: ${error}`);
-    db.rollback();
+    // db.rollback();
     res.status(500).json({ error: 'Internal server error' });
   }
 };
