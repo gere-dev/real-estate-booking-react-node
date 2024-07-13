@@ -52,14 +52,14 @@ export const getProperties = async (req: Request, res: Response) => {
 
 export const filterProperties = async (req: Request, res: Response) => {
   try {
-    const { location, minPrice, maxPrice, bed } = req.query;
-    console.log(location, minPrice, maxPrice, bed);
+    const { city, minPrice, maxPrice, bed } = req.query;
+    console.log('filter by', req.query);
 
     const query = `
       SELECT p.*, i.image_url
       FROM properties p
       LEFT JOIN images i ON p.property_id = i.property_id
-      WHERE p.city LIKE '%${location}%' AND p.price_per_night >= ${minPrice} AND p.price_per_night <= ${maxPrice} AND p.bed >= ${bed}
+      WHERE p.city LIKE '%${city}%' AND p.price_per_night >= ${minPrice} AND p.price_per_night <= ${maxPrice} AND p.bed >= ${bed}
     `;
 
     let params: any[] = [];
@@ -70,33 +70,40 @@ export const filterProperties = async (req: Request, res: Response) => {
       WHERE 1=1
     `;
 
-    if (location) {
-      sql += ` AND p.city LIKE '%${location}%'`;
-      params.push(`%${location}%`);
+    if (city) {
+      sql += ` AND p.city LIKE ?`;
+      params.push(`%${city}%`);
     }
 
     if (minPrice) {
-      sql += ` AND p.price_per_night >= ${minPrice}`;
+      sql += ` AND p.price_per_night >= ?`;
       params.push(minPrice);
     }
 
     if (maxPrice) {
-      sql += ` AND p.price_per_night <= ${maxPrice}`;
+      sql += ` AND p.price_per_night <= ?`;
       params.push(maxPrice);
     }
 
     if (bed) {
-      sql += ` AND p.bed >= ${bed}`;
-      params.push(bed);
+      if (bed === '1' || bed === '2') {
+        sql += ` AND p.bed =?`;
+        params.push(parseInt(bed));
+      } else if (bed === '3+') {
+        sql += ` AND p.bed >= ?`;
+        params.push(3);
+      }
     }
 
     sql += `
       ORDER BY p.price_per_night ASC
     `;
+
+    console.log(sql, params);
     const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>(sql, params);
 
     const response = formatPropertiesData(rows);
-    console.log(response);
+    // console.log(response);
     res.json(response);
   } catch (error) {
     console.error(error);
