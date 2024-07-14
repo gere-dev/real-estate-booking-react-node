@@ -2,20 +2,32 @@ import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/com
 import { useState } from 'react';
 
 export const FilterForm = () => {
-  const [formData, setFormData] = useState<{ location: string; price: number; bed: number }>({
-    location: '',
-    price: '',
-    bed: '',
-  });
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    const newValue = name === 'price' ? parseFloat(value) : value;
-    setFormData({ ...formData, [name]: newValue });
+  const [price, setPrice] = useState<[number, number]>([0, 700]);
+  const [city, setCity] = useState<string>('');
+  const [bed, setBed] = useState<number | string>('any');
+
+  const minDistance = 20;
+
+  const handlePriceChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+    if (!Array.isArray(newValue)) return;
+
+    if (activeThumb === 0) {
+      setPrice([Math.min(newValue[0], price[1] - minDistance), price[1]]);
+    } else {
+      setPrice([price[0], Math.max(newValue[1], price[0] + minDistance)]);
+    }
   };
 
   const handleSummit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    const query = {
+      city,
+      minPrice: price[0],
+      maxPrice: price[1],
+      bed,
+    };
+
+    console.log(query);
   };
 
   return (
@@ -23,9 +35,9 @@ export const FilterForm = () => {
       onSubmit={handleSummit}
       className='flex flex-col gap-4 lg:flex-row lg:items-center lg:shadow-lg lg:-mt-16 rounded-full py-2 lg:px-8 z-10 lg:h-fit bg-white'
     >
-      <SearchField onChange={handleChange} />
-      <PriceRangeField onChange={handleChange} />
-      <NumOfBedField onChange={handleChange} />
+      <SearchField onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCity(e.target.value)} />
+      <PriceRangeField onChange={handlePriceChange} value={price} />
+      <NumOfBedField onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setBed(e.target.value)} />
       <SearchButton />
     </form>
   );
