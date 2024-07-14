@@ -4,7 +4,7 @@ import { formatPropertiesData } from '@/utils';
 import { Request, Response } from 'express';
 import { FieldPacket, RowDataPacket } from 'mysql2';
 
-export const getProperties = async (req: Request, res: Response) => {
+export const getAllProperties = async (req: Request, res: Response) => {
   const query = `
       SELECT p.*, i.image_url
       FROM properties p
@@ -106,5 +106,29 @@ export const filterProperties = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const getPropertyById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const query = `
+    SELECT properties.*, images.image_url
+    FROM properties
+    LEFT JOIN images ON properties.property_id = images.property_id
+    WHERE properties.property_id = ?
+    `;
+    const [result] = await db.query<any>(query, [id]);
+
+    let property: PropertyWithImages = {} as PropertyWithImages;
+
+    if (result.length > 0) {
+      property = { ...property, ...result[0] };
+      property.images = result.map((row: Property) => row.image_url);
+    }
+    res.status(201).json(property);
+  } catch (error) {
+    console.log(`Error at getProperty controller: ${error}`);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };

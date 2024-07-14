@@ -6,7 +6,7 @@ export const fetchPropertyById = createAsyncThunk<Property, number, { rejectValu
   'property/fetchPropertyById',
   async (id: number, { rejectWithValue }) => {
     try {
-      const data = await agent.Property.get(id);
+      const data = await agent.Properties.getById(id);
       return data;
     } catch (error) {
       console.log((error as Error).message);
