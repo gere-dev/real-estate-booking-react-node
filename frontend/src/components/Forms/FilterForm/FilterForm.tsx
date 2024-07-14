@@ -1,10 +1,14 @@
 import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/components';
+import { filterProperties } from '@/state/filterProperties/filterPropertiesSlice';
+import { useAppDispatch } from '@/state/hooks';
 import { useState } from 'react';
 
 export const FilterForm = () => {
   const [price, setPrice] = useState<[number, number]>([0, 700]);
   const [city, setCity] = useState<string>('');
   const [bed, setBed] = useState<number | string>('any');
+
+  const dispatch = useAppDispatch();
 
   const minDistance = 20;
 
@@ -26,8 +30,7 @@ export const FilterForm = () => {
       maxPrice: price[1],
       bed,
     };
-
-    console.log(query);
+    dispatch(filterProperties(query));
   };
 
   return (

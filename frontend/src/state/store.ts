@@ -7,12 +7,14 @@ import propertiesSlice from './properties/propertiesSlice';
 import propertySlice from './property/propertySlice';
 import authSlice from './auth/authSlice';
 import listingsSlice from './listings/listingsSlice';
+import filterPropertiesSlice from './filterProperties/filterPropertiesSlice';
 
 const rootReducer = combineReducers({
   properties: propertiesSlice,
   property: propertySlice,
   auth: authSlice,
   listings: listingsSlice,
+  filteredProperties: filterPropertiesSlice,
 });
 // Persistor
 const persistConfig = {
