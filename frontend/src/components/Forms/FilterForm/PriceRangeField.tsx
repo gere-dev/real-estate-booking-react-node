@@ -16,6 +16,9 @@ export const PriceRangeField = ({ onChange, value }: Props) => {
         valueLabelDisplay='auto'
         disableSwap
         sx={{ color: ' #ff385c ' }}
+        min={0}
+        max={900}
+        step={10}
       />
     </FieldContainer>
   );

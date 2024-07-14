@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const FilterForm = () => {
-  const [price, setPrice] = useState<[number, number]>([0, 700]);
+  const [price, setPrice] = useState<[number, number]>([0, 880]);
   const [city, setCity] = useState<string>('');
   const [bed, setBed] = useState<number | string>('any');
 
