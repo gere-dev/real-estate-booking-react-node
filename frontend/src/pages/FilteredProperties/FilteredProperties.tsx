@@ -1,8 +1,20 @@
 import { PropertiesGrid } from '@/components';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppSelector } from '@/state/hooks';
+import { selectFilteredProperties } from '@/state/selectors';
+import { BiArrowBack } from 'react-icons/bi';
+import { BsBack } from 'react-icons/bs';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const FilteredProperties = () => {
-  const dispatch = useAppDispatch();
+  const properties = useAppSelector(selectFilteredProperties);
+  const navigate = useNavigate();
 
-  return <PropertiesGrid />;
+  return (
+    <section className='max-width-container py-2'>
+      <button onClick={() => navigate(-1)} className='text-2xl text-white bg-primary rounded-full p-1'>
+        <BiArrowBack />
+      </button>
+      <PropertiesGrid properties={properties} />
+    </section>
+  );
 };

@@ -2,6 +2,7 @@ import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/com
 import { filterProperties } from '@/state/filterProperties/filterPropertiesSlice';
 import { useAppDispatch } from '@/state/hooks';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const FilterForm = () => {
   const [price, setPrice] = useState<[number, number]>([0, 700]);
@@ -9,6 +10,7 @@ export const FilterForm = () => {
   const [bed, setBed] = useState<number | string>('any');
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const minDistance = 20;
 
@@ -31,6 +33,7 @@ export const FilterForm = () => {
       bed,
     };
     dispatch(filterProperties(query));
+    navigate('/filtered-properties', { state: query });
   };
 
   return (
