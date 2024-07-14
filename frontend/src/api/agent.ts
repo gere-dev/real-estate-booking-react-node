@@ -41,10 +41,13 @@ const privateRequests = createRequests(privateInstance);
 const publicRequests = createRequests(publicInstance);
 
 const Properties = {
-  list: () => privateRequests.get('/properties'),
-  create: (property: PropertyType) => privateRequests.post(`/properties/`, property),
-  update: (property: PropertyType) => privateRequests.put(`/properties/${property.property_id}`, property),
-  delete: (propertyId: number) => privateRequests.delete(`/properties/${propertyId}`),
+  list: () => publicRequests.get('/properties/get-all-properties'),
+  create: (property: PropertyType) => privateRequests.post(`/properties/create`, property),
+  update: (property: PropertyType) => privateRequests.put(`/properties/update/${property.property_id}`, property),
+  delete: (propertyId: number) => privateRequests.delete(`/properties/delete/${propertyId}`),
+  getById: (id: number) => publicRequests.get(`/properties/get-by-id/${id}`),
+  filter: (query: { city: string; minPrice: number; maxPrice: number; bed: number | string }) =>
+    publicRequests.get(`/properties/filter?city=${query.city}&minPrice=${query.minPrice}&maxPrice=${query.maxPrice}&bed=${query.bed}`),
 };
 
 const Property = {
@@ -56,7 +59,7 @@ const Listings = {
   create: (listing: FormData) => privateRequests.post(`/listings/create`, listing),
   update: (property: FormData, propertyId: number) => privateRequests.put(`/listings/update-listings/${propertyId}`, property),
   delete: (propertyId: number) => privateRequests.delete(`/listings/delete/${propertyId}`),
-  getById: (id: number) => privateRequests.get(`/listings/${id}`),
+  getById: (id: number) => privateRequests.get(`/listings/get-by-id/${id}`),
 };
 
 const Auth = {

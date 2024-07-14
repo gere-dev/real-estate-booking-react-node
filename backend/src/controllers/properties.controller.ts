@@ -99,11 +99,9 @@ export const filterProperties = async (req: Request, res: Response) => {
       ORDER BY p.price_per_night ASC
     `;
 
-    console.log(sql, params);
     const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>(sql, params);
 
     const response = formatPropertiesData(rows);
-    // console.log(response);
     res.json(response);
   } catch (error) {
     console.error(error);
