@@ -1,18 +1,11 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { fetchProperties } from '@/state/properties/propertiesSlice';
-import { selectProperties } from '@/state/properties/selectors';
+import React from 'react';
 import { Loading, PropertiesList } from '@/components';
+import { Property } from '@/types';
 
-export const PropertiesGrid = () => {
-  const dispatch = useAppDispatch();
-
-  const properties = useAppSelector(selectProperties);
-
-  useEffect(() => {
-    dispatch(fetchProperties());
-  }, [dispatch]);
-
+interface Props {
+  properties: Property[] | null;
+}
+export const PropertiesGrid: React.FC<Props> = ({ properties }) => {
   if (!properties) {
     return <Loading />;
   }
