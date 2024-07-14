@@ -10,12 +10,12 @@ export interface Property {
   city: string;
   state: string;
   price_per_night: number;
-  wifi: boolean;
-  parking: boolean;
-  pets: boolean;
-  gym: boolean;
-  pool: boolean;
-  netflix: boolean;
+  wifi: boolean | number;
+  parking: boolean | number;
+  pets: boolean | number;
+  gym: boolean | number;
+  pool: boolean | number;
+  netflix: boolean | number;
   user_id: number;
   image_url: string;
 }

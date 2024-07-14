@@ -97,7 +97,7 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
         label='Extra info'
         description='Extra information about the property'
       />
-      <PropertyCheckBoxContainer handleChange={handleChange} />
+      <PropertyCheckBoxContainer formData={formData} handleChange={handleChange} />
 
       <div className='flex flex-col md:flex-row gap-4'>
         <RectangleButton type='submit' label={isEditing ? 'Update' : 'Create'} />
