@@ -28,7 +28,7 @@ export const validateCredentials = (req: Request, res: Response, next: NextFunct
   next();
 };
 
-export const authenticateUser = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ message: errorMessages.unauthorized });
