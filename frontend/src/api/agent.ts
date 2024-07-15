@@ -62,6 +62,10 @@ const Listings = {
   getById: (id: number) => privateRequests.get(`/listings/get-by-id/${id}`),
 };
 
+const Bookings = {
+  list: () => privateRequests.get('/bookings/get-all-bookings'),
+};
+
 const Auth = {
   register: (data: Register) => publicRequests.post(`/auth/register`, data),
   login: (data: Login) => publicRequests.post(`/auth/login`, data),
@@ -74,6 +78,7 @@ const agent = {
   Property,
   Auth,
   Listings,
+  Bookings,
 };
 
 export default agent;
