@@ -38,7 +38,7 @@ export interface User {
 
 export interface CustomRequest extends Request {
   user: {
-    id?: number;
-    role?: UserRole;
+    id: number;
+    role: UserRole;
   };
 }
