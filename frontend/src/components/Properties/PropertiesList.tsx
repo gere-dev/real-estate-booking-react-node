@@ -1,13 +1,18 @@
 import { apiUrl } from '@/api/agent';
+import BookingsInfo from '@/pages/Bookings/BookingsInfo';
 import { Property } from '@/types';
 import React, { FC } from 'react';
 import { MdOutlineBed, MdOutlineLocationOn } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface Props {
   property: Property;
+  children?: React.ReactNode;
 }
-export const PropertiesList: FC<Props> = ({ property }) => {
+export const PropertiesList: FC<Props> = ({ property, children }) => {
+  const location = useLocation();
+  const isBookingsPage = location.pathname.includes('/bookings');
+
   return (
     <li key={property.property_id} className='flex flex-col gap-2 text-gray-600'>
       <Link className='w-full relative overflow-hidden rounded-lg' to={`/property/${property.property_id}`}>
@@ -21,17 +26,17 @@ export const PropertiesList: FC<Props> = ({ property }) => {
 
       <div>
         <h3 className='font-semibold text-xl capitalize leading-1 mb-1'>{property.title}</h3>
-        <div className='text-gray-500 flex flex-col gap-0'>
-          <div className='flex gap-2 items-end'>
-            <MdOutlineLocationOn className='inline text-lg' />
-            <span className='text-gray-600 text-sm'>{`${property.city}, ${property.state}`}</span>{' '}
+        <div className='text-gray-500 flex flex-col gap-0 text-xs'>
+          <div className='flex gap-1 items-end '>
+            <MdOutlineLocationOn className='inline' />
+            <span className='text-gray-600 '>{`${property.city}, ${property.state}`}</span>{' '}
           </div>
-          <div className='flex gap-2 items-end'>
-            <MdOutlineBed className='inline text-lg' />
-            <span className='text-gray-600 text-sm'>{property.bed}</span>
+          <div className='flex gap-1 items-end'>
+            <MdOutlineBed className='inline ' />
+            <span className='text-gray-600 '>{property.bed}</span>
           </div>
-          <div> </div>
         </div>
+        {isBookingsPage && <BookingsInfo />}
       </div>
     </li>
   );
