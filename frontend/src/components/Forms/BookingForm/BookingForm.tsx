@@ -32,6 +32,7 @@ const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
     return { days, cost_per_guest_night, cleaning_fee, service_fee, tax, total };
   }, [checkin, checkout, guest, price]);
 
+  const disableReservation = !checkin || !checkout || Number(guest) <= 0 || Number(guest) > bed || days <= 0;
   return (
     <div className=' shadow-lg p-3 rounded-lg'>
       <span className='font-bold text-lg'>
@@ -64,7 +65,7 @@ const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
             />
           </div>
         </div>
-        <RectangleButton label='Reserve' />
+        <RectangleButton disabled={disableReservation} label='Reserve' />
       </form>
       <div className='my-4'>
         <BookingPriceSummary title={`$100 X guest(s) X ${days} night(s)`} price={cost_per_guest_night} />
