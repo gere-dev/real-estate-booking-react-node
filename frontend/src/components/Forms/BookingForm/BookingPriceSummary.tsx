@@ -7,7 +7,7 @@ interface Props {
 export const BookingPriceSummary: FC<Props> = ({ title, price }) => {
   return (
     <div className='flex justify-between'>
-      <span>{title}</span>
+      <span className={title === 'Total' ? 'font-bold' : 'font-normal'}>{title}</span>
       <span>${price.toFixed(2)}</span>
     </div>
   );

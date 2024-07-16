@@ -31,6 +31,8 @@ const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
         <BookingPriceSummary title='Cleaning fee' price={price} />
         <BookingPriceSummary title='Service fee' price={price} />
         <BookingPriceSummary title='Taxes' price={price} />
+        <hr />
+        <BookingPriceSummary title='Total' price={price} />
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export const Property = () => {
     <section className='max-width-container mt-8'>
       <PropertyHeader city={property.city} state={property.state} title={property.title} />
       <PropertyImages images={property.images} />
-      <div className='grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr] mt-4'>
+      <div className='grid grid-cols-1 gap-8 md:gap-2 sm:grid-cols-[2fr_1fr] mt-4'>
         <PropertyDescription property={property} />
         <BookingForm price={property.price_per_night} propertyId={property.property_id} bed={property.bed} />
       </div>
