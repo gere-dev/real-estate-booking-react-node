@@ -1,12 +1,12 @@
 import { apiUrl } from '@/api/agent';
 import BookingsInfo from '@/pages/Bookings/BookingsInfo';
-import { Property } from '@/types';
+import { Booking, Property } from '@/types';
 import React, { FC } from 'react';
 import { MdOutlineBed, MdOutlineLocationOn } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 
 interface Props {
-  property: Property;
+  property: Property | Booking;
   children?: React.ReactNode;
 }
 export const PropertiesList: FC<Props> = ({ property, children }) => {
@@ -18,7 +18,7 @@ export const PropertiesList: FC<Props> = ({ property, children }) => {
       <Link className='w-full relative overflow-hidden rounded-lg' to={`/property/${property.property_id}`}>
         <img className='aspect-square object-cover w-full h-full' src={`${apiUrl}/uploads/${property?.images[0]}`} alt='property image' />
         <span className='absolute bottom-2 left-1 rounded text-white z-10 font-bold text-lg'>
-          ${property.price_per_night}
+          ${property?.price_per_night}
           <span className='text-sm font-normal'>/night</span>
         </span>
         <div className='absolute top-0 left-0 h-full w-full  bg-gradient-to-b from-transparent to-gray-700 opacity-60'></div>

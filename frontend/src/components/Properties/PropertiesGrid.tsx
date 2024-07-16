@@ -1,9 +1,9 @@
 import React from 'react';
 import { Loading, PropertiesList } from '@/components';
-import { Property } from '@/types';
+import { Booking, Property } from '@/types';
 
 interface Props {
-  properties: Property[] | null;
+  properties: Property[] | Booking[] | null;
 }
 export const PropertiesGrid: React.FC<Props> = ({ properties }) => {
   if (!properties) {

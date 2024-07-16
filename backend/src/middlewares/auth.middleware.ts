@@ -45,16 +45,21 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
       return res.status(401).json({ message: errorMessages.invalidToken });
     }
 
-    const user = db.query('SELECT * FROM users WHERE id = ?', [decoded.id]);
+    const user = db.query('SELECT * FROM users WHERE user_id = ?', [decoded.id]);
 
     if (!user) {
       return res.status(401).json({ message: errorMessages.userNotFound });
     }
-
+    if (!req.user) {
+      req.user = {
+        id: decoded.id,
+        role: decoded.role,
+      };
+    }
     req.user.id = decoded.id;
     req.user.role = decoded.role;
   } catch (error) {
-    console.log(error, 'auth error');
+    console.log(`Error at authenticateUser middleware: ${error}`);
     return res.status(401).json({ message: errorMessages.invalidToken });
   }
 
