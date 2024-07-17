@@ -7,6 +7,14 @@ export const privateInstance: AxiosInstance = axios.create({
   baseURL: apiUrl,
   withCredentials: true,
   headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const formDataInstance: AxiosInstance = axios.create({
+  baseURL: apiUrl,
+  withCredentials: true,
+  headers: {
     'Content-Type': 'multipart/form-data',
   },
 });

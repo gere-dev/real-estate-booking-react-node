@@ -34,31 +34,30 @@ export const getAllBookings = async (req: Request, res: Response) => {
 };
 
 export const createBooking = async (req: Request, res: Response) => {
-  const { property_id, start_date, end_date } = req.body;
+  const { property_id, guests, total_price, start_date, end_date } = req.body;
   const { id } = req.user;
+  console.log(id);
 
   if (typeof property_id !== 'number' || !start_date || !end_date) {
     return res.status(400).json({ error: 'Invalid input data' });
   }
 
   try {
-    const [rows]: [any, FieldPacket[]] = await db.query('INSERT INTO bookings (user_id, property_id, start_date, end_date) VALUES (?, ?, ?, ?)', [
-      id,
-      property_id,
-      start_date,
-      end_date,
-    ]);
+    const [rows]: [any, FieldPacket[]] = await db.query(
+      'INSERT INTO bookings (user_id, property_id, guests,  start_date, end_date, total_price) VALUES (?, ?, ?, ?, ?, ?)',
+      [id, property_id, guests, start_date, end_date, total_price]
+    );
 
     const booking_id = rows.insertId;
     const query = `
       SELECT * FROM properties 
-      WHERE property_id = ${property_id}
       LEFT JOIN images ON properties.property_id = images.property_id
+      WHERE properties.property_id = ${property_id}
     `;
 
     const [property] = await db.query(query);
     const formattedProperty = formatPropertiesData(property as Property[]);
-    const response = { ...formattedProperty, booking_id, start_date, end_date };
+    const response = { ...formattedProperty, booking_id, start_date, end_date, total_price, guests };
 
     res.status(200).json(response);
   } catch (error) {

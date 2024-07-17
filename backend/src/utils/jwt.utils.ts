@@ -26,11 +26,6 @@ export const generateRefreshToken = (id: number, role: string): string => {
 };
 
 export const verifyToken = (token: string) => {
-  try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    return decoded;
-  } catch (error) {
-    console.error('Error verifying token:', error);
-    return null; // Return null or handle error as needed
-  }
+  const decoded = jwt.verify(token, SECRET_KEY);
+  return decoded;
 };

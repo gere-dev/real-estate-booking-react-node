@@ -110,6 +110,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     // verify token
     const decoded = await verifyToken(refreshToken);
     if (!decoded) {
+      console.log(` invalid token while refreshing: ${decoded}`);
       return res.status(401).json({ message: 'Invalid token' });
     }
 
@@ -145,7 +146,7 @@ export const privateRoutes = async (req: Request, res: Response) => {
   try {
     const decoded = verifyToken(token);
     if (!decoded) {
-      return res.status(403).json({ message: 'Invalid token' });
+      return res.status(403).json({ message: 'Invalid token or expired' });
     }
     res.status(200).json({ message: 'Private route accessed successfully' });
   } catch (error) {

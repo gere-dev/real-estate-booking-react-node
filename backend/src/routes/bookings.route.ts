@@ -5,5 +5,5 @@ import { authenticateUser } from '@/middlewares';
 const router = Router();
 
 router.get('/get-all-bookings', authenticateUser, getAllBookings);
-router.post('/create-booking', authenticateUser, createBooking);
+router.post('/create', authenticateUser, createBooking);
 export default router;
