@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { BookingDateInput, BookingPriceSummary, RectangleButton } from '@/components';
 import { CreateBooking } from '@/types';
-import { useAppDispatch } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { createBooking } from '@/state/bookings/bookingsSlice';
+import { selectIsAuth } from '@/state/selectors';
 
 interface Props {
   price: number;
@@ -18,6 +19,7 @@ const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
   });
 
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(selectIsAuth);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
 
@@ -52,7 +54,7 @@ const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
     return { days, cost_per_guest_night, cleaning_fee, service_fee, tax, total };
   }, [checkin, checkout, guests, price]);
 
-  const disableReservation = !checkin || !checkout || Number(guests) <= 0 || Number(guests) > bed || days <= 0;
+  const disableReservation = !checkin || !checkout || Number(guests) <= 0 || Number(guests) > bed || days <= 0 || !isAuth;
   return (
     <div className=' shadow-lg p-3 rounded-lg'>
       <span className='font-bold text-lg'>
