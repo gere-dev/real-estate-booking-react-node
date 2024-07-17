@@ -36,7 +36,14 @@ export const PropertiesList: FC<Props> = ({ property, children }) => {
             <span className='text-gray-600 '>{property.bed}</span>
           </div>
         </div>
-        {isBookingsPage && <BookingsInfo />}
+        {isBookingsPage && (
+          <BookingsInfo
+            end_date={(property as Booking).end_date}
+            start_date={(property as Booking).start_date}
+            total_price={(property as Booking).total_price}
+            booking_id={(property as Booking).booking_id}
+          />
+        )}
       </div>
     </li>
   );

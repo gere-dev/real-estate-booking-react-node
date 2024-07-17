@@ -35,11 +35,12 @@ export const createBooking = createAsyncThunk<Booking, CreateBooking, { rejectVa
   }
 );
 
-export const deleteBooking = createAsyncThunk<void, number, { rejectValue: string }>(
+export const deleteBooking = createAsyncThunk<number, number, { rejectValue: string }>(
   'bookings/deleteBooking',
   async (bookingId, { rejectWithValue }) => {
     try {
       await agent.Bookings.delete(bookingId);
+      return bookingId;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
         return rejectWithValue(error.response.data);
@@ -95,8 +96,9 @@ export const bookingsSlice = createSlice({
       .addCase(deleteBooking.pending, (state) => {
         state.status = Status.LOADING;
       })
-      .addCase(deleteBooking.fulfilled, (state) => {
+      .addCase(deleteBooking.fulfilled, (state, action) => {
         state.status = Status.SUCCEEDED;
+        state.bookings = state.bookings.filter((booking) => booking.booking_id !== action.payload);
       })
       .addCase(deleteBooking.rejected, (state, action) => {
         state.status = Status.FAILED;
