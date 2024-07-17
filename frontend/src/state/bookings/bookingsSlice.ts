@@ -1,7 +1,7 @@
 import agent from '@/api/agent';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Booking, Status } from '@/types';
+import { Booking, CreateBooking, Status } from '@/types';
 import { isAxiosError } from 'axios';
 export const getAllBookings = createAsyncThunk<Booking[], void, { rejectValue: string }>(
   'bookings/getAllBookings',
@@ -14,6 +14,22 @@ export const getAllBookings = createAsyncThunk<Booking[], void, { rejectValue: s
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while fetching bookings');
+      }
+    }
+  }
+);
+
+export const createBooking = createAsyncThunk<Booking, CreateBooking, { rejectValue: string }>(
+  'bookings/createBooking',
+  async (booking, { rejectWithValue }) => {
+    try {
+      const data = await agent.Bookings.create(booking);
+      return data;
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue('Unknown error occurred while creating booking');
       }
     }
   }
@@ -45,6 +61,18 @@ export const bookingsSlice = createSlice({
         state.bookings = action.payload;
       })
       .addCase(getAllBookings.rejected, (state, action) => {
+        state.status = Status.FAILED;
+        state.error = action.payload as string;
+      })
+      // create booking
+      .addCase(createBooking.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(createBooking.fulfilled, (state, action) => {
+        state.status = Status.SUCCEEDED;
+        state.bookings.push(action.payload);
+      })
+      .addCase(createBooking.rejected, (state, action) => {
         state.status = Status.FAILED;
         state.error = action.payload as string;
       });
