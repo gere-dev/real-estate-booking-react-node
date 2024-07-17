@@ -1,4 +1,4 @@
-import { Login, Register, Property as PropertyType, NewProperty } from '@/types';
+import { Login, Register, Property as PropertyType, NewProperty, CreateBooking } from '@/types';
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 export const apiUrl = import.meta.env.NODE === 'production' ? import.meta.env.VITE_API_URL : 'http://localhost:5000/api';
@@ -64,6 +64,7 @@ const Listings = {
 
 const Bookings = {
   list: () => privateRequests.get('/bookings/get-all-bookings'),
+  create: (booking: CreateBooking) => privateRequests.post(`/bookings/create`, booking),
 };
 
 const Auth = {

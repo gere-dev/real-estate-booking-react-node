@@ -6,3 +6,11 @@ export interface Booking extends Property {
   end_date: string;
   total_price: number;
 }
+
+export interface CreateBooking {
+  start_date: string;
+  end_date: string;
+  total_price: number;
+  property_id: number;
+  guests: number;
+}
