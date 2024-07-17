@@ -73,6 +73,7 @@ const Listings = {
 const Bookings = {
   list: () => privateRequests.get('/bookings/get-all-bookings'),
   create: (booking: CreateBooking) => privateRequests.post(`/bookings/create`, booking),
+  delete: (bookingId: number) => privateRequests.delete(`/bookings/delete/${bookingId}`),
 };
 
 const Auth = {

@@ -35,6 +35,21 @@ export const createBooking = createAsyncThunk<Booking, CreateBooking, { rejectVa
   }
 );
 
+export const deleteBooking = createAsyncThunk<void, number, { rejectValue: string }>(
+  'bookings/deleteBooking',
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      await agent.Bookings.delete(bookingId);
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue('Unknown error occurred while deleting booking');
+      }
+    }
+  }
+);
+
 type BookingsState = {
   bookings: Booking[];
   status: Status;
@@ -73,6 +88,17 @@ export const bookingsSlice = createSlice({
         state.bookings.push(action.payload);
       })
       .addCase(createBooking.rejected, (state, action) => {
+        state.status = Status.FAILED;
+        state.error = action.payload as string;
+      })
+      // delete booking
+      .addCase(deleteBooking.pending, (state) => {
+        state.status = Status.LOADING;
+      })
+      .addCase(deleteBooking.fulfilled, (state) => {
+        state.status = Status.SUCCEEDED;
+      })
+      .addCase(deleteBooking.rejected, (state, action) => {
         state.status = Status.FAILED;
         state.error = action.payload as string;
       });
