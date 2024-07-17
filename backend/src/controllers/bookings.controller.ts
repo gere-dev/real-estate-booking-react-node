@@ -1,7 +1,6 @@
 import { UserRole } from '@/constants/user.role';
 import db from '@/database/config/db';
-import { Property } from '@/types';
-import { formatPropertiesData } from '@/utils';
+import { formatBookingData } from '@/utils';
 import { Request, Response } from 'express';
 import { FieldPacket } from 'mysql2';
 
@@ -25,7 +24,7 @@ export const getAllBookings = async (req: Request, res: Response) => {
 
   try {
     const [rows]: any = await db.query(query);
-    const response = formatPropertiesData(rows);
+    const response = formatBookingData(rows);
 
     res.status(200).json(response);
   } catch (error) {
@@ -56,9 +55,9 @@ export const createBooking = async (req: Request, res: Response) => {
       WHERE properties.property_id = ${property_id}
     `;
 
-    const [property] = await db.query(query);
-    const formattedProperty = formatPropertiesData(property as Property[]);
-    const response = { ...formattedProperty, booking_id, start_date, end_date, total_price, guests };
+    const [property]: any = await db.query(query);
+    const newBooking = [...property, booking_id, start_date, end_date, total_price, guests];
+    const response = formatBookingData(newBooking)[0];
 
     res.status(200).json(response);
   } catch (error) {
