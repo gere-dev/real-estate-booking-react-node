@@ -10,6 +10,7 @@ import { selectBookings } from '@/state/selectors';
 export const Bookings = () => {
   const booking = useAppSelector(selectBookings);
   const dispatch = useAppDispatch();
+  console.log(booking);
 
   useEffect(() => {
     dispatch(getAllBookings());

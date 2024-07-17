@@ -7,11 +7,10 @@ import { FieldPacket } from 'mysql2';
 
 export const getAllBookings = async (req: Request, res: Response) => {
   // (SELECT image_url FROM images WHERE property_id = p.property_id LIMIT 1) AS image_url
-  let query = `SELECT b.*, p.title, p.price_per_night, p.bed, b.start_date, b.end_date
-    FROM bookings b
-    LEFT JOIN properties p ON b.property_id = p.property_id
-    LEFT JOIN images i ON p.property_id = i.property_id
-  `;
+  let query = `SELECT b.*, p.title, p.city, p.state, i.image_url, p.price_per_night, p.bed, b.start_date, b.end_date, b.total_price, b.guests
+                FROM bookings b
+                LEFT JOIN properties p ON b.property_id = p.property_id
+                LEFT JOIN images i ON p.property_id = i.property_id`;
 
   if (req.user.role === UserRole.ADMIN) {
     query += `
@@ -25,8 +24,10 @@ export const getAllBookings = async (req: Request, res: Response) => {
   }
 
   try {
-    const [rows] = await db.query(query);
-    res.status(200).json(rows);
+    const [rows]: any = await db.query(query);
+    const response = formatPropertiesData(rows);
+    console.log(rows);
+    res.status(200).json(response);
   } catch (error) {
     console.error(`Error at getAllBookings controller: ${error}`);
     res.status(500).json({ error: 'Internal server error' });
