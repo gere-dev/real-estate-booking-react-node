@@ -26,7 +26,7 @@ export const getAllBookings = async (req: Request, res: Response) => {
   try {
     const [rows]: any = await db.query(query);
     const response = formatPropertiesData(rows);
-    console.log(rows);
+
     res.status(200).json(response);
   } catch (error) {
     console.error(`Error at getAllBookings controller: ${error}`);
@@ -63,6 +63,19 @@ export const createBooking = async (req: Request, res: Response) => {
     res.status(200).json(response);
   } catch (error) {
     console.error(`Error at createBooking controller: ${error}`);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+export const deleteBooking = async (req: Request, res: Response) => {
+  const { booking_id } = req.params;
+  const { id } = req.user;
+  try {
+    await db.query('DELETE FROM bookings WHERE user_id = ? AND booking_id = ?', [id, booking_id]);
+
+    res.status(200).json({ message: 'Booking deleted successfully' });
+  } catch (error) {
+    console.error(`Error at deleteBooking controller: ${error}`);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
