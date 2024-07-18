@@ -1,4 +1,4 @@
-import { NewProperty, Property, UpdateProperty } from '@/types';
+import { Property, NewProperty, UpdateProperty } from '@/types';
 
 export const convertToFormData = (formData: NewProperty | Property | UpdateProperty) => {
   const formDataToSend = new FormData();
