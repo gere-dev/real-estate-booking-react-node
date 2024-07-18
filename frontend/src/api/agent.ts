@@ -28,7 +28,7 @@ const formHeader = {
 
 // Function to create request methods
 const createRequests = (instance: AxiosInstance) => ({
-  get: (url: string, query?: object) => instance.get(url, { params: query }).then(responseBody),
+  get: <T>(url: string, query?: T) => instance.get(url, { params: query }).then(responseBody),
   post: <T>(url: string, body: T, headers?: object) => instance.post(url, body, { headers }).then(responseBody),
   put: <T>(url: string, body: T, headers?: object) => instance.put(url, body, { headers }).then(responseBody),
   delete: (url: string, headers?: object) => instance.delete(url, { headers }).then(responseBody),
@@ -45,8 +45,7 @@ const PropertiesAPI = {
   update: (property: PropertyType) => privateRequests.put(`/properties/update/${property.property_id}`, property),
   delete: (propertyId: number) => privateRequests.delete(`/properties/delete/${propertyId}`),
   getById: (id: number) => publicRequests.get(`/properties/get-by-id/${id}`),
-  filter: (query: { city: string; minPrice: number; maxPrice: number; bed: number | string }) =>
-    publicRequests.get(`/properties/filter`, { params: query }),
+  filter: (query: { city: string; minPrice: number; maxPrice: number; bed: number | string }) => publicRequests.get(`/properties/filter`, query),
 };
 
 const ListingsAPI = {

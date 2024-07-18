@@ -26,8 +26,6 @@ export const getAllProperties = async (req: Request, res: Response) => {
 export const filterProperties = async (req: Request, res: Response) => {
   try {
     const { city, minPrice, maxPrice, bed } = req.query;
-    console.log('filter by', req.query);
-
     const query = `
       SELECT p.*, i.image_url
       FROM properties p
