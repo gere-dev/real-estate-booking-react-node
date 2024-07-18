@@ -5,7 +5,6 @@ import { Request, Response } from 'express';
 import { FieldPacket } from 'mysql2';
 
 export const getAllBookings = async (req: Request, res: Response) => {
-  // (SELECT image_url FROM images WHERE property_id = p.property_id LIMIT 1) AS image_url
   let query = `SELECT b.*, p.title, p.city, p.state, i.image_url, p.price_per_night, p.bed, b.start_date, b.end_date, b.total_price, b.guests
                 FROM bookings b
                 LEFT JOIN properties p ON b.property_id = p.property_id
