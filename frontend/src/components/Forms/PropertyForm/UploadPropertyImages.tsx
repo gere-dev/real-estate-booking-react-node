@@ -1,4 +1,5 @@
 import { apiUrl } from '@/api/agent';
+import { ErrorMessage } from '@/components/ErrorMessage';
 import React from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
 
@@ -8,8 +9,9 @@ interface Props {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 
   onRemove: (index: number) => void;
+  error?: string;
 }
-export const UploadPropertyImages = ({ images, onChange, onRemove }: Props) => {
+export const UploadPropertyImages = ({ images, onChange, onRemove, ...props }: Props) => {
   return (
     <div className='flex gap-4 flex-wrap flex-shrink-0'>
       <label className='hover:cursor-pointer text-gray-500 h-28 border w-fit px-4 py-2 rounded flex items-center gap-2' htmlFor='upload'>
@@ -33,6 +35,7 @@ export const UploadPropertyImages = ({ images, onChange, onRemove }: Props) => {
             </figure>
           );
         })}
+      <ErrorMessage error={props.error} />
     </div>
   );
 };

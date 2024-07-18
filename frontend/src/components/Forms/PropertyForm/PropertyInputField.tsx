@@ -1,8 +1,10 @@
+import { ErrorMessage } from '@/components/ErrorMessage';
 import React, { ComponentProps } from 'react';
 
 interface InputProps extends ComponentProps<'input'> {
   label?: string;
   description?: string;
+  error?: string;
 }
 
 export const PropertyInputField = ({ label, description, ...props }: InputProps) => {
@@ -15,6 +17,7 @@ export const PropertyInputField = ({ label, description, ...props }: InputProps)
         <small className='text-gray-400'>{description}</small>
       </div>
       <input {...props} type={'text' || props.type} className='border px-2 py-2 rounded outline-none w-full' />
+      <ErrorMessage error={props.error} />
     </div>
   );
 };

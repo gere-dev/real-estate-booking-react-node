@@ -23,3 +23,15 @@ export interface NewProperty extends Omit<Property, 'property_id'> {}
 export interface UpdateProperty extends Property {
   images_to_delete: (File | string)[];
 }
+
+export type PropertyErrors = {
+  title?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  province?: string;
+  images?: string;
+  description?: string;
+  price_per_night?: string;
+  bed?: string;
+};

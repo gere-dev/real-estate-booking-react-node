@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
-import { NewProperty, Property, UpdateProperty } from '@/types';
+import { NewProperty, Property, PropertyErrors, UpdateProperty } from '@/types';
 import { useAppDispatch } from '@/state/hooks';
 import { createListings, updateListings } from '@/state/listings/listingsSlice';
 import { convertToFormData } from '@/utils/convert.formdata';
+import { validatePropertyForm } from '@/utils/validation';
 
 interface Props {
   initialFormData: NewProperty | UpdateProperty;
@@ -12,7 +13,9 @@ interface Props {
 
 export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = false }) => {
   const [formData, setFormData] = useState<NewProperty | UpdateProperty>(initialFormData);
+  const [errors, setErrors] = useState<PropertyErrors>();
 
+  //removes image from images array
   const onRemove = (index: number) => {
     if (!isEditing) {
       const updatedFormData = { ...formData };
@@ -30,6 +33,7 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
     }
   };
 
+  //updates form data in response to user input changes.
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value, type } = event.target;
 
@@ -48,10 +52,19 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
   };
   const dispatch = useAppDispatch();
 
+  // Dispatches createListings or updateListings action.
   const onSubmits = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Validate form data before dispatching registration action.
+    const validateErrors = validatePropertyForm(formData);
+    if (Object.keys(validateErrors).length > 0) {
+      setErrors(validateErrors);
+      return;
+    }
+
+    // Dispatch registration action.
     const formDataToSend = convertToFormData(formData);
-    // console.log('formDataToSend', formDataToSend);
     if (!isEditing) {
       dispatch(createListings(formDataToSend));
       setFormData(initialFormData);
@@ -62,7 +75,6 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
       setFormData(propertyData);
     }
   };
-  console.log(formData);
 
   return (
     <form onSubmit={onSubmits} className='flex-1 flex gap-4 flex-col' action=''>
@@ -72,23 +84,40 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
         value={formData.title}
         label='Title'
         description='Title for your place, should be short and catchy as in advertisement'
+        error={errors?.title}
       />
-      <PropertyInputField onChange={handleChange} name='address' value={formData.address} label='address' description='Address to this place' />
-      <PropertyInputField onChange={handleChange} name='city' value={formData.city} label='city' description='City where the place is located' />
       <PropertyInputField
+        onChange={handleChange}
+        name='address'
+        value={formData.address}
+        label='address'
+        description='Address to this place'
+        error={errors?.address}
+      />
+      <PropertyInputField
+        onChange={handleChange}
+        name='city'
+        value={formData.city}
+        label='city'
+        description='City where the place is located'
+        error={errors?.city}
+      />
+      <PropertyInputField
+        error={errors?.state}
         onChange={handleChange}
         name='state'
         value={formData.state}
         label='province/state'
         description='Province/State where the place is located'
       />
-      <UploadPropertyImages onChange={handleChange} images={formData.images} onRemove={onRemove} />
+      <UploadPropertyImages error={errors?.images} onChange={handleChange} images={formData.images} onRemove={onRemove} />
       <PropertyTextareaField
         onChange={handleChange}
         name='description'
         value={formData.description}
         label='Description'
         description='Description of the place.'
+        error={errors?.description}
       />
       <PropertyTextareaField
         onChange={handleChange}

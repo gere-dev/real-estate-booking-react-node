@@ -8,3 +8,4 @@ export * from './Slides';
 export * from './Account';
 export * from './PrivateRoute';
 export * from './Buttons';
+export * from './ErrorMessage';
