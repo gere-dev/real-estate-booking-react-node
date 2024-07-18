@@ -4,7 +4,7 @@ import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { useState } from 'react';
 import { useAppDispatch } from '@/state/hooks';
 import { register } from '@/state/auth/authSlice';
-import { validateRegisterForm } from '@/utils/validation';
+import { validateRegisterForm } from '@/utils';
 export const Register = () => {
   const [formData, setFormData] = useState<RegisterType>({
     name: '',

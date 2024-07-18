@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
-import { NewProperty, Property, PropertyErrors, UpdateProperty } from '@/types';
+import { NewProperty, PropertyErrors, UpdateProperty } from '@/types';
 import { useAppDispatch } from '@/state/hooks';
 import { createListings, updateListings } from '@/state/listings/listingsSlice';
-import { convertToFormData } from '@/utils/convert.formdata';
-import { validatePropertyForm } from '@/utils/validation';
+import { convertToFormData, validatePropertyForm } from '@/utils';
 
 interface Props {
   initialFormData: NewProperty | UpdateProperty;

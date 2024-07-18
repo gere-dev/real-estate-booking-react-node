@@ -1,11 +1,10 @@
-import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
-import AuthProvider from '@/components/AuthProvider';
+import { AuthForm, AuthMessageLink, Title, AuthContainer, AuthProvider } from '@/components';
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { login } from '@/state/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { selectAuthStatus } from '@/state/selectors';
 import { AuthForm as AuthFormType, AuthFormErrors, Login as LoginType, Status } from '@/types';
-import { validateLoginForm } from '@/utils/validation';
+import { validateLoginForm } from '@/utils';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
