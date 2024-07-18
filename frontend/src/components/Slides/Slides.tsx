@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect, useState } from 'react';
+import React, { ComponentProps, useCallback, useEffect, useState } from 'react';
 import { apiUrl } from '@/api/agent';
 import { BiSolidLeftArrowAlt, BiSolidRightArrowAlt } from 'react-icons/bi';
 import { CgClose } from 'react-icons/cg';
@@ -12,7 +12,8 @@ interface Props {
 
 export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => {
   const [currentImage, setCurrentImage] = useState(0);
-  const nextSlide = () => {
+
+  const nextSlide = useCallback(() => {
     if (!images || images.length === 0) return;
 
     if (currentImage === images.length - 1) {
@@ -20,9 +21,9 @@ export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => 
     } else {
       setCurrentImage(currentImage + 1);
     }
-  };
+  }, [currentImage, images]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     if (!images || images.length === 0) return;
 
     if (currentImage === 0) {
@@ -30,7 +31,7 @@ export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => 
     } else {
       setCurrentImage(currentImage - 1);
     }
-  };
+  }, [currentImage, images]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -50,7 +51,7 @@ export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentImage]);
+  }, [currentImage, closeSlide, nextSlide, prevSlide]);
 
   useEffect(() => {
     if (isSlideOpen) {
