@@ -8,6 +8,7 @@ import store, { persistor } from './state/store.ts';
 import { PersistGate } from 'redux-persist/integration/react';
 import agent, { privateInstance } from './api/agent.ts';
 import { logout } from './state/auth/authSlice.ts';
+import { AxiosInterceptorOptions } from 'axios';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>

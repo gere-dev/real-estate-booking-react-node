@@ -23,6 +23,7 @@ export const getListings = async (req: Request, res: Response) => {
 };
 
 export const createListing = async (req: Request, res: Response) => {
+  console.log(req.body, req.headers, req.files);
   const property = {
     user_id: parseInt(req.body.user_id),
     title: req.body.title,
