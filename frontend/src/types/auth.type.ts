@@ -21,3 +21,9 @@ export interface User {
   email: string;
   token: string;
 }
+
+export interface AuthFormErrors {
+  email?: string;
+  password?: string;
+  name?: string;
+}

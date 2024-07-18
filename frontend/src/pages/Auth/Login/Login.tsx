@@ -1,11 +1,11 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
 import AuthProvider from '@/components/AuthProvider';
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
-import { useRedirect } from '@/hooks';
 import { login } from '@/state/auth/authSlice';
-import { RootState, useAppDispatch, useAppSelector } from '@/state/hooks';
-import { selectAuthStatus, selectIsAuth, selectUser } from '@/state/selectors';
-import { AuthForm as AuthFormType, Login as LoginType, Status } from '@/types';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { selectAuthStatus } from '@/state/selectors';
+import { AuthForm as AuthFormType, AuthFormErrors, Login as LoginType, Status } from '@/types';
+import { validateLoginForm } from '@/utils/validation';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ export const Login = () => {
     email: '',
     password: '',
   });
+  const [errors, setErrors] = useState<AuthFormErrors>();
 
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectAuthStatus);
@@ -30,7 +31,13 @@ export const Login = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login(formData));
+
+    const validationErrors = validateLoginForm(formData);
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(login(formData));
+    } else {
+      setErrors(validationErrors);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
