@@ -1,8 +1,8 @@
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useAppSelector } from '@/state/hooks';
 import { selectUser } from '@/state/selectors';
 import { Link, useLocation } from 'react-router-dom';
-import { Account_Nav } from '@/types/accountnav.type';
+import { Account_Nav } from '@/types';
 interface Props {
   nav: Account_Nav;
 }
@@ -10,8 +10,14 @@ export const AccountNavList: FC<Props> = ({ nav }) => {
   const { pathname } = useLocation();
   const userId = useAppSelector(selectUser)!.user_id;
 
-  const isCurrentPath = pathname.startsWith(typeof nav.path === 'function' ? nav.path(userId) : nav.path);
-  const isActive = isCurrentPath ? 'bg-primary text-white' : '';
+  const isActive = useMemo(() => {
+    if (!nav || !nav.path) return '';
+
+    const isCurrentPath = pathname.startsWith(typeof nav.path === 'function' ? nav.path(userId) : nav.path);
+    return isCurrentPath ? 'bg-primary text-white' : '';
+  }, [nav, pathname, userId]);
+
+  if (!nav || !nav.path) return null;
 
   return (
     <li className='flex gap-1' key={nav.title}>
