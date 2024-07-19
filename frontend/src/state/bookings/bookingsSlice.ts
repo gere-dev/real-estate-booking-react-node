@@ -1,8 +1,5 @@
-import agent from '@/api/agent';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
-import { Booking, CreateBooking, Status } from '@/types';
-import { isAxiosError } from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
+import { Booking, Status } from '@/types';
 import { createBooking, deleteBooking, getAllBookings } from './bookingsThunks';
 
 type BookingsState = {
