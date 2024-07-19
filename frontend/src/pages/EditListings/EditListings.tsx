@@ -1,5 +1,5 @@
 import { AccountContainer, PropertyForm } from '@/components';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { selectProperty, selectPropertyStatus, fetchPropertyById } from '@/state';
 import { Status } from '@/types';
 import React, { useEffect } from 'react';

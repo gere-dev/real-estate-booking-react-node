@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { fetchPropertyById } from '@/state';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';

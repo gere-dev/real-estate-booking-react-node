@@ -4,8 +4,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { MdOutlineSingleBed, MdOutlineWifi, MdEdit, MdDelete } from 'react-icons/md';
-import { useAppDispatch } from '@/state/hooks';
-import { deleteListings } from '@/state/listings/listingsThunks';
+import { useAppDispatch } from '@/hooks';
+import { deleteListings } from '@/state';
 interface Props {
   property: Property;
 }

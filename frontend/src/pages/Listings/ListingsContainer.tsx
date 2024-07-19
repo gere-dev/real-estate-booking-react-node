@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { ListingsList } from '@/pages';
-import { fetchListings } from '@/state/listings/listingsThunks';
-import { selectListings } from '@/state/listings/listingsSelectors';
+import { fetchListings, selectListings } from '@/state';
 
 export const ListingsContainer = () => {
   const properties = useAppSelector(selectListings);

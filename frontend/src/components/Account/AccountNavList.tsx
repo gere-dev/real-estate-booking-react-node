@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { useAppSelector } from '@/state/hooks';
+import { useAppSelector } from '@/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { Account_Nav } from '@/types';
 import { selectUser } from '@/state';

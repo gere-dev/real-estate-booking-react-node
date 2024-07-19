@@ -3,7 +3,7 @@ import { IconType } from 'react-icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from './types';
-import { useAppSelector } from '@/state/hooks';
+import { useAppSelector } from '@/hooks';
 import { selectUser } from '@/state/auth/authSelectors';
 interface Props {
   nav: Nav;

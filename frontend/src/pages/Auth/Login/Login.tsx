@@ -1,8 +1,7 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer, AuthProvider } from '@/components';
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
-import { selectAuthStatus } from '@/state/auth/authSelectors';
-import { login } from '@/state/auth/authThunks';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { selectAuthStatus, login } from '@/state';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { AuthForm as AuthFormType, AuthFormErrors, Login as LoginType, Status } from '@/types';
 import { validateLoginForm } from '@/utils';
 import { useEffect, useState } from 'react';

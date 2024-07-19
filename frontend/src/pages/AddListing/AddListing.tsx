@@ -1,6 +1,6 @@
 import { AccountContainer, PropertyForm } from '@/components';
-import { selectUser } from '@/state/auth/authSelectors';
-import { useAppSelector } from '@/state/hooks';
+import { selectUser } from '@/state';
+import { useAppSelector } from '@/hooks';
 import { NewProperty } from '@/types';
 
 export const AddListing = () => {

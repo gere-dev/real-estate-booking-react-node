@@ -1,5 +1,5 @@
 import { PropertiesHeader, PropertiesGrid } from '@/components';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { fetchProperties, selectProperties } from '@/state';
 import { useEffect } from 'react';
 

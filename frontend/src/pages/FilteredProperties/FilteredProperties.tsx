@@ -1,6 +1,6 @@
 import { PropertiesGrid } from '@/components';
 import { selectFilteredProperties } from '@/state/filterProperties/filterPropertiesSelectors';
-import { useAppSelector } from '@/state/hooks';
+import { useAppSelector } from '@/hooks';
 import { BiArrowBack } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 

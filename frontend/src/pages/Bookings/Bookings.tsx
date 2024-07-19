@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { AccountContainer } from '../../components/Account';
 import { PropertiesGrid } from '@/components';
-import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 
 import { selectBookings } from '@/state/bookings/bookingsSelectors';
 import { getAllBookings } from '@/state/bookings/bookingsThunks';

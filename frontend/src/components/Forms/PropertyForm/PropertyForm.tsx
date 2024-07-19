@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
 import { NewProperty, PropertyErrors, UpdateProperty } from '@/types';
-import { useAppDispatch } from '@/state/hooks';
+import { useAppDispatch } from '@/hooks';
 import { convertToFormData, validatePropertyForm } from '@/utils';
 import { createListings, updateListings } from '@/state/listings/listingsThunks';
 
