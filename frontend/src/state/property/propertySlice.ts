@@ -15,7 +15,7 @@ const initialState: PropertyState = {
   error: null,
 };
 
-const propertySlice = createSlice({
+export const propertySlice = createSlice({
   name: 'property',
   initialState,
   reducers: {},
@@ -38,4 +38,4 @@ const propertySlice = createSlice({
   },
 });
 
-export default propertySlice.reducer;
+

@@ -3,19 +3,14 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 //Reducers
-import propertiesSlice from './properties/propertiesSlice';
-import propertySlice from './property/propertySlice';
-import authSlice from './auth/authSlice';
-import listingsSlice from './listings/listingsSlice';
-import filterPropertiesSlice from './filterProperties/filterPropertiesSlice';
-import bookingsSlice from './bookings/bookingsSlice';
+import { propertiesSlice, propertySlice, authSlice, listingsSlice, filterPropertiesSlice, bookingsSlice } from '@/state';
 
 const rootReducer = combineReducers({
-  properties: propertiesSlice,
-  property: propertySlice,
-  auth: authSlice,
-  listings: listingsSlice,
-  filteredProperties: filterPropertiesSlice,
+  properties: propertiesSlice.reducer,
+  property: propertySlice.reducer,
+  auth: authSlice.reducer,
+  listings: listingsSlice.reducer,
+  filteredProperties: filterPropertiesSlice.reducer,
   bookings: bookingsSlice,
 });
 // Persistor

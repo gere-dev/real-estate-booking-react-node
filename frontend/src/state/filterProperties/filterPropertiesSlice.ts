@@ -36,5 +36,3 @@ export const filterPropertiesSlice = createSlice({
       });
   },
 });
-
-export default filterPropertiesSlice.reducer;
