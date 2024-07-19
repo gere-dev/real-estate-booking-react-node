@@ -66,10 +66,11 @@ export const createBooking = async (req: Request, res: Response) => {
 };
 
 export const deleteBooking = async (req: Request, res: Response) => {
-  const { booking_id } = req.params;
+  const { bookingId } = req.params;
   const { id } = req.user;
+
   try {
-    await db.query('DELETE FROM bookings WHERE user_id = ? AND booking_id = ?', [id, booking_id]);
+    await db.query('DELETE FROM bookings WHERE user_id = ? AND booking_id = ?', [id, bookingId]);
 
     res.status(200).json({ message: 'Booking deleted successfully' });
   } catch (error) {

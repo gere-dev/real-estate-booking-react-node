@@ -17,4 +17,9 @@ export const END_POINTS = Object.freeze({
     update: '/update/:propertyId',
     delete: '/delete/:propertyId',
   },
+  bookings: {
+    getAll: '/get-all',
+    create: '/create',
+    delete: '/delete/:bookingId',
+  },
 });

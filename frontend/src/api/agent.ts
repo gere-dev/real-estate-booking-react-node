@@ -41,9 +41,6 @@ const publicRequests = createRequests(publicInstance);
 // APIs
 const PropertiesAPI = {
   list: () => publicRequests.get('/properties/get-all'),
-  create: (property: PropertyType) => privateRequests.post(`/properties/create`, property),
-  update: (property: PropertyType) => privateRequests.put(`/properties/update/${property.property_id}`, property),
-  delete: (propertyId: number) => privateRequests.delete(`/properties/delete/${propertyId}`),
   getById: (id: number) => publicRequests.get(`/properties/get-by-id/${id}`),
   filter: (query: { city: string; minPrice: number; maxPrice: number; bed: number | string }) => publicRequests.get(`/properties/filter`, query),
 };
@@ -57,7 +54,7 @@ const ListingsAPI = {
 };
 
 const BookingsAPI = {
-  list: () => privateRequests.get('/bookings/get-all-bookings'),
+  list: () => privateRequests.get('/bookings/get-all'),
   create: (booking: CreateBooking) => privateRequests.post(`/bookings/create`, booking),
   delete: (bookingId: number) => privateRequests.delete(`/bookings/delete/${bookingId}`),
 };
