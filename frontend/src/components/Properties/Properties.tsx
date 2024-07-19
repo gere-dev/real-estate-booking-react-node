@@ -1,7 +1,6 @@
 import { PropertiesHeader, PropertiesGrid } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { fetchProperties } from '@/state/properties/propertiesSlice';
-import { selectProperties } from '@/state/properties/selectors';
+import { fetchProperties, selectProperties } from '@/state';
 import { useEffect } from 'react';
 
 export const Properties = () => {
