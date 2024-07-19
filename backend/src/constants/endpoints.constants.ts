@@ -11,4 +11,10 @@ export const END_POINTS = Object.freeze({
     filter: '/filter',
     getById: '/get-by-id/:id',
   },
+  listings: {
+    getAll: '/get-all',
+    create: '/create',
+    update: '/update/:propertyId',
+    delete: '/delete/:propertyId',
+  },
 });

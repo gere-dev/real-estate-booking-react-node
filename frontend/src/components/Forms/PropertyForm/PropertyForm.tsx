@@ -57,10 +57,11 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
 
     // Validate form data before dispatching registration action.
     const validateErrors = validatePropertyForm(formData);
-    if (Object.keys(validateErrors).length > 0) {
-      setErrors(validateErrors);
-      return;
-    }
+    console.log(validateErrors);
+    // if (Object.keys(validateErrors).length > 0) {
+    //   setErrors(validateErrors);
+    //   return;
+    // }
 
     // Dispatch registration action.
     const formDataToSend = convertToFormData(formData);

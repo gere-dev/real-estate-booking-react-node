@@ -49,9 +49,9 @@ const PropertiesAPI = {
 };
 
 const ListingsAPI = {
-  list: () => privateRequests.get('/listings/fetch'),
-  create: (listing: FormData) => privateRequests.post(`/listings/create`, listing, { headers: formHeader }),
-  update: (listing: FormData, listingId: number) => privateRequests.put(`/listings/update-listings/${listingId}`, listing, { headers: formHeader }),
+  list: () => privateRequests.get('/listings/get-all'),
+  create: (listing: FormData) => privateRequests.post(`/listings/create`, listing, formHeader),
+  update: (listing: FormData, listingId: number) => privateRequests.put(`/listings/update/${listingId}`, listing, formHeader),
   delete: (listingId: number) => privateRequests.delete(`/listings/delete/${listingId}`),
   getById: (id: number) => privateRequests.get(`/listings/get-by-id/${id}`),
 };
@@ -69,7 +69,6 @@ const AuthAPI = {
   refresh: () => privateRequests.get(`/auth/refresh`),
 };
 
-// Exporting agent object
 const agent = {
   Properties: PropertiesAPI,
   Listings: ListingsAPI,
