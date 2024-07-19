@@ -1,7 +1,6 @@
 import { AccountContainer, PropertyForm } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { fetchPropertyById } from '@/state/property/propertySlice';
-import { selectProperty, selectPropertyStatus } from '@/state/selectors';
+import { selectProperty, selectPropertyStatus, fetchPropertyById } from '@/state';
 import { Status } from '@/types';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
