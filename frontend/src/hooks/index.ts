@@ -1,1 +1,2 @@
-export * from './redirect.hook';
+export * from './router.hooks';
+export * from './router.hooks';
