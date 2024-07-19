@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { AccountContainer, AccountNav } from '../../components/Account';
+import { AccountContainer } from '../../components/Account';
 import { PropertiesGrid } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 
-import { getAllBookings } from '@/state/bookings/bookingsSlice';
-import { selectBookings } from '@/state/selectors';
-// import { AccountNav } from '../Account';
+import { selectBookings } from '@/state/bookings/bookingsSelectors';
+import { getAllBookings } from '@/state/bookings/bookingsThunks';
 
 export const Bookings = () => {
   const booking = useAppSelector(selectBookings);

@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { BookingDateInput, BookingPriceSummary, RectangleButton } from '@/components';
 import { CreateBooking } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { createBooking } from '@/state/bookings/bookingsSlice';
 import { selectIsAuth } from '@/state/auth/authSelectors';
+import { createBooking } from '@/state/bookings/bookingsThunks';
 
 interface Props {
   price: number;

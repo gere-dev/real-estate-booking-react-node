@@ -7,7 +7,3 @@ export const selectFilteredProperties = (state: RootState) => state.filteredProp
 
 export const selectListings = (state: RootState) => state.listings.listings;
 export const selectListingsStatus = (state: RootState) => state.listings.status;
-
-// Bookings Selectors
-export const selectBookings = (state: RootState) => state.bookings.bookings;
-export const selectBookingsStatus = (state: RootState) => state.bookings.status;

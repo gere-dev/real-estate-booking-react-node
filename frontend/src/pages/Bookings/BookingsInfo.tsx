@@ -1,7 +1,7 @@
 import React from 'react';
 import { RectangleButton } from '../../components';
 import { useAppDispatch } from '@/state/hooks';
-import { deleteBooking } from '@/state/bookings/bookingsSlice';
+import { deleteBooking } from '@/state/bookings/bookingsThunks';
 interface Props {
   start_date: string;
   end_date: string;
