@@ -1,13 +1,16 @@
+import express from 'express';
+import { END_POINTS } from '@/constants';
 import { login, logout, privateRoutes, refreshToken, register } from '@/controllers';
 import { validateCredentials } from '@/middlewares';
-import express from 'express';
 
 const router = express.Router();
 
-router.post('/register', validateCredentials, register);
-router.post('/login', validateCredentials, login);
-router.get('/refresh', refreshToken);
-router.get('/private-route', privateRoutes);
-router.post('/logout', logout);
+const authEndpoints = END_POINTS.auth;
+
+router.post(authEndpoints.register, validateCredentials, register);
+router.post(authEndpoints.login, validateCredentials, login);
+router.get(authEndpoints.refresh, refreshToken);
+router.get(authEndpoints.private, privateRoutes);
+router.post(authEndpoints.private, logout);
 
 export default router;

@@ -1,9 +1,9 @@
-export const END_POINTS = {
+export const END_POINTS = Object.freeze({
   auth: {
     login: '/login',
     register: '/register',
     logout: '/logout',
     refresh: '/refresh',
-    private_route: 'private-route',
+    private: '/private',
   },
-};
+});
