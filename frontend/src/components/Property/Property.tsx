@@ -1,9 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { fetchPropertyById } from '@/state/property/propertySlice';
-import React, { useEffect } from 'react';
+import { fetchPropertyById } from '@/state';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { PropertyImages, PropertyHeader, PropertyDescription } from '@/components';
-import BookingForm from '../Forms/BookingForm/BookingForm';
+import { PropertyImages, PropertyHeader, PropertyDescription, BookingForm } from '@/components';
 import { selectProperty } from '@/state';
 
 export const Property = () => {

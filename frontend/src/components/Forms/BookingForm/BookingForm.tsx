@@ -10,7 +10,7 @@ interface Props {
   propertyId: number;
   bed: number;
 }
-const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
+export const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
   const today = new Date().toISOString().split('T')[0];
   const [formData, setFormData] = React.useState<{ checkin: string; checkout: string; guests: string }>({
     checkin: today,
@@ -100,5 +100,3 @@ const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
     </div>
   );
 };
-
-export default BookingForm;

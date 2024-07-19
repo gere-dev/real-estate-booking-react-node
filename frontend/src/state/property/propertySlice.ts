@@ -1,19 +1,7 @@
 import agent from '@/api/agent';
 import { Property } from '@/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-export const fetchPropertyById = createAsyncThunk<Property, number, { rejectValue: string }>(
-  'property/fetchPropertyById',
-  async (id: number, { rejectWithValue }) => {
-    try {
-      const data = await agent.Properties.getById(id);
-      return data;
-    } catch (error) {
-      console.log((error as Error).message);
-      return rejectWithValue((error as Error).message);
-    }
-  }
-);
+import { fetchPropertyById } from './propertyThunks';
 
 interface PropertyState {
   property: Property;
