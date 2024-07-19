@@ -1,3 +1,3 @@
-export * from './endpoint.paths';
+export * from './endpoints.constants';
 export * from './error.messages';
-export * from './endpoint.paths';
+export * from './endpoints.constants';

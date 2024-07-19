@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import validator from 'email-validator';
-import { errorMessages, EndPointPaths } from '@/constants';
+import { errorMessages, END_POINTS } from '@/constants';
 import { verifyToken } from '@/utils/jwt.utils';
 import { UserRole } from '@/constants/user.role';
 import db from '@/database/config/db';
@@ -19,7 +19,7 @@ export const validateCredentials = (req: Request, res: Response, next: NextFunct
   }
 
   // for registration end point only
-  if (req.path === EndPointPaths.REGISTER) {
+  if (req.path === END_POINTS.auth.register) {
     if (!name) {
       return res.status(400).json({ message: errorMessages.invalidName });
     }
