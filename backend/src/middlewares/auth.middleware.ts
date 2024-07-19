@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import validator from 'email-validator';
 import { errorMessages, EndPointPaths } from '@/constants';
 import { verifyToken } from '@/utils/jwt.utils';
-import { CustomRequest } from '@/types';
 import { UserRole } from '@/constants/user.role';
 import db from '@/database/config/db';
 export const validateCredentials = (req: Request, res: Response, next: NextFunction) => {
