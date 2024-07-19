@@ -2,7 +2,7 @@ import { AuthForm, AuthMessageLink, Title, AuthContainer, AuthProvider } from '@
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { selectAuthStatus, login } from '@/state';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { AuthForm as AuthFormType, AuthFormErrors, Login as LoginType, Status } from '@/types';
+import { AuthFormErrors, Login as LoginType, Status } from '@/types';
 import { validateLoginForm } from '@/utils';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

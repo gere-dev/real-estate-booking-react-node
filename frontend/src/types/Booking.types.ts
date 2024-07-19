@@ -1,4 +1,4 @@
-import { Property } from './property.type';
+import { Property } from './property.types';
 
 export interface Booking extends Property {
   booking_id: number;

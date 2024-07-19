@@ -1,6 +1,5 @@
 import { IconType } from 'react-icons';
 
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Nav } from './types';
 import { useAppSelector } from '@/hooks';
