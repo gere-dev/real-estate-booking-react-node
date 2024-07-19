@@ -1,11 +1,11 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer, AuthProvider } from '@/components';
-import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { selectAuthStatus, login } from '@/state';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { AuthFormErrors, Login as LoginType, Status } from '@/types';
 import { validateLoginForm } from '@/utils';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { COMPONENTS_DATA } from '@/constants';
 
 export const Login = () => {
   const [formData, setFormData] = useState<LoginType>({
@@ -13,6 +13,8 @@ export const Login = () => {
     password: '',
   });
   const [errors, setErrors] = useState<AuthFormErrors>();
+
+  const { loginPage, registerPage } = COMPONENTS_DATA;
 
   const dispatch = useAppDispatch();
   const status = useAppSelector(selectAuthStatus);
@@ -44,13 +46,9 @@ export const Login = () => {
   return (
     <AuthProvider>
       <AuthContainer>
-        <Title title={AuthFormEnum.LOGIN} />
-        <AuthForm formType={AuthFormEnum.LOGIN} onSubmit={handleSubmit} onChange={handleChange} />
-        <AuthMessageLink
-          to={authMessageLinkProps.REGISTER_LINK}
-          linkText={authMessageLinkProps.REGISTER_LINK}
-          message={authMessageLinkProps.REGISTER_MESSAGE}
-        />
+        <Title title={loginPage.title} />
+        <AuthForm onSubmit={handleSubmit} onChange={handleChange} />
+        <AuthMessageLink to={registerPage.link} linkText={registerPage.title} message={registerPage.message} />
       </AuthContainer>
     </AuthProvider>
   );

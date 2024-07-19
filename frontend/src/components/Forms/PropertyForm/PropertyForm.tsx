@@ -3,7 +3,7 @@ import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, Prope
 import { NewProperty, PropertyErrors, UpdateProperty } from '@/types';
 import { useAppDispatch } from '@/hooks';
 import { convertToFormData, validatePropertyForm } from '@/utils';
-import { createListings, updateListings } from '@/state/listings/listingsThunks';
+import { createListings, updateListings } from '@/state';
 
 interface Props {
   initialFormData: NewProperty | UpdateProperty;

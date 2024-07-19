@@ -1,10 +1,10 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
 import { Register as RegisterType, AuthFormErrors } from '@/types';
-import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { useState } from 'react';
 import { useAppDispatch } from '@/hooks';
 import { validateRegisterForm } from '@/utils';
-import { register } from '@/state/auth/authThunks';
+import { register } from '@/state';
+import { COMPONENTS_DATA } from '@/constants';
 export const Register = () => {
   const [formData, setFormData] = useState<RegisterType>({
     name: '',
@@ -13,6 +13,8 @@ export const Register = () => {
   });
 
   const [errors, setErrors] = useState<AuthFormErrors>();
+
+  const { loginPage, registerPage } = COMPONENTS_DATA;
 
   const dispatch = useAppDispatch();
 
@@ -35,13 +37,9 @@ export const Register = () => {
   };
   return (
     <AuthContainer>
-      <Title title={AuthFormEnum.REGISTER} />
-      <AuthForm onChange={handleChange} formType={AuthFormEnum.REGISTER} onSubmit={handleSubmit} />
-      <AuthMessageLink
-        to={authMessageLinkProps.LOGIN_LINK}
-        linkText={authMessageLinkProps.LOGIN_TITLE}
-        message={authMessageLinkProps.LOGIN_MESSAGE}
-      />
+      <Title title={registerPage.title} />
+      <AuthForm onChange={handleChange} onSubmit={handleSubmit} />
+      <AuthMessageLink to={loginPage.link} linkText={loginPage.title} message={loginPage.message} />
     </AuthContainer>
   );
 };
