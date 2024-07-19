@@ -1,11 +1,11 @@
 import { IconType } from 'react-icons';
 
 import { Link } from 'react-router-dom';
-import { Nav } from './types';
+import { Main_Nav } from '@/types';
 import { useAppSelector } from '@/hooks';
 import { selectUser } from '@/state/auth/authSelectors';
 interface Props {
-  nav: Nav;
+  nav: Main_Nav;
 }
 export const NavList = ({ nav }: Props) => {
   const user = useAppSelector(selectUser);

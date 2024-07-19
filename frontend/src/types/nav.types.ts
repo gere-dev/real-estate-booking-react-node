@@ -1,6 +1,6 @@
 import { IconType } from 'react-icons';
 
-export type MAIN_Nav = {
+export type Main_Nav = {
   title: string;
   path?: string;
   icon?: IconType;

@@ -1,11 +1,9 @@
-import React from 'react';
-import { navs } from './navs';
 import { Link, useNavigate } from 'react-router-dom';
-import { NavList } from './NavList';
+import { NavList } from '@/components';
 import { RiLoginCircleFill, RiLogoutCircleRFill } from 'react-icons/ri';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { selectIsAuth } from '@/state/auth/authSelectors';
-import { logout } from '@/state/auth/authThunks';
+import { selectIsAuth, logout } from '@/state';
+import { MAIN_NAV } from '@/constants';
 
 export const Nav = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -20,7 +18,7 @@ export const Nav = () => {
         </Link>
         <nav>
           <ul className='flex gap-5  '>
-            {navs.map((nav) => {
+            {MAIN_NAV.map((nav) => {
               return <NavList nav={nav} key={nav.title} />;
             })}
             <li className='flex hover:bg-primary hover:bg-opacity-40 rounded'>

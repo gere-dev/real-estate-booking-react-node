@@ -86,7 +86,11 @@ export const BookingForm: React.FC<Props> = ({ price, propertyId, bed }) => {
             />
           </div>
         </div>
-        <RectangleButton className={`${disableReservation ? 'bg-opacity-25' : 'bg-opacity-100'}`} disabled={disableReservation} label='Reserve' />
+        <RectangleButton
+          className={`${disableReservation ? 'bg-primary bg-opacity-25 text-white' : 'bg-primary bg-opacity-100 text-white'}`}
+          disabled={disableReservation}
+          label='Reserve'
+        />
       </form>
       <div className='my-4'>
         <BookingPriceSummary title={`$100 X guest(s) X ${days} night(s)`} price={cost_per_guest_night} />
