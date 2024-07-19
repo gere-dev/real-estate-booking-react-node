@@ -1,9 +1,8 @@
 import { PropertiesGrid } from '@/components';
+import { selectFilteredProperties } from '@/state/filterProperties/filterPropertiesSelectors';
 import { useAppSelector } from '@/state/hooks';
-import { selectFilteredProperties } from '@/state/selectors';
 import { BiArrowBack } from 'react-icons/bi';
-import { BsBack } from 'react-icons/bs';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const FilteredProperties = () => {
   const properties = useAppSelector(selectFilteredProperties);

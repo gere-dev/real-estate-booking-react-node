@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { MdOutlineSingleBed, MdOutlineWifi, MdEdit, MdDelete } from 'react-icons/md';
 import { useAppDispatch } from '@/state/hooks';
-import { deleteListings } from '@/state/listings/listingsSlice';
+import { deleteListings } from '@/state/listings/listingsThunks';
 interface Props {
   property: Property;
 }
