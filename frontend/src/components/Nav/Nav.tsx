@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { NavList } from './NavList';
 import { RiLoginCircleFill, RiLogoutCircleRFill } from 'react-icons/ri';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
-import { selectIsAuth } from '@/state/selectors';
-import { logout } from '@/state/auth/authSlice';
+import { selectIsAuth } from '@/state/auth/authSelectors';
+import { logout } from '@/state/auth/authThunks';
 
 export const Nav = () => {
   const isAuth = useAppSelector(selectIsAuth);

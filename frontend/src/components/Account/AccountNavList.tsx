@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react';
 import { useAppSelector } from '@/state/hooks';
-import { selectUser } from '@/state/selectors';
 import { Link, useLocation } from 'react-router-dom';
 import { Account_Nav } from '@/types';
+import { selectUser } from '@/state/auth/authSelectors';
 interface Props {
   nav: Account_Nav;
 }

@@ -3,7 +3,7 @@ import { BookingDateInput, BookingPriceSummary, RectangleButton } from '@/compon
 import { CreateBooking } from '@/types';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { createBooking } from '@/state/bookings/bookingsSlice';
-import { selectIsAuth } from '@/state/selectors';
+import { selectIsAuth } from '@/state/auth/authSelectors';
 
 interface Props {
   price: number;

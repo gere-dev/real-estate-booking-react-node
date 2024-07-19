@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import agent from '@/api/agent';
-import { Login, Register, Status, User } from '@/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { Status, User } from '@/types';
+import { login, logout, register } from './authThunks';
 
 interface AuthState {
   status: Status;
@@ -17,40 +17,6 @@ const initialState: AuthState = {
   isAuth: false,
   user: null,
 };
-
-export const register = createAsyncThunk<{ user: User; accessToken: string }, Register, { rejectValue: string }>(
-  'auth/register',
-  async (user: Register, { rejectWithValue }) => {
-    try {
-      const data = await agent.Auth.register(user);
-      return data;
-    } catch (error) {
-      return rejectWithValue((error as Error).message);
-    }
-  }
-);
-
-export const login = createAsyncThunk<{ user: User; accessToken: string }, Login, { rejectValue: string }>(
-  'auth/login',
-  async (user: Login, { rejectWithValue }) => {
-    try {
-      const data = await agent.Auth.login(user);
-      return data;
-    } catch (error) {
-      console.log(`Error at login controller: ${error}`);
-      return rejectWithValue((error as Error).message);
-    }
-  }
-);
-
-export const logout = createAsyncThunk<void, void, { rejectValue: string }>('auth/logout', async (_, { rejectWithValue }) => {
-  try {
-    await agent.Auth.logout();
-  } catch (error) {
-    console.log(`Error at logout controller: ${error}`);
-    return rejectWithValue((error as Error).message);
-  }
-});
 
 export const authSlice = createSlice({
   name: 'auth',

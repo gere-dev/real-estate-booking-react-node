@@ -1,10 +1,10 @@
 import { AuthForm, AuthMessageLink, Title, AuthContainer } from '@/components';
-import { Register as RegisterType, Login, AuthFormErrors } from '@/types';
+import { Register as RegisterType, AuthFormErrors } from '@/types';
 import { AuthForm as AuthFormEnum, authMessageLinkProps } from '@/enums';
 import { useState } from 'react';
 import { useAppDispatch } from '@/state/hooks';
-import { register } from '@/state/auth/authSlice';
 import { validateRegisterForm } from '@/utils';
+import { register } from '@/state/auth/authThunks';
 export const Register = () => {
   const [formData, setFormData] = useState<RegisterType>({
     name: '',
