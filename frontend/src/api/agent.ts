@@ -40,7 +40,7 @@ const publicRequests = createRequests(publicInstance);
 
 // APIs
 const PropertiesAPI = {
-  list: () => publicRequests.get('/properties/get-all-properties'),
+  list: () => publicRequests.get('/properties/get-all'),
   create: (property: PropertyType) => privateRequests.post(`/properties/create`, property),
   update: (property: PropertyType) => privateRequests.put(`/properties/update/${property.property_id}`, property),
   delete: (propertyId: number) => privateRequests.delete(`/properties/delete/${propertyId}`),

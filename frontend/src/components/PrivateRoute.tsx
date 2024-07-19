@@ -17,7 +17,7 @@ export const PrivateRoute = () => {
         return;
       }
       try {
-        await privateInstance.get('/auth/private-route');
+        await privateInstance.get('/auth/private');
       } catch (error) {
         console.log(error);
         dispatch(logout());
