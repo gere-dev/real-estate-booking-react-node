@@ -1,8 +1,7 @@
-import agent from '@/api/agent';
 import { Property, Status } from '@/types';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { isAxiosError } from 'axios';
-import { filterProperties } from './fiilterPropertiesThunks';
+import { createSlice } from '@reduxjs/toolkit';
+
+import { filterProperties } from './filterPropertiesThunks';
 
 interface FilterPropertiesState {
   status: Status;

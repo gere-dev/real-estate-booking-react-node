@@ -1,5 +1,5 @@
 import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/components';
-import { filterProperties } from '@/state/filterProperties/fiilterPropertiesThunks';
+import { filterProperties } from '@/state';
 import { useAppDispatch } from '@/state/hooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
