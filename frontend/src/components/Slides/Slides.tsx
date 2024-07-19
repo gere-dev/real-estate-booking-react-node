@@ -1,5 +1,5 @@
 import React, { ComponentProps, useCallback, useEffect, useState } from 'react';
-import { apiUrl } from '@/api/agent';
+import { BASE_URL } from '@/api/agent';
 import { BiSolidLeftArrowAlt, BiSolidRightArrowAlt } from 'react-icons/bi';
 import { CgClose } from 'react-icons/cg';
 import { IconType } from 'react-icons';
@@ -72,7 +72,7 @@ export const Slides: React.FC<Props> = ({ images, closeSlide, isSlideOpen }) => 
             <Button customClass='absolute top-5 right-5' Icon={CgClose} onClick={closeSlide} />
             <img
               className='p-4 rounded-lg aspect-[16/12] object-cover w-full max-h-[700px] '
-              src={`${apiUrl}/uploads/${images[currentImage]}`}
+              src={`${BASE_URL}/uploads/${images[currentImage]}`}
               alt='slide'
             />
             <div className='absolute px-5 top-1/2 -translate-y-1/2 flex w-full justify-between text-primary'>

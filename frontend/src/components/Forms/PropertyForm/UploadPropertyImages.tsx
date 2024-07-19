@@ -1,4 +1,4 @@
-import { apiUrl } from '@/api/agent';
+import { BASE_URL } from '@/api/agent';
 import { ErrorMessage } from '@/components/ErrorMessage';
 import React from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
@@ -20,7 +20,7 @@ export const UploadPropertyImages = ({ images, onChange, onRemove, ...props }: P
       </label>
       {images?.length > 0 &&
         images.map((image, index) => {
-          const imageUrl = typeof image === 'string' ? `${apiUrl}/uploads/${image}` : URL.createObjectURL(image as File);
+          const imageUrl = typeof image === 'string' ? `${BASE_URL}/uploads/${image}` : URL.createObjectURL(image as File);
 
           return (
             <figure key={index} className='relative'>

@@ -1,4 +1,4 @@
-import { apiUrl } from '@/api/agent';
+import { BASE_URL } from '@/api/agent';
 import BookingsInfo from '@/pages/Bookings/BookingsInfo';
 import { Booking, Property } from '@/types';
 import React, { FC } from 'react';
@@ -16,7 +16,7 @@ export const PropertiesList: FC<Props> = ({ property, children }) => {
   return (
     <li key={property.property_id} className='flex flex-col gap-2 text-gray-600'>
       <Link className='w-full relative overflow-hidden rounded-lg' to={`/property/${property.property_id}`}>
-        <img className='aspect-square object-cover w-full h-full' src={`${apiUrl}/uploads/${property?.images[0]}`} alt='property image' />
+        <img className='aspect-square object-cover w-full h-full' src={`${BASE_URL}/uploads/${property?.images[0]}`} alt='property image' />
         <span className='absolute bottom-2 left-1 rounded text-white z-10 font-bold text-lg'>
           ${property?.price_per_night}
           <span className='text-sm font-normal'>/night</span>

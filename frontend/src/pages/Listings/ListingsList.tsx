@@ -1,4 +1,4 @@
-import { apiUrl } from '@/api/agent';
+import { BASE_URL } from '@/api/agent';
 import { Property } from '@/types';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ interface Props {
 
 export const ListingsList: React.FC<Props> = ({ property }) => {
   const navigate = useNavigate();
-  const imageUrl = property?.images?.length > 0 ? `${apiUrl}/uploads/${property.images[0]}` : 'https://picsum.photos/300';
+  const imageUrl = property?.images?.length > 0 ? `${BASE_URL}/uploads/${property.images[0]}` : 'https://picsum.photos/300';
   const dispatch = useAppDispatch();
   return (
     <li className='flex gap-4 shadow-lg shadow-zinc-200 p-3 rounded'>

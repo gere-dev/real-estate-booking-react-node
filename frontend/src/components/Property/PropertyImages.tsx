@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiUrl } from '@/api/agent';
+import { BASE_URL } from '@/api/agent';
 import { Slides } from '@/components';
 interface Props {
   images?: (string | File)[];
@@ -28,7 +28,7 @@ export const PropertyImages: React.FC<Props> = ({ images }) => {
           <img
             onClick={() => setIsSlideOpen(true)}
             className={`hover:cursor-pointer aspect-square object-cover`}
-            src={`${apiUrl}/uploads/${image}`}
+            src={`${BASE_URL}/uploads/${image}`}
             alt='property image'
           />
         </li>
