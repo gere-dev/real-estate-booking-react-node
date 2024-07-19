@@ -74,5 +74,3 @@ export const listingsSlice = createSlice({
       });
   },
 });
-
-export default listingsSlice.reducer;

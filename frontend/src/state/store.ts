@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   auth: authSlice.reducer,
   listings: listingsSlice.reducer,
   filteredProperties: filterPropertiesSlice.reducer,
-  bookings: bookingsSlice,
+  bookings: bookingsSlice.reducer,
 });
 // Persistor
 const persistConfig = {
@@ -30,4 +30,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-export default store;

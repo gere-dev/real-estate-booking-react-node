@@ -4,11 +4,9 @@ import App from './App.tsx';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store, { persistor } from './state/store.ts';
+import { persistor, store } from './state';
 import { PersistGate } from 'redux-persist/integration/react';
 import agent, { privateInstance } from './api/agent.ts';
-import { logout } from './state/auth/authSlice.ts';
-import { AxiosInterceptorOptions } from 'axios';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>

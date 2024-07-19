@@ -4,3 +4,4 @@ export * from './listings';
 export * from './filterProperties';
 export * from './auth';
 export * from './bookings';
+export * from './store';
