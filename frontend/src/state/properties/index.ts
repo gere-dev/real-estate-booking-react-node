@@ -1,3 +1,3 @@
 export * from './propertiesSlice';
-export * from './propertySelectors';
-export * from './propertyThunks';
+export * from './propertiesSelectors';
+export * from './propertiesThunks';

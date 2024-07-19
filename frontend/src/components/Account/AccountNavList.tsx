@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 import { useAppSelector } from '@/state/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { Account_Nav } from '@/types';
-import { selectUser } from '@/state/auth/authSelectors';
+import { selectUser } from '@/state';
 interface Props {
   nav: Account_Nav;
 }

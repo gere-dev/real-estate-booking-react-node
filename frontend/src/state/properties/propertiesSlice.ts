@@ -1,6 +1,6 @@
 import { Property } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchProperties } from './propertyThunks';
+import { fetchProperties } from './propertiesThunks';
 
 interface PropertyState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
