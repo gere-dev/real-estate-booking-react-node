@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import validator from 'email-validator';
-import { errorMessages, END_POINTS } from '@/constants';
-import { verifyToken } from '@/utils/jwt.utils';
-import { UserRole } from '@/constants/user.role';
+import { errorMessages, END_POINTS, UserRole } from '@/constants';
+import { verifyToken } from '@/utils';
 import db from '@/database/config/db';
 export const validateCredentials = (req: Request, res: Response, next: NextFunction) => {
   const MIN_PASSWORD_LENGTH = 6;

@@ -1,5 +1,4 @@
-import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE } from '@/constants/tokens.max.age';
-import { TokenNames } from '@/enums/tokens.name';
+import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE, TokenNames } from '@/constants';
 import { Response } from 'express';
 
 type COOKIE_OPTIONS = {
@@ -13,7 +12,7 @@ export const setCookies = (res: Response, refreshToken: string) => {
   const cookieOptions = (maxAge: number): COOKIE_OPTIONS => {
     return {
       httpOnly: true,
-      maxAge: maxAge, // in milliseconds
+      maxAge: maxAge,
       secure: true,
       sameSite: 'none',
     };

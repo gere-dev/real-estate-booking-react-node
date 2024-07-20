@@ -1,4 +1,4 @@
-import { UserRole } from '@/constants/user.role';
+import { UserRole } from '@/constants';
 import db from '@/database/config/db';
 import { formatBookingData } from '@/utils';
 import { Request, Response } from 'express';

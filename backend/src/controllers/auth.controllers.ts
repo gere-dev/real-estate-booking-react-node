@@ -1,4 +1,4 @@
-import { UserRole } from '@/constants/user.role';
+import { UserRole } from '@/constants';
 import db from '@/database/config/db';
 import { generateAccessToken, generateRefreshToken, verifyToken, setCookies } from '@/utils';
 import bcrypt from 'bcryptjs';
