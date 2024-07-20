@@ -1,14 +1,9 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
-import routes from '@/routes';
-import path from 'path';
 import cookieParse from 'cookie-parser';
+import path from 'path';
+import routes from '@/routes';
 import { corsOptions } from '@/config';
-
-const environment = process.env.NODE_ENV || 'development';
-const envFilePath = `.env.${environment}`;
-dotenv.config({ path: envFilePath });
 
 const app = express();
 const port = process.env.PORT || 5000;
