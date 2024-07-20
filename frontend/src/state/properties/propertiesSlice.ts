@@ -1,15 +1,15 @@
-import { Property } from '@/types';
+import { Property, Status } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchProperties } from './propertiesThunks';
 
 interface PropertyState {
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: Status;
   properties: Property[];
   error: string | null;
 }
 
 const initialState: PropertyState = {
-  status: 'idle',
+  status: Status.IDLE,
   properties: [],
   error: null,
 };
@@ -20,14 +20,14 @@ export const propertiesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProperties.pending, (state) => {
-        state.status = 'loading';
+        state.status = Status.LOADING;
       })
       .addCase(fetchProperties.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = Status.SUCCEEDED;
         state.properties = action.payload;
       })
       .addCase(fetchProperties.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = Status.FAILED;
         if (action.payload) {
           state.error = action.payload;
         }

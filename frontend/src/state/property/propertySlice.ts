@@ -1,17 +1,17 @@
 import { agent } from '@/api';
-import { Property } from '@/types';
+import { Property, Status } from '@/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchPropertyById } from './propertyThunks';
 
 interface PropertyState {
   property: Property;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: Status;
   error: string | null;
 }
 
 const initialState: PropertyState = {
   property: {} as Property,
-  status: 'idle',
+  status: Status.IDLE,
   error: null,
 };
 
@@ -22,14 +22,14 @@ export const propertySlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPropertyById.pending, (state) => {
-        state.status = 'loading';
+        state.status = Status.LOADING;
       })
       .addCase(fetchPropertyById.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = Status.SUCCEEDED;
         state.property = action.payload;
       })
       .addCase(fetchPropertyById.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = Status.FAILED;
         state.property = {} as Property;
         if (action.payload) {
           state.error = action.payload;

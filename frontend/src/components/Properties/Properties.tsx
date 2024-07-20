@@ -1,20 +1,14 @@
 import { PropertiesHeader, PropertiesGrid } from '@/components';
-import { useAppDispatch, useAppSelector } from '@/hooks';
-import { fetchProperties, selectProperties } from '@/state';
-import { useEffect } from 'react';
+import { fetchProperties, selectProperties, selectPropertiesStatus } from '@/state';
+import { useFetchData } from '@/hooks';
 
 export const Properties = () => {
-  const properties = useAppSelector(selectProperties);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(fetchProperties());
-  }, [dispatch]);
+  const { data, status } = useFetchData(fetchProperties(), selectProperties, selectPropertiesStatus);
 
   return (
     <section className='max-width-container my-8'>
       <PropertiesHeader />
-      <PropertiesGrid properties={properties} />
+      <PropertiesGrid properties={data} />
     </section>
   );
 };
