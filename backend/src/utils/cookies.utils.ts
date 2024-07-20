@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE, TokenNames } from '@/constants';
+import { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE, TOKEN_TYPE } from '@/constants';
 import { Response } from 'express';
 
 type COOKIE_OPTIONS = {
@@ -18,6 +18,6 @@ export const setCookies = (res: Response, refreshToken: string) => {
     };
   };
 
-  // res.cookie(TokenNames.ACCESS_TOKEN, accessToken, cookieOptions(ACCESS_TOKEN_MAX_AGE));
-  res.cookie(TokenNames.REFRESH_TOKEN, refreshToken, cookieOptions(REFRESH_TOKEN_MAX_AGE));
+  // res.cookie(TOKEN_TYPE.ACCESS_TOKEN, accessToken, cookieOptions(ACCESS_TOKEN_MAX_AGE));
+  res.cookie(TOKEN_TYPE.REFRESH_TOKEN, refreshToken, cookieOptions(REFRESH_TOKEN_MAX_AGE));
 };
