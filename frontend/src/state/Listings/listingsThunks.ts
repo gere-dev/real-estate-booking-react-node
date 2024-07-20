@@ -1,8 +1,11 @@
-import agent from '@/api/agent';
+import { agent, privateInstance } from '@/api';
 import { Property } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const formHeader = {
+  'Content-Type': 'multipart/form-data',
+};
 export const fetchListings = createAsyncThunk<Array<Property>, void, { rejectValue: unknown }>(
   'fetchListings/listings',
   async (_, { rejectWithValue }) => {
@@ -24,7 +27,7 @@ export const createListings = createAsyncThunk<Property, FormData, { rejectValue
   'createListings/listings',
   async (listing, { rejectWithValue }) => {
     try {
-      const data = await agent.Listings.create(listing);
+      const data = await agent.Listings.create(listing, formHeader);
       return data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {

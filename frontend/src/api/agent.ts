@@ -6,9 +6,6 @@ import { privateInstance, publicInstance } from './config';
 const responseBody = (response: AxiosResponse) => response.data;
 
 // Axios request headers
-const formHeader = {
-  'Content-Type': 'multipart/form-data',
-};
 
 // Function to create request methods
 const createRequests = (instance: AxiosInstance) => ({
@@ -31,8 +28,8 @@ const PropertiesAPI = {
 
 const ListingsAPI = {
   list: () => privateRequests.get('/listings/get-all'),
-  create: (listing: FormData) => privateRequests.post(`/listings/create`, listing, formHeader),
-  update: (listing: FormData, listingId: number) => privateRequests.put(`/listings/update/${listingId}`, listing, formHeader),
+  create: (listing: FormData, headers?: object) => privateRequests.post(`/listings/create`, listing, headers),
+  update: (listing: FormData, listingId: number, headers?: object) => privateRequests.put(`/listings/update/${listingId}`, listing, headers),
   delete: (listingId: number) => privateRequests.delete(`/listings/delete/${listingId}`),
   getById: (id: number) => privateRequests.get(`/listings/get-by-id/${id}`),
 };
@@ -50,11 +47,9 @@ const AuthAPI = {
   refresh: () => privateRequests.get(`/auth/refresh`),
 };
 
-const agent = {
+export const agent = {
   Properties: PropertiesAPI,
   Listings: ListingsAPI,
   Bookings: BookingsAPI,
   Auth: AuthAPI,
 };
-
-export default agent;

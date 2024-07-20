@@ -1,4 +1,4 @@
-import agent from '@/api/agent';
+import { agent } from '@/api';
 import { Property } from '@/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchPropertyById } from './propertyThunks';
@@ -37,5 +37,3 @@ export const propertySlice = createSlice({
       });
   },
 });
-
-

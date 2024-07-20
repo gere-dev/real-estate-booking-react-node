@@ -1,4 +1,4 @@
-import agent from '@/api/agent';
+import { agent } from '@/api';
 import { Login, Register, User } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
