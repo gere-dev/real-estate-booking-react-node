@@ -1,9 +1,8 @@
-import { BASE_URL } from '@/api/agent';
-import { Property } from '@/types';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { MdOutlineSingleBed, MdOutlineWifi, MdEdit, MdDelete } from 'react-icons/md';
+import { BASE_URL } from '@/api';
+import { Property } from '@/types';
 import { useAppDispatch } from '@/hooks';
 import { deleteListings } from '@/state';
 interface Props {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BASE_URL } from '@/api/agent';
+import { BASE_URL } from '@/api';
 import { Slides } from '@/components';
 interface Props {
   images?: (string | File)[];

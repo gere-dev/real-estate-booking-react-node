@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { privateInstance } from '@/api/agent';
+import { privateInstance } from '@/api';
 import { selectIsAuth } from '@/state/auth/authSelectors';
 import { logout } from '@/state/auth/authThunks';
 

@@ -6,7 +6,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistor, store } from './state';
 import { PersistGate } from 'redux-persist/integration/react';
-import agent, { privateInstance } from './api/agent.ts';
+import { privateInstance } from '@/api';
+import agent from './api/agent.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>

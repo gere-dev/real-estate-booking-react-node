@@ -1,5 +1,5 @@
 import React, { ComponentProps, useCallback, useEffect, useState } from 'react';
-import { BASE_URL } from '@/api/agent';
+import { BASE_URL } from '@/api';
 import { BiSolidLeftArrowAlt, BiSolidRightArrowAlt } from 'react-icons/bi';
 import { CgClose } from 'react-icons/cg';
 import { IconType } from 'react-icons';

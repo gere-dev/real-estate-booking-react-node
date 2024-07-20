@@ -1,22 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { Login, Register, Property as PropertyType, NewProperty, CreateBooking } from '@/types';
-
-// Base URL based on environment
-export const BASE_URL = import.meta.env.NODE === 'production' ? import.meta.env.VITE_API_URL : 'http://localhost:5000/api';
-
-// Axios instances
-export const privateInstance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-export const publicInstance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-});
+import { AxiosInstance, AxiosResponse } from 'axios';
+import { Login, Register, CreateBooking } from '@/types';
+import { privateInstance, publicInstance } from './config';
 
 // Axios response handler
 const responseBody = (response: AxiosResponse) => response.data;

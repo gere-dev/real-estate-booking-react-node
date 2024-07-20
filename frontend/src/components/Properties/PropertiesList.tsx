@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/api/agent';
+import { BASE_URL } from '@/api';
 import BookingsInfo from '@/pages/Bookings/BookingsInfo';
 import { Booking, Property } from '@/types';
 import React, { FC } from 'react';

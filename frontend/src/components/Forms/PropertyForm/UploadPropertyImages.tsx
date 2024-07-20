@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/api/agent';
+import { BASE_URL } from '@/api';
 import { ErrorMessage } from '@/components/ErrorMessage';
 import React from 'react';
 import { MdCloudUpload, MdDelete } from 'react-icons/md';
