@@ -11,6 +11,6 @@ router.post(authEndpoints.register, validateCredentials, register);
 router.post(authEndpoints.login, validateCredentials, login);
 router.get(authEndpoints.refresh, refreshToken);
 router.get(authEndpoints.private, privateRoutes);
-router.post(authEndpoints.private, logout);
+router.post(authEndpoints.logout, logout);
 
 export default router;
