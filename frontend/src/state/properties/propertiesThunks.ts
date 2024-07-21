@@ -1,6 +1,7 @@
 import { agent } from '@/api';
 import { Property } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { isAxiosError } from 'axios';
 
 export const fetchProperties = createAsyncThunk<Property[], void, { rejectValue: string }>(
   'properties/fetchProperties',
@@ -8,8 +9,12 @@ export const fetchProperties = createAsyncThunk<Property[], void, { rejectValue:
     try {
       const data = await agent.Properties.list();
       return data;
-    } catch (error) {
-      return rejectWithValue((error as Error).message);
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue('Unknown error occurred while creating booking');
+      }
     }
   }
 );
