@@ -11,6 +11,7 @@ export const fetchProperties = createAsyncThunk<Property[], void, { rejectValue:
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
+        console.log(error.response.data);
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while creating booking');

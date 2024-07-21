@@ -11,6 +11,7 @@ export const getAllBookings = createAsyncThunk<Booking[], void, { rejectValue: s
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
+        console.log(error.response.data);
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while fetching bookings');
@@ -27,6 +28,7 @@ export const createBooking = createAsyncThunk<Booking, CreateBooking, { rejectVa
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
+        console.log(error.response.data);
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while creating booking');
@@ -43,6 +45,7 @@ export const deleteBooking = createAsyncThunk<number, number, { rejectValue: str
       return bookingId;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
+        console.log(error.response.data);
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while deleting booking');

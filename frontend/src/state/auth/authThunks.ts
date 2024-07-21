@@ -11,6 +11,7 @@ export const register = createAsyncThunk<{ user: User; accessToken: string }, Re
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
+        console.log(error.response.data);
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while registering a user');
@@ -27,6 +28,7 @@ export const login = createAsyncThunk<{ user: User; accessToken: string }, Login
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
+        console.log(error.response.data);
         return rejectWithValue(error.response.data);
       } else {
         return rejectWithValue('Unknown error occurred while login in');
@@ -40,6 +42,7 @@ export const logout = createAsyncThunk<void, void, { rejectValue: string }>('aut
     await agent.Auth.logout();
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
+      console.log(error.response.data);
       return rejectWithValue(error.response.data);
     } else {
       return rejectWithValue('Unknown error occurred while login out');

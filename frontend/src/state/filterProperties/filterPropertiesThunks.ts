@@ -16,7 +16,7 @@ export const filterProperties = createAsyncThunk<
       console.log(error.response.data);
       return rejectWithValue(error.response.data);
     } else {
-      return rejectWithValue((error as Error).message);
+      return rejectWithValue('Unknown error occurred while filtering properties');
     }
   }
 });
