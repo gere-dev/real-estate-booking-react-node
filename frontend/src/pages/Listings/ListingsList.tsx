@@ -1,19 +1,14 @@
-import { Loading } from '@/components';
-import { useFetchData } from '@/hooks';
 import { ListingsCard } from '@/pages';
-import { fetchListings, selectListings, selectListingsStatus } from '@/state';
-import { Status } from '@/types';
+import { Property } from '@/types';
+import { FC } from 'react';
 
-export const ListingsList = () => {
-  const { data, status } = useFetchData(fetchListings(), selectListings, selectListingsStatus);
-
-  // display a spinner while loading
-  if (status === Status.LOADING) {
-    return <Loading />;
-  }
+interface Props {
+  listings: Property[];
+}
+export const ListingsList: FC<Props> = ({ listings }) => {
   return (
     <ul className='flex flex-1 flex-col gap-4 '>
-      {data.map((property) => {
+      {listings.map((property) => {
         return <ListingsCard key={property.property_id} property={property} />;
       })}
     </ul>
