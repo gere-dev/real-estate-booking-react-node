@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hooks';
+import { Loading } from '@/components';
+import { useFetchData } from '@/hooks';
 import { ListingsList } from '@/pages';
-import { fetchListings, selectListings } from '@/state';
+import { fetchListings, selectListings, selectListingsStatus } from '@/state';
+import { Status } from '@/types';
 
 export const ListingsContainer = () => {
-  const properties = useAppSelector(selectListings);
-  const dispatch = useAppDispatch();
+  const { data, status } = useFetchData(fetchListings(), selectListings, selectListingsStatus);
 
-  useEffect(() => {
-    dispatch(fetchListings());
-  }, [dispatch]);
+  // display a spinner while loading
+  if (status === Status.LOADING) {
+    return <Loading />;
+  }
   return (
     <ul className='flex flex-1 flex-col gap-4 '>
-      {properties.map((property) => {
+      {data.map((property) => {
         return <ListingsList key={property.property_id} property={property} />;
       })}
     </ul>

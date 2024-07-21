@@ -1,9 +1,8 @@
-import { useFetchData, useScrollTop } from '@/hooks';
-import { fetchPropertyById, selectPropertyStatus } from '@/state';
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { PropertyImages, PropertyHeader, PropertyDescription, BookingForm } from '@/components';
-import { selectProperty } from '@/state';
+import { fetchPropertyById, selectPropertyStatus, selectProperty } from '@/state';
+import { PropertyImages, PropertyHeader, PropertyDescription, BookingForm, Loading } from '@/components';
+import { useFetchData, useScrollTop } from '@/hooks';
+import { Status } from '@/types';
 
 export const Property = () => {
   const { id } = useParams();
@@ -13,6 +12,11 @@ export const Property = () => {
   const { data: property, status } = useFetchData(fetchPropertyById(propertyId), selectProperty, selectPropertyStatus, [propertyId]);
 
   useScrollTop(); //  Scrolls to the top of the page on component mount
+
+  // display a spinner while loading
+  if (status === Status.LOADING) {
+    return <Loading />;
+  }
 
   return (
     <section className='max-width-container mt-8'>
