@@ -1,10 +1,10 @@
 import { AccountContainer } from '@/components';
-import { ListingsContainer } from '@/pages';
+import { ListingsList } from '@/pages';
 
 export const Listings = () => {
   return (
     <AccountContainer>
-      <ListingsContainer />
+      <ListingsList />
     </AccountContainer>
   );
 };
