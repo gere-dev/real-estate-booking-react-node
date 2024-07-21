@@ -9,7 +9,7 @@ interface Props {
   property: Property | Booking;
   children?: React.ReactNode;
 }
-export const PropertiesList: FC<Props> = ({ property, children }) => {
+export const PropertiesCard: FC<Props> = ({ property, children }) => {
   const location = useLocation();
   const isBookingsPage = location.pathname.includes('/bookings');
 
