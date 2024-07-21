@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '@/hooks';
-import { fetchPropertyById } from '@/state';
+import { useFetchData, useScrollTop } from '@/hooks';
+import { fetchPropertyById, selectPropertyStatus } from '@/state';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { PropertyImages, PropertyHeader, PropertyDescription, BookingForm } from '@/components';
@@ -8,13 +8,11 @@ import { selectProperty } from '@/state';
 export const Property = () => {
   const { id } = useParams();
 
-  const dispatch = useAppDispatch();
-  const property = useAppSelector(selectProperty);
+  const propertyId = Number(id);
 
-  useEffect(() => {
-    dispatch(fetchPropertyById(Number(id)));
-    window.scrollTo(0, 0);
-  }, [id, dispatch]);
+  const { data: property, status } = useFetchData(fetchPropertyById(propertyId), selectProperty, selectPropertyStatus, [propertyId]);
+
+  useScrollTop(); //  Scrolls to the top of the page on component mount
 
   return (
     <section className='max-width-container mt-8'>

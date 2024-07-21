@@ -9,7 +9,7 @@ export const useFetchData = <TData>(
   fetchAction: AsyncThunkAction<TData, any, any>,
   selectData: SelectData<TData>,
   selectStatus: SelectStatus,
-  dependencies = []
+  dependencies: any[] = []
 ) => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(selectData);
