@@ -1,5 +1,5 @@
-import { AccountNavList } from './AccountNavList';
 import { FC, ReactNode } from 'react';
+import { AccountNavList } from '@/components';
 
 interface Props {
   children: ReactNode;
