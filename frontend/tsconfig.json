@@ -23,8 +23,14 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
-      "@/components/*": ["/components/*"],
-      "@/pages/*": ["/pages/*"],
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/state/*": ["state/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/types/*": ["types/*"],
+      "@/constants/*": ["constants/*"],
+      "@/utils/*": ["utils/*"],
+      "@/assets/*": ["assets/*"] 
     },
 
     /* Linting */
