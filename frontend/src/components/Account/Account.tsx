@@ -1,13 +1,13 @@
-import { AccountNav } from './AccountNav';
+import { AccountNavList } from './AccountNavList';
 import { FC, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
 }
-export const AccountContainer: FC<Props> = ({ children }: Props) => {
+export const Account: FC<Props> = ({ children }: Props) => {
   return (
     <section className='max-width-container py-8  flex flex-col md:flex-row '>
-      <AccountNav />
+      <AccountNavList />
       {children}
     </section>
   );

@@ -1,4 +1,4 @@
-import { AccountContainer, PropertyForm } from '@/components';
+import { Account, PropertyForm } from '@/components';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { selectProperty, selectPropertyStatus, fetchPropertyById } from '@/state';
 import { Status } from '@/types';
@@ -28,8 +28,8 @@ export const EditListings = () => {
     return <div>Loading...</div>;
   }
   return (
-    <AccountContainer>
+    <Account>
       <PropertyForm isEditing={true} initialFormData={initialState} />
-    </AccountContainer>
+    </Account>
   );
 };

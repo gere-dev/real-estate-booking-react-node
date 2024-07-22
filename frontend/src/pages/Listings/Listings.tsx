@@ -1,32 +1,32 @@
-import { AccountContainer, Loading } from '@/components';
+import { Account, Loading } from '@/components';
 import { useFetchData } from '@/hooks';
 import { ListingsList } from '@/pages';
-import { getAllBookings, selectBookings, selectBookingsStatus } from '@/state';
+import { fetchListings, selectListings, selectListingsStatus } from '@/state';
 import { Status } from '@/types';
 
 export const Listings = () => {
-  const { data: listings, status } = useFetchData(getAllBookings(), selectBookings, selectBookingsStatus);
+  const { data: listings, status } = useFetchData(fetchListings(), selectListings, selectListingsStatus);
 
   // Display loading spinner while fetching data
   if (status === Status.LOADING) {
     return (
-      <AccountContainer>
+      <Account>
         <Loading />
-      </AccountContainer>
+      </Account>
     );
   }
 
   // Handle no listings found
   if (!listings || listings.length === 0) {
     return (
-      <AccountContainer>
+      <Account>
         <div className='text-center flex-1 '>You haven't listed any property.</div>;
-      </AccountContainer>
+      </Account>
     );
   }
   return (
-    <AccountContainer>
+    <Account>
       <ListingsList listings={listings} />
-    </AccountContainer>
+    </Account>
   );
 };

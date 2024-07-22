@@ -1,4 +1,4 @@
-import { PropertiesGrid, AccountContainer, Loading } from '@/components';
+import { PropertiesGrid, Account, Loading } from '@/components';
 import { selectBookings, getAllBookings, selectBookingsStatus } from '@/state';
 import { useFetchData } from '@/hooks';
 import { Status } from '@/types';
@@ -9,24 +9,24 @@ export const Bookings = () => {
   // Display loading spinner while fetching data
   if (status === Status.LOADING) {
     return (
-      <AccountContainer>
+      <Account>
         <Loading />
-      </AccountContainer>
+      </Account>
     );
   }
 
   // Handle no bookings found
   if (!booking || booking.length === 0) {
     return (
-      <AccountContainer>
+      <Account>
         <div className='text-center flex-1 '>No Bookings yet</div>;
-      </AccountContainer>
+      </Account>
     );
   }
 
   return (
-    <AccountContainer>
+    <Account>
       <PropertiesGrid properties={booking} />
-    </AccountContainer>
+    </Account>
   );
 };

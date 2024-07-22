@@ -44,6 +44,7 @@ const AuthAPI = {
   login: (data: Login) => publicRequests.post(auth.login, data),
   logout: () => publicRequests.post(auth.logout, {}),
   refresh: () => privateRequests.get(auth.refresh),
+  private: () => privateRequests.get(auth.private),
 };
 
 export const agent = {

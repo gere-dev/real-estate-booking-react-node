@@ -1,9 +1,8 @@
-import { useAppDispatch, useAppSelector } from '@/hooks';
 import { useEffect } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { endpoints, privateInstance } from '@/api';
-import { selectIsAuth } from '@/state/auth/authSelectors';
-import { logout } from '@/state/auth/authThunks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { agent } from '@/api';
+import { logout, selectIsAuth } from '@/state';
 
 export const PrivateRoute = () => {
   const isAuth = useAppSelector(selectIsAuth);
@@ -17,7 +16,7 @@ export const PrivateRoute = () => {
         return;
       }
       try {
-        await privateInstance.get(endpoints.auth.private);
+        await agent.Auth.private();
       } catch (error) {
         console.log(error);
         dispatch(logout());

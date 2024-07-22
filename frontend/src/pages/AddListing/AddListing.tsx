@@ -1,4 +1,4 @@
-import { AccountContainer, PropertyForm } from '@/components';
+import { Account, PropertyForm } from '@/components';
 import { selectUser } from '@/state';
 import { useAppSelector } from '@/hooks';
 import { NewProperty } from '@/types';
@@ -26,8 +26,8 @@ export const AddListing = () => {
   };
 
   return (
-    <AccountContainer>
+    <Account>
       <PropertyForm initialFormData={initialFormData} />
-    </AccountContainer>
+    </Account>
   );
 };
