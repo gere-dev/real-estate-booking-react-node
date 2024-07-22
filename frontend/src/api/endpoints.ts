@@ -21,5 +21,6 @@ export const endpoints = Object.freeze({
     login: '/auth/login',
     logout: '/auth/logout',
     refresh: '/auth/refresh',
+    private: '/auth/private',
   },
 });
