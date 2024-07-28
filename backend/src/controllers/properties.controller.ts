@@ -1,4 +1,4 @@
-import db from '@/database/config/db';
+import { db } from '@db/index';
 import { Property, PropertyWithImages } from '@/types';
 import { formatPropertiesData } from '@/utils';
 import { Request, Response } from 'express';

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import validator from 'email-validator';
 import { errorMessages, END_POINTS, UserRole } from '@/constants';
 import { verifyToken } from '@/utils';
-import db from '@/database/config/db';
+import { db } from '@db/index';
 export const validateCredentials = (req: Request, res: Response, next: NextFunction) => {
   const MIN_PASSWORD_LENGTH = 6;
 

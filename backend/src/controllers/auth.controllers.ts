@@ -1,6 +1,6 @@
-import { UserRole } from '@/constants';
-import db from '@/database/config/db';
-import { generateAccessToken, generateRefreshToken, verifyToken, setCookies } from '@/utils';
+import { UserRole } from '@/constants/index';
+import { db } from '@db/index';
+import { generateAccessToken, generateRefreshToken, verifyToken, setCookies } from '@/utils/index';
 import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { ResultSetHeader } from 'mysql2';

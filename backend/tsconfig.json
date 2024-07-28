@@ -1,22 +1,26 @@
 {
     "compilerOptions": {
       "target": "es6",
-      "module": "commonjs",
+      "module": "CommonJS",
       "outDir": "./dist",
       "strict": true,
       "esModuleInterop": true,
       "resolveJsonModule": true,
+      "moduleResolution": "node",
       "sourceMap": true,
-      "baseUrl": "./src",
-      // "typeRoots": ["node_modules/@types", "./types"],
       "typeRoots": ["./src/types", "./node_modules/@types"],
-     "paths": {
-      "@/*": ["*"],
-      "@db/*": ["database/config/db"],
-      "@controllers/*": ["controllers/*"],
-      "@routes/*": ["routes/*"],
-      "@models/*": ["database/models/*"],
-}
+      "baseUrl": "./",
+      "paths": {
+        "@constants/*": ["src/constants/*"],
+        "@controllers/*": ["src/controllers/*"],
+        "@routes/*": ["src/routes/*"],
+        "@db/*": ["src/database/config/*"],
+        "@models/*": ["src/database/models/*"],
+        "@middlewares/*": ["src/middlewares/*"],
+        "@utils/*": ["src/utils/*"], 
+        "@types/*":["src/types/*"],
+        "@/*": ["src/*"]
+      }
     },
     "ts-node": {
       "require": ["tsconfig-paths/register"]

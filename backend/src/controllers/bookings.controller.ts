@@ -1,5 +1,5 @@
 import { UserRole } from '@/constants';
-import db from '@/database/config/db';
+import { db } from '@db/index';
 import { formatBookingData } from '@/utils';
 import { Request, Response } from 'express';
 import { FieldPacket } from 'mysql2';

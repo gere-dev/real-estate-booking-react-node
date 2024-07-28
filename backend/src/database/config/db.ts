@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const db = mysql
+export const db = mysql
   .createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -11,5 +11,3 @@ const db = mysql
     database: process.env.DB_DATABASE,
   })
   .promise();
-
-export default db;

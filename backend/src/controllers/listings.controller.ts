@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import db from '@/database/config/db';
+import { db } from '@db/index';
 import { FieldPacket, RowDataPacket } from 'mysql2';
-import { Property, PropertyWithImages } from '@/types';
-import { formatPropertiesData } from '@/utils';
+import { Property } from '@/types';
+import { formatPropertiesData } from '@utils/index';
 import fs from 'fs';
 
 export const getListings = async (req: Request, res: Response) => {
