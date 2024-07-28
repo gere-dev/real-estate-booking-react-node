@@ -26,12 +26,6 @@ export const getAllProperties = async (req: Request, res: Response) => {
 export const filterProperties = async (req: Request, res: Response) => {
   try {
     const { city, minPrice, maxPrice, bed } = req.query;
-    const query = `
-      SELECT p.*, i.image_url
-      FROM properties p
-      LEFT JOIN images i ON p.property_id = i.property_id
-      WHERE p.city LIKE '%${city}%' AND p.price_per_night >= ${minPrice} AND p.price_per_night <= ${maxPrice} AND p.bed >= ${bed}
-    `;
 
     let params: any[] = [];
     let sql = `
@@ -42,23 +36,23 @@ export const filterProperties = async (req: Request, res: Response) => {
     `;
 
     if (city) {
-      sql += ` AND p.city LIKE ?`;
-      params.push(`%${city}%`);
+      sql += ` AND (p.city LIKE ? OR SOUNDEX(p.city) = SOUNDEX(?))`;
+      params.push(`%${city}%`, city);
     }
 
     if (minPrice) {
       sql += ` AND p.price_per_night >= ?`;
-      params.push(minPrice);
+      params.push(parseInt(minPrice as string));
     }
 
     if (maxPrice) {
       sql += ` AND p.price_per_night <= ?`;
-      params.push(maxPrice);
+      params.push(parseInt(maxPrice as string));
     }
 
     if (bed) {
       if (bed === '1' || bed === '2') {
-        sql += ` AND p.bed =?`;
+        sql += ` AND p.bed = ?`;
         params.push(parseInt(bed));
       } else if (bed === '3+') {
         sql += ` AND p.bed >= ?`;
