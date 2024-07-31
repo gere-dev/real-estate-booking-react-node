@@ -1,4 +1,4 @@
-import { agent } from '@/api';
+import { requests } from '@/api';
 import { Booking, CreateBooking } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
@@ -7,7 +7,7 @@ export const getAllBookings = createAsyncThunk<Booking[], void, { rejectValue: s
   'bookings/getAllBookings',
   async (_, { rejectWithValue }) => {
     try {
-      const data = await agent.Bookings.list();
+      const data = await requests.Bookings.list();
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
@@ -24,7 +24,7 @@ export const createBooking = createAsyncThunk<Booking, CreateBooking, { rejectVa
   'bookings/createBooking',
   async (booking, { rejectWithValue }) => {
     try {
-      const data = await agent.Bookings.create(booking);
+      const data = await requests.Bookings.create(booking);
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
@@ -41,7 +41,7 @@ export const deleteBooking = createAsyncThunk<number, number, { rejectValue: str
   'bookings/deleteBooking',
   async (bookingId, { rejectWithValue }) => {
     try {
-      await agent.Bookings.delete(bookingId);
+      await requests.Bookings.delete(bookingId);
       return bookingId;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {

@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistor, store } from './state';
 import { PersistGate } from 'redux-persist/integration/react';
-import { privateInstance, agent } from '@/api';
+import { privateInstance, requests } from '@/api';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
@@ -40,7 +40,7 @@ privateInstance.interceptors.response.use(
 
     if (status === 403 && !previousRequest?.sent) {
       previousRequest.sent = true;
-      const response = await agent.Auth.refresh();
+      const response = await requests.Auth.refresh();
 
       const newAccessToken = response.accessToken;
       console.log('requested for a new access token and returned a new one', newAccessToken);

@@ -1,4 +1,4 @@
-import { agent } from '@/api';
+import { requests } from '@/api';
 import { Property } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
@@ -7,7 +7,7 @@ export const fetchProperties = createAsyncThunk<Property[], void, { rejectValue:
   'properties/fetchProperties',
   async (_, { rejectWithValue }) => {
     try {
-      const data = await agent.Properties.list();
+      const data = await requests.Properties.list();
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {

@@ -47,7 +47,7 @@ const AuthAPI = {
   private: () => privateRequests.get(auth.private),
 };
 
-export const agent = {
+export const requests = {
   Properties: PropertiesAPI,
   Listings: ListingsAPI,
   Bookings: BookingsAPI,

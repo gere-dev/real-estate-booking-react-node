@@ -1,4 +1,4 @@
-import { agent, privateInstance } from '@/api';
+import { requests, privateInstance } from '@/api';
 import { Property } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -10,7 +10,7 @@ export const fetchListings = createAsyncThunk<Array<Property>, void, { rejectVal
   'fetchListings/listings',
   async (_, { rejectWithValue }) => {
     try {
-      const data = await agent.Listings.list();
+      const data = await requests.Listings.list();
       return data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
@@ -27,7 +27,7 @@ export const createListings = createAsyncThunk<Property, FormData, { rejectValue
   'createListings/listings',
   async (listing, { rejectWithValue }) => {
     try {
-      const data = await agent.Listings.create(listing, formHeader);
+      const data = await requests.Listings.create(listing, formHeader);
       return data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
@@ -44,7 +44,7 @@ export const updateListings = createAsyncThunk<Property, { property: FormData; p
   'updateListings/listings',
   async ({ property, propertyId }, { rejectWithValue }) => {
     try {
-      const data = await agent.Listings.update(property, propertyId);
+      const data = await requests.Listings.update(property, propertyId);
       return data;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
@@ -61,7 +61,7 @@ export const deleteListings = createAsyncThunk<number, number, { rejectValue: un
   'deleteListings/listings',
   async (propertyId, { rejectWithValue }) => {
     try {
-      await agent.Listings.delete(propertyId);
+      await requests.Listings.delete(propertyId);
       return propertyId;
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {

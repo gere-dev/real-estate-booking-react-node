@@ -1,4 +1,4 @@
-import { agent } from '@/api';
+import { requests } from '@/api';
 import { Login, Register, User } from '@/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { isAxiosError } from 'axios';
@@ -7,7 +7,7 @@ export const register = createAsyncThunk<{ user: User; accessToken: string }, Re
   'auth/register',
   async (user: Register, { rejectWithValue }) => {
     try {
-      const data = await agent.Auth.register(user);
+      const data = await requests.Auth.register(user);
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
@@ -24,7 +24,7 @@ export const login = createAsyncThunk<{ user: User; accessToken: string }, Login
   'auth/login',
   async (user: Login, { rejectWithValue }) => {
     try {
-      const data = await agent.Auth.login(user);
+      const data = await requests.Auth.login(user);
       return data;
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response) {
@@ -39,7 +39,7 @@ export const login = createAsyncThunk<{ user: User; accessToken: string }, Login
 
 export const logout = createAsyncThunk<void, void, { rejectValue: string }>('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    await agent.Auth.logout();
+    await requests.Auth.logout();
   } catch (error: unknown) {
     if (isAxiosError(error) && error.response) {
       console.log(error.response.data);

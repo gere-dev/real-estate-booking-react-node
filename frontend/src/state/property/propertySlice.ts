@@ -1,4 +1,4 @@
-import { agent } from '@/api';
+import { requests } from '@/api';
 import { Property, Status } from '@/types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchPropertyById } from './propertyThunks';
