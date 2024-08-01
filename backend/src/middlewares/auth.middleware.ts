@@ -26,7 +26,7 @@ export const validateCredentials = (req: Request, res: Response, next: NextFunct
   next();
 };
 
-export const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).json({ message: errorMessages.unauthorized });
@@ -57,7 +57,7 @@ export const authenticateUser = (req: Request, res: Response, next: NextFunction
     req.user.id = decoded.id;
     req.user.role = decoded.role;
   } catch (error) {
-    console.log(`Error at authenticateUser middleware: ${error}`);
+    console.log(`Error at isAuthenticated middleware: ${error}`);
     return res.status(401).json({ message: errorMessages.invalidToken });
   }
 

@@ -3,7 +3,7 @@ import authRoutes from './auth.routes';
 import propertiesRoutes from './properties.route';
 import listingsRoutes from './listings.route';
 import bookingsRoutes from './bookings.route';
-import { authenticateUser } from '@/middlewares';
+import { isAuthenticated } from '@/middlewares';
 
 const router = Router();
 
@@ -11,8 +11,8 @@ const router = Router();
 router.use('/auth', authRoutes);
 router.use('/properties', propertiesRoutes);
 
-// apply authenticateUser middleware globally before protected routes
-router.use(authenticateUser);
+// apply isAuthenticated middleware globally before protected routes
+router.use(isAuthenticated);
 
 // protected routes
 router.use('/listings', listingsRoutes);
