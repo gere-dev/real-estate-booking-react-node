@@ -63,3 +63,18 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 
   next();
 };
+
+export const isAuthorized = (req: Request, res: Response, next: NextFunction) => {
+  const resourceOwnerId = req.params.id || req.body.user_id;
+  const currentUser = req.user;
+
+  if (!currentUser || !currentUser.id) {
+    return res.status(400).json({ message: 'Bad Request' });
+  }
+
+  if (resourceOwnerId === currentUser.id || currentUser.role === UserRole.ADMIN) {
+    return next();
+  } else {
+    return res.status(403).json({ message: 'Forbidden' });
+  }
+};
