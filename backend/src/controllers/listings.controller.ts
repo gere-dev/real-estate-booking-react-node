@@ -4,15 +4,26 @@ import { FieldPacket, RowDataPacket } from 'mysql2';
 import { Property } from '@/types';
 import { formatPropertiesData } from '@utils/index';
 import fs from 'fs';
+import { UserRole } from '@constants/user.constants';
 
 export const getListings = async (req: Request, res: Response) => {
-  const query = `
+  const userRole = req.user.role;
+  const userId = req.user.id;
+  const queryParma: number[] = [];
+  let query = `
         SELECT p.*, i.image_url
         FROM properties p
         LEFT JOIN images i ON p.property_id = i.property_id
+        WHERE 1=1
       `;
+
+  if (userRole === UserRole.USER) {
+    query += `AND user_id= ?`;
+    queryParma.push(userId);
+  }
+
   try {
-    const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>(query);
+    const [rows]: [Property[], FieldPacket[]] = await db.query<Property[] & RowDataPacket[]>(query, queryParma);
 
     const response = formatPropertiesData(rows);
     res.json(response);
