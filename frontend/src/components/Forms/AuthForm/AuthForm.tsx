@@ -20,7 +20,7 @@ export const AuthForm: React.FC<Props> = ({ onSubmit, onChange }) => {
       {Object.values(fields).map((field) => (
         <InputField onChange={onChange} key={field} name={field} placeholder={field} type={field === 'password' ? 'password' : 'text'} required />
       ))}
-      <RectangleButton type='submit' label={pathname === registerPage.link ? registerPage.title : loginPage.title} />
+      <RectangleButton variant='primary' type='submit' label={pathname === registerPage.link ? registerPage.title : loginPage.title} />
     </form>
   );
 };

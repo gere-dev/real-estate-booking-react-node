@@ -58,10 +58,10 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
     // Validate form data before dispatching registration action.
     const validateErrors = validatePropertyForm(formData);
     console.log(validateErrors);
-    // if (Object.keys(validateErrors).length > 0) {
-    //   setErrors(validateErrors);
-    //   return;
-    // }
+    if (Object.keys(validateErrors).length > 0) {
+      setErrors(validateErrors);
+      return;
+    }
 
     // Dispatch registration action.
     const formDataToSend = convertToFormData(formData);
@@ -129,8 +129,8 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
       <PropertyCheckBoxContainer formData={formData} handleChange={handleChange} />
 
       <div className='flex flex-col md:flex-row gap-4'>
-        <RectangleButton type='submit' label={isEditing ? 'Update' : 'Create'} />
-        <RectangleButton className='bg-white border border-gray-300 text-gray-500' label='Cancel' />
+        <RectangleButton variant='primary' type='submit' label={isEditing ? 'Update' : 'Create'} />
+        <RectangleButton variant='secondary' label='Cancel' />
       </div>
     </form>
   );
