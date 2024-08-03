@@ -3,9 +3,9 @@ import classNames from 'classnames';
 interface Props extends React.ComponentProps<'button'> {
   label: string;
   className?: string;
-  variant?: string;
+  variant?: 'primary' | 'secondary';
 }
-export const RectangleButton: React.FC<Props> = ({ label, className, variant, ...props }) => {
+export const RectangleButton: React.FC<Props> = ({ label, className, variant = 'primary', ...props }) => {
   const buttonClass = classNames(
     'w-full py-2 rounded capitalize',
     {
