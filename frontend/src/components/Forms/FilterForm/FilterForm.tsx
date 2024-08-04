@@ -1,15 +1,12 @@
-import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/components';
-import { filterProperties } from '@/state';
-import { useAppDispatch } from '@/hooks';
 import { memo, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { NumOfBedField, PriceRangeField, SearchButton, SearchField } from '@/components';
 
 export const FilterForm = memo(() => {
   const [price, setPrice] = useState<[number, number]>([0, 880]);
   const [city, setCity] = useState<string>('');
   const [bed, setBed] = useState<number | string>('any');
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const minDistance = 20;
@@ -29,14 +26,15 @@ export const FilterForm = memo(() => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const query = {
+
+    const queryParams = new URLSearchParams({
       city,
-      minPrice: price[0],
-      maxPrice: price[1],
-      bed,
-    };
-    dispatch(filterProperties(query));
-    navigate('/filtered-properties', { state: query });
+      minPrice: price[0].toString(),
+      maxPrice: price[1].toString(),
+      bed: bed.toString(),
+    }).toString();
+
+    navigate(`/filtered-properties?${queryParams}`);
   };
 
   const handleLocation = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setCity(e.target.value), []);

@@ -1,12 +1,31 @@
-import { PropertiesGrid } from '@/components';
-import { selectFilteredProperties } from '@/state/filterProperties/filterPropertiesSelectors';
-import { useAppSelector, useScrollTop } from '@/hooks';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { PropertiesGrid } from '@/components';
+import { useAppDispatch, useAppSelector, useScrollTop } from '@/hooks';
+import { filterProperties, selectFilteredProperties } from '@/state';
 
 export const FilteredProperties = () => {
   const properties = useAppSelector(selectFilteredProperties);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { search } = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const city = params.get('city') || '';
+    const minPrice = parseInt(params.get('minPrice') || '0', 10);
+    const maxPrice = parseInt(params.get('maxPrice') || '0', 10);
+    const bed = parseInt(params.get('bed') || '0', 10);
+
+    const query = {
+      city,
+      minPrice,
+      maxPrice,
+      bed,
+    };
+    dispatch(filterProperties(query));
+  }, [dispatch, search]);
 
   //scroll to the top when it mounts
   useScrollTop();
