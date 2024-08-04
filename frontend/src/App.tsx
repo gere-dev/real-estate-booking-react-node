@@ -1,8 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Nav, PrivateRoute, Property } from '@/components';
-import { Home, Login, Register, Bookings, AddListing, Listings, NotFound, EditListings } from '@/pages';
+import { Home, Login, Register, Bookings, AddListing, Listings, NotFound, EditListings, FilteredProperties } from '@/pages';
 import './App.css';
-import { FilteredProperties } from './pages/FilteredProperties/FilteredProperties';
 function App() {
   return (
     <>

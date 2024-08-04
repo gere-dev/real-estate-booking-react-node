@@ -4,4 +4,5 @@ export * from './AddListing';
 export * from './Bookings';
 export * from './Listings';
 export * from './EditListings';
+export * from './FilteredProperties';
 export * from './NotFound';
