@@ -1,7 +1,13 @@
+import { NewProperty, Property } from '@/types';
+import { IconType } from 'react-icons';
 import { BiDumbbell } from 'react-icons/bi';
 import { MdDriveEta, MdPets, MdPool, MdTv, MdWifi } from 'react-icons/md';
 
-export const PROPERTY_CHECKBOX_OPTIONS = [
+export const PROPERTY_CHECKBOX_OPTIONS: {
+  label: string;
+  icon: IconType;
+  name: keyof Property | keyof NewProperty;
+}[] = [
   {
     label: 'Wifi',
     icon: MdWifi,
