@@ -16,7 +16,9 @@ export const PropertyCheckBoxContainer = ({ handleChange, formData }: Props) => 
       <div className='grid grid-cols-2 gap-4'>
         {PROPERTY_CHECKBOX_OPTIONS.map(({ label, icon, name }) => {
           if (['wifi', 'parking', 'pets', 'gym', 'pool', 'netflix'].includes(name)) {
-            return <CheckBoxList id={name} checked={formData[name]} name={name} onChange={handleChange} key={label} label={label} icon={icon} />;
+            return (
+              <CheckBoxList id={name} checked={!!(formData as any)[name]} name={name} onChange={handleChange} key={label} label={label} icon={icon} />
+            );
           }
         })}
       </div>

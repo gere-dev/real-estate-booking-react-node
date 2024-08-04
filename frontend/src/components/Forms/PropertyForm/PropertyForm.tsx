@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { RectangleButton, UploadPropertyImages, PropertyCheckBoxContainer, PropertyInputField, PropertyTextareaField } from '@/components';
 import { NewProperty, PropertyErrors, UpdateProperty } from '@/types';
 import { useAppDispatch } from '@/hooks';
@@ -13,27 +13,31 @@ interface Props {
 export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = false }) => {
   const [formData, setFormData] = useState<NewProperty | UpdateProperty>(initialFormData);
   const [errors, setErrors] = useState<PropertyErrors>();
+  const dispatch = useAppDispatch();
 
-  //removes image from images array
-  const onRemove = (index: number) => {
-    if (!isEditing) {
-      const updatedFormData = { ...formData };
-      updatedFormData.images = updatedFormData.images.filter((_, i) => i !== index);
-      setFormData(updatedFormData);
-    } else {
-      const updatedFormData = { ...formData } as UpdateProperty;
-      const image_to_delete = updatedFormData.images[index];
-      if (typeof image_to_delete === 'string') {
-        updatedFormData.images_to_delete.push(image_to_delete);
+  //Removes image from images array
+  const handleRemoveImage = useCallback(
+    (index: number) => {
+      if (!isEditing) {
+        const updatedFormData = { ...formData };
+        updatedFormData.images = updatedFormData.images.filter((_, i) => i !== index);
+        setFormData(updatedFormData);
+      } else {
+        const updatedFormData = { ...formData } as UpdateProperty;
+        const image_to_delete = updatedFormData.images[index];
+        if (typeof image_to_delete === 'string') {
+          updatedFormData.images_to_delete.push(image_to_delete);
+        }
+        updatedFormData.images = updatedFormData.images.filter((_, i) => i !== index);
+
+        setFormData(updatedFormData);
       }
-      updatedFormData.images = updatedFormData.images.filter((_, i) => i !== index);
-
-      setFormData(updatedFormData);
-    }
-  };
+    },
+    [isEditing]
+  );
 
   //updates form data in response to user input changes.
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
     const { name, value, type } = event.target;
 
     if (type === 'file') {
@@ -48,38 +52,40 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  };
-  const dispatch = useAppDispatch();
+  }, []);
 
   // Dispatches createListings or updateListings action.
-  const onSubmits = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmits = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    // Validate form data before dispatching registration action.
-    const validateErrors = validatePropertyForm(formData);
-    console.log(validateErrors);
-    if (Object.keys(validateErrors).length > 0) {
-      setErrors(validateErrors);
-      return;
-    }
+      // Validate form data before dispatching registration action.
+      const validateErrors = validatePropertyForm(formData);
+      console.log(validateErrors);
+      if (Object.keys(validateErrors).length > 0) {
+        setErrors(validateErrors);
+        return;
+      }
 
-    // Dispatch registration action.
-    const formDataToSend = convertToFormData(formData);
-    if (!isEditing) {
-      dispatch(createListings(formDataToSend));
-      setFormData(initialFormData);
-    } else {
-      const propertyData = { ...formData } as UpdateProperty;
-      dispatch(updateListings({ property: formDataToSend, propertyId: propertyData.property_id }));
-      propertyData.images_to_delete = [];
-      setFormData(propertyData);
-    }
-  };
+      // Dispatch registration action.
+      const formDataToSend = convertToFormData(formData);
+      if (!isEditing) {
+        dispatch(createListings(formDataToSend));
+        setFormData(initialFormData);
+      } else {
+        const propertyData = { ...formData } as UpdateProperty;
+        dispatch(updateListings({ property: formDataToSend, propertyId: propertyData.property_id }));
+        propertyData.images_to_delete = [];
+        setFormData(propertyData);
+      }
+    },
+    [dispatch, formData, isEditing, initialFormData]
+  );
 
   return (
     <form onSubmit={onSubmits} className='flex-1 flex gap-4 flex-col' action=''>
       <PropertyInputField
-        onChange={handleChange}
+        onChange={handleInputChange}
         name='title'
         value={formData.title}
         label='Title'
@@ -87,7 +93,7 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
         error={errors?.title}
       />
       <PropertyInputField
-        onChange={handleChange}
+        onChange={handleInputChange}
         name='address'
         value={formData.address}
         label='address'
@@ -95,7 +101,7 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
         error={errors?.address}
       />
       <PropertyInputField
-        onChange={handleChange}
+        onChange={handleInputChange}
         name='city'
         value={formData.city}
         label='city'
@@ -104,15 +110,15 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
       />
       <PropertyInputField
         error={errors?.state}
-        onChange={handleChange}
+        onChange={handleInputChange}
         name='state'
         value={formData.state}
         label='province/state'
         description='Province/State where the place is located'
       />
-      <UploadPropertyImages error={errors?.images} onChange={handleChange} images={formData.images} onRemove={onRemove} />
+      <UploadPropertyImages error={errors?.images} onChange={handleInputChange} images={formData.images} onRemove={handleRemoveImage} />
       <PropertyTextareaField
-        onChange={handleChange}
+        onChange={handleInputChange}
         name='description'
         value={formData.description}
         label='Description'
@@ -120,13 +126,13 @@ export const PropertyForm: React.FC<Props> = ({ initialFormData, isEditing = fal
         error={errors?.description}
       />
       <PropertyTextareaField
-        onChange={handleChange}
+        onChange={handleInputChange}
         name='extraInfo'
         value={formData.extraInfo}
         label='Extra info'
         description='Extra information about the property'
       />
-      <PropertyCheckBoxContainer formData={formData} handleChange={handleChange} />
+      <PropertyCheckBoxContainer formData={formData} handleChange={handleInputChange} />
 
       <div className='flex flex-col md:flex-row gap-4'>
         <RectangleButton variant='primary' type='submit' label={isEditing ? 'Update' : 'Create'} />
