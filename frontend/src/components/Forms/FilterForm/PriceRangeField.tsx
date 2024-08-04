@@ -1,12 +1,13 @@
 import { FieldContainer } from './FieldContainer';
 import { BiDollar } from 'react-icons/bi';
 import { Slider } from '@mui/material';
+import { memo } from 'react';
 
 interface Props {
   onChange: (event: Event, newValue: number | number[], activeThumb: number) => void;
   value: [number, number];
 }
-export const PriceRangeField = ({ onChange, value }: Props) => {
+export const PriceRangeField = memo(({ onChange, value }: Props) => {
   return (
     <FieldContainer Icon={BiDollar} htmlFor='price' label='Price Range'>
       <Slider
@@ -22,4 +23,4 @@ export const PriceRangeField = ({ onChange, value }: Props) => {
       />
     </FieldContainer>
   );
-};
+});
