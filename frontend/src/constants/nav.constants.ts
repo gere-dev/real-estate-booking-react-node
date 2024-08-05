@@ -10,7 +10,7 @@ export const MAIN_NAV: Main_Nav[] = [
   },
   {
     title: 'Account',
-    path: '/account',
+    path: (userId: number) => `/account/${userId}/listings`,
     icon: FaCircleUser,
   },
 ];
@@ -18,14 +18,14 @@ export const MAIN_NAV: Main_Nav[] = [
 export const ACCOUNT_NAV: Account_Nav[] = [
   {
     title: 'Listings',
-    path: (userId: number) => `/account/${userId}`,
+    path: (userId: number) => `/account/${userId}/listings`,
   },
   {
     title: 'Bookings',
-    path: '/account/bookings',
+    path: (userId: number) => `/account/${userId}/bookings`,
   },
   {
     title: 'Add Listing',
-    path: '/account/add-listing',
+    path: (userId: number) => `/account/${userId}/add-listing`,
   },
 ];

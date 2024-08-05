@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MdOutlineSingleBed, MdOutlineWifi, MdEdit, MdDelete } from 'react-icons/md';
 import { BASE_URL } from '@/api';
 import { Property } from '@/types';
-import { useAppDispatch } from '@/hooks';
-import { deleteListings } from '@/state';
+import { useAppDispatch, useAppSelector } from '@/hooks';
+import { deleteListings, selectUser } from '@/state';
 interface Props {
   property: Property;
 }
@@ -13,6 +13,8 @@ export const ListingsCard: React.FC<Props> = ({ property }) => {
   const navigate = useNavigate();
   const imageUrl = property?.images?.length > 0 ? `${BASE_URL}/uploads/${property.images[0]}` : 'https://picsum.photos/300';
   const dispatch = useAppDispatch();
+  const userId = useAppSelector(selectUser)?.user_id;
+
   return (
     <li className='flex gap-4 shadow-lg shadow-zinc-200 p-3 rounded'>
       <figure className=''>
@@ -40,7 +42,7 @@ export const ListingsCard: React.FC<Props> = ({ property }) => {
         </div>
         <div className='flex flex-col justify-between'>
           <button
-            onClick={() => navigate(`/account/edit-listing/properties/${property.property_id}`)}
+            onClick={() => navigate(`/account/${userId!}/edit-listing/${property.property_id}`)}
             className='p-2 bg-gray-200 text-gray-700 rounded shadow-md'
           >
             <MdEdit />

@@ -1,6 +1,5 @@
 import { Home, Login, Register, Bookings, AddListing, Listings, NotFound, EditListings, FilteredProperties } from '@/pages';
 import { Layout, Nav, PrivateRoute, Property } from '@/components';
-import { RouteConfig } from '@/types';
 import { RouteObject } from 'react-router-dom';
 
 const routesConfig: RouteObject[] = [

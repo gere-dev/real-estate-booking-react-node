@@ -8,11 +8,11 @@ interface Props {
   nav: Main_Nav;
 }
 export const NavList = ({ nav }: Props) => {
-  const user = useAppSelector(selectUser);
+  const userId = useAppSelector(selectUser)?.user_id;
 
   return (
     <li className='flex hover:bg-primary hover:bg-opacity-40 rounded'>
-      <Link className=' text-primary px-2 py-2' to={nav.path === '/account' ? `/account/${user?.user_id}` : `${nav.path}`}>
+      <Link className=' text-primary px-2 py-2' to={typeof nav.path === 'function' ? nav.path(userId!) : `${nav.path}`}>
         <IconComponent Icon={nav.icon!} />
       </Link>
     </li>
